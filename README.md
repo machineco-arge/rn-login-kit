@@ -1,53 +1,58 @@
 
 
-Install the required peer dependencies:
+# rn-login-kit
+
+Reusable React Native Login Kit with Social Authentication.
+
+## Kurulum (Installation)
+
+Bu paketi projenize eklemek için aşağıdaki adımları takip edin:
+
+### Adım 1: npm'i GitHub Packages için Yapılandırın
+
+Paketiniz GitHub Packages'ta barındırıldığı için, npm'in bu kayıt defterinden paketleri indirebilmesi için yapılandırılması gerekir. Projenizin kök dizininde `.npmrc` adında bir dosya oluşturun ve aşağıdaki içeriği ekleyin:
+
+```
+@machineco-arge:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=YOUR_GITHUB_PAT_OR_GH_TOKEN
+```
+
+*   `YOUR_GITHUB_PAT_OR_GH_TOKEN` yerine, GitHub hesabınızdan oluşturduğunuz ve `read:packages` kapsamına sahip bir Kişisel Erişim Belirteci (PAT) kullanın. CI/CD ortamlarında `GITHUB_TOKEN` da kullanılabilir.
+
+### Adım 2: Paketi Kurun
+
+Paketi projenize bağımlılık olarak ekleyin:
 
 ```bash
-npm install react-native @react-navigation/native @react-navigation/native-stack
-npm install react-i18next i18next
-npm install @react-native-google-signin/google-signin @invertase/react-native-apple-authentication
-npm install react-native-fast-image react-native-gradients axios
-npm install react-native-image-crop-picker
-npm install react-native-reanimated react-native-heroicons 
-npm install axios
-npm install react-native-localize
-
+npm install @machineco-arge/rn-login-kit
+# veya
+yarn add @machineco-arge/rn-login-kit
 ```
 
-Setup babel.config.json and metro.config.json for react-native-reanimated package
-```typescript
-ex. babel.config.json:
-    module.exports = {
-    presets: ['module:@react-native/babel-preset', 'nativewind/babel'],
-    env: {
-        production: {
-        plugins: ['react-native-paper/babel', 'react-native-reanimated/plugin'],
-        },
-    },
-    };
+### Adım 3: Peer Dependencies (Eş Bağımlılıkları) Kurun
 
-ex. metro.config.json:
-    const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
-    const { withNativeWind } = require('nativewind/metro');
-    const { wrapWithReanimatedMetroConfig } = require('react-native-reanimated/metro-config');
+Bu paket, düzgün çalışabilmesi için aşağıdaki eş bağımlılıklara ihtiyaç duyar. Lütfen projenizde bu paketlerin uyumlu sürümlerinin kurulu olduğundan emin olun. Eksik olanları veya uyumsuz olanları kurmak/güncellemek için aşağıdaki komutu kullanabilirsiniz:
 
-    // Varsayılan Metro yapılandırmasını alın
-    const defaultConfig = getDefaultConfig(__dirname);
-    const { assetExts, sourceExts } = defaultConfig.resolver;
-
-    // Metro yapılandırmasını özelleştirin
-    const config = mergeConfig(defaultConfig, {
-    transformer: {
-        babelTransformerPath: require.resolve('react-native-svg-transformer'),
-    },
-    resolver: {
-        assetExts: assetExts.filter(ext => ext !== 'svg'),
-        sourceExts: [...sourceExts, 'svg'],
-    },
-    });
-
-    // NativeWind ve Reanimated Metro yapılandırmalarını doğru şekilde birleştirin
-    const finalConfig = withNativeWind(config, { input: './global.css' });
-    module.exports = wrapWithReanimatedMetroConfig(finalConfig);
-
+```bash
+npm install \
+  react@18.3.1 react-native@0.77.1 \
+  @react-navigation/native@^7.0.14 @react-navigation/native-stack@^7.2.0 \
+  react-i18next@^15.5.1 i18next@^25.0.1 \
+  @react-native-google-signin/google-signin@^13.2.0 @invertase/react-native-apple-authentication@^2.4.0 \
+  react-native-fast-image@^8.6.3 react-native-gradients@^2.1.1 \
+  react-native-reanimated@^3.17.1 react-native-heroicons@^4.0.0 \
+  axios@^1.8.1 react-native-localize@^3.5.2 \
+  @dr.pogodin/react-native-fs@^2.21.0 \
+  @react-native-async-storage/async-storage@^1.19.0 \
+  @react-native-community/checkbox@^0.5.20 \
+  i18next-async-storage-backend2@^2.1.0 \
+  i18next-chained-backend@^4.6.2 \
+  i18next-http-backend@^3.0.2
 ```
+
+**Önemli Notlar:**
+
+*   `react-native-reanimated` için Babel yapılandırması gereklidir. `babel.config.js` dosyanıza `plugins: ['react-native-reanimated/plugin']` eklediğinizden emin olun.
+*   iOS projeleri için `cd ios && pod install` komutunu çalıştırmanız gerekebilir.
+
+
