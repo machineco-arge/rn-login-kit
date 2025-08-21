@@ -92,7 +92,7 @@ export const HelpsFAQsScreen: React.FC<HelpsFAQsScreenProps> = (
             return (
               <View key={section.key} style={styles.sectionContainer}>
                 <View style={styles.sectionHeader}>
-                  <Icon size={24} color={config.theme.colors.navbarSelected} />
+                  <Icon size={24} color={config.theme.colors.faqsScreeenIconsColor} />
                   <Text style={styles.sectionTitle}>{section.title}</Text>
                 </View>
                 {section.items.map(item => (

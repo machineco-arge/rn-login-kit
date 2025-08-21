@@ -12,33 +12,111 @@ export interface AppTranslationResources {
 
 // Theme Configuration
 export interface LoginKitThemeColors {
-  primary: string;
-  secondary: string;
   background: string;
-  cardBackground: string;
-  navbarUnselected: string;
-  navbarSelected: string;
   textShadow: string;
-  gray: string;
-  reddish: string;
-  surface: string;
   text: string;
-  textSecondary: string;
-  border: string;
   gradient: string[];
-  buttonPrimary: string;
-  buttonSecondary: string;
-  buttonText: string;
-  error: string;
-  success: string;
-  themeToggleCircle: string;
-  editColor: string;
-  resetColor: string;
-  deleteColor: string;
-  imagePickerColor: string;
-  alertOkButtonColor: string;
-  alertCancelButtonColor: string;
-  alertConfirmButtonColor: string;
+
+
+  // Login&SignIn&Register Screens
+  loginScreensTextInputBgColor: string;
+  loginScreensTextInputBorderColor: string;
+  loginScreensTextInputTextColor: string;
+  loginScreensTextInputSecondaryTextColor: string;
+  loginScreensPrivacyPolicyCheckTrueColor: string;
+  loginScreensPrivacyPolicyCheckFalseColor: string;
+  loginScreensPrivacyPolicyTextColor: string;
+  loginScreensHaveAnAccountTextColor: string;
+  loginScreensHaveAnAccountButtonColor: string;
+  loginScreensTitleColor: string;
+  loginScreensSubTitleColor: string;
+  loginScreensButtonsColor: string;
+  loginScreensButtonTextColor: string;
+  loginScreensLogoTextColor: string;
+
+  // Account Screen
+  accountScreenPhotoCropperBgColor: string;
+  accountScreenPhotoCropperTitleColor: string;
+  accountScreenPhotoCropperPreviewContainerBorderColor: string;
+  accountScreenPhotoCropperButtonBorderColor: string;
+  accountScreenPhotoCropperOkButtonColor: string;
+  accountScreenPhotoCropperCancelButtonColor: string;
+  accountScreenPhotoCropperButtonTextColor: string;
+  accountScreenEditNameModalBgColor: string;
+  accountScreenEditNameModalBorderColor: string;
+  accountScreenEditNameModalTitleColor: string;
+  accountScreenEditNameModalTextInputBgColor: string;
+  accountScreenEditNameModalTextInputColor: string;
+  accountScreenEditNameModalOkButtonColor: string;
+  accountScreenEditNameModalCancelButtonColor: string;
+  accountScreenEditNameModalButtonTextColor: string;
+  accountScreenHeaderTitleColor: string;
+  accountScreenHeaderEditPhotoTitleColor: string;
+  accountScreenEditPhotoCardBgColor: string;
+  accountScreenAvatarPhotoCardBgColor: string;
+  accountScreenAvatarPhotoCardTextColor: string;
+  accountScreenEditPhotoActionButtonsBgColor: string;
+  accountScreenEditPhotoActionButtonsBorderColor: string;
+  accountScreenInfoSectionBgColor: string;
+  accountScreenInfoSectionBorderColor: string;
+  accountScreenInfoSectionLabelTextColor: string;
+  accountScreenInfoSectionValueTextColor: string;
+  accountScreenLogoutButtonColor: string;
+
+  // Language Screen
+  languageScreenHeaderTitleColor: string;
+  languageScreenItemCardBgColor: string;
+  languageScreenSelectedLanguageItemBgColor: string;
+  languageScreenSelectedLanguageItemBorderColor: string;
+  languageScreenCurrentLanguageItemBgColor: string;
+  languageScreenCurrentLanguageItemBorderColor: string;
+  languageScreenAllLanguagesTextColor: string;
+  languageScreenEnglishVersionOfAllLanguagesTextColor: string;
+  languageScreenSelectedLanguageTextColor: string;
+  languageScreenCurrentLanguageColor: string;
+  languageScreenApplyButtonColor: string;
+  languageScreenApplyButtonTextColor: string;
+  languageScreenProgressTitle: string;
+  languageScreenProgressSubTitle: string;
+  languageScreenProgressBarContainer: string;
+  languageScreenProgressBarFill: string;
+
+  // Helps&FAQs Screen
+  faqsScreeenHeaderTitleColor: string;
+  faqsScreeenIconsColor: string;
+  faqsScreeenTooggleIconColor: string;
+  faqsScreeenSectionTitle: string;
+  faqsScreeenAccordionBgColor: string;
+  faqsScreeenAccordionShadowColor: string;
+  faqsScreeenAccordionBorderColor: string;
+  faqsScreeenQuestionTextColor: string;
+  faqsScreeenAnswerTextColor: string;
+
+  // DarkLightMode Screen
+  themeScreenHeaderTitleColor: string;
+  themeScreenSubHeaderTitleColor: string;
+  themeScreenCardBgColor: string;
+  themeScreenCardShadowColor: string;
+  themeScreenToggleContainerColor: string;
+  themeScreenToggleTextColor: string;
+
+  // CustomAlert
+  customAlertCardBgColor: string;
+  customAlertBorderColor: string;
+  customAlertTitleTextColor: string;
+  customAlertCancelColor: string;
+  customAlertConfirmColor: string;
+  customAlertOkColor: string;
+  customAlertSendPrintColor: string;
+  customAlertButtonTextColor: string;
+
+  // IconSet
+  iconSetSignInAndSignUpScreenIconsColor: string;
+  iconSetThemeScreenIconsColor: string;
+  iconSetAccountScreenResetColor: string;
+  iconSetAccountScreenEditColor: string;
+  iconSetAccountScreenImagePickerColor: string;
+  iconSetAccountScreenDeleteColor: string;
 }
 
 export interface LoginKitTheme {

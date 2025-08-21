@@ -162,12 +162,12 @@ export const LanguageScreen: React.FC<ScreenProps> = ({config}) => {
                     <Text style={styles.currentIndicatorText}>✓</Text>
                   </View>
                 )}
-                {selectedLanguage === language.code &&
+                {/* {selectedLanguage === language.code &&
                   selectedLanguage !== currentLanguage && (
                     <View style={styles.selectedIndicator}>
                       <Text style={styles.selectedIndicatorText}>○</Text>
                     </View>
-                  )}
+                  )} */}
               </View>
             </TouchableOpacity>
           ))}

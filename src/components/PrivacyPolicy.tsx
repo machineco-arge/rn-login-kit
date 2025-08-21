@@ -35,16 +35,16 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({
         value={isChecked}
         onValueChange={onCheckboxChange}
         tintColors={{
-          true: colors.primary,
-          false: colors.textSecondary,
+          true: colors.loginScreensPrivacyPolicyCheckTrueColor,
+          false: colors.loginScreensPrivacyPolicyCheckFalseColor,
         }}
         style={styles.checkbox}
       />
       <TouchableOpacity
         style={styles.textContainer}
         onPress={pressPrivacyPolicy}>
-        <Text style={[styles.text, {color: colors.textSecondary}]}>
-            <Text style={styles.link}>{t('PrivacyPolicy')}</Text>
+        <Text style={[styles.text, {color: colors.loginScreensPrivacyPolicyCheckFalseColor}]}>
+            <Text style={[styles.link, {color: colors.loginScreensPrivacyPolicyTextColor}]}>{t('PrivacyPolicy')}</Text>
         </Text>
       </TouchableOpacity>
     </View>
@@ -74,7 +74,6 @@ const createStyles = () =>
       textAlign: 'center',
     } as TextStyle,
     link: {
-      color: '#007AFF',
       textDecorationLine: 'underline',
     } as TextStyle,
   });

@@ -29,9 +29,9 @@ export const TextInputsLogin: React.FC<TextInputsLoginProps> = ({
   const containerStyle: ViewStyle = {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: theme.colors.surface,
+    backgroundColor: theme.colors.loginScreensTextInputBgColor,
     borderWidth: 1,
-    borderColor: theme.colors.border,
+    borderColor: theme.colors.loginScreensTextInputBorderColor,
     borderRadius: theme.borderRadius,
     paddingHorizontal: 16,
     paddingVertical: 12,
@@ -42,11 +42,11 @@ export const TextInputsLogin: React.FC<TextInputsLoginProps> = ({
     flex: 1,
     fontFamily: theme.fonts.primary,
     fontSize: 16,
-    color: theme.colors.text,
+    color: theme.colors.loginScreensTextInputTextColor,
     marginLeft: IconComponent ? 10 : 0,
   };
 
-  const placeholderTextColor = theme.colors.textSecondary;
+  const placeholderTextColor = theme.colors.loginScreensTextInputSecondaryTextColor;
 
   return (
     <View style={containerStyle}>

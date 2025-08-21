@@ -33,13 +33,13 @@ export const HaveAnAccount: React.FC<HaveAnAccountProps> = ({
   const textStyle: TextStyle = {
     fontFamily: theme.fonts.primary,
     fontSize: 16,
-    color: theme.colors.textSecondary,
+    color: theme.colors.loginScreensHaveAnAccountTextColor,
   };
 
   const linkStyle: TextStyle = {
     fontFamily: theme.fonts.primary,
     fontSize: 16,
-    color: theme.colors.primary,
+    color: theme.colors.loginScreensHaveAnAccountButtonColor,
     fontWeight: '600',
     marginLeft: 4,
   };

@@ -25,13 +25,13 @@ export const OrComponent: React.FC<OrComponentProps> = ({
   const lineStyle: ViewStyle = {
     flex: 1,
     height: 1,
-    backgroundColor: theme.colors.border,
+    backgroundColor: theme.colors.loginScreensTextInputBorderColor,
   };
 
   const textStyle: TextStyle = {
     fontFamily: theme.fonts.primary,
     fontSize: 16,
-    color: theme.colors.textSecondary,
+    color: theme.colors.loginScreensHaveAnAccountTextColor,
     marginHorizontal: 16,
     textTransform: 'lowercase',
   };

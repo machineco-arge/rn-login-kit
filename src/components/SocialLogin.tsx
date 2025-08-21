@@ -43,7 +43,7 @@ export const SocialLogin: React.FC<SocialLoginProps> = ({
     marginBottom: 16,
     borderRadius: theme.borderRadius,
     borderWidth: 1,
-    borderColor: theme.colors.border,
+    borderColor: theme.colors.loginScreensTextInputBorderColor,
     opacity: disabled || loading ? 0.5 : 1,
   };
 

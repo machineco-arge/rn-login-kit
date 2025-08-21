@@ -24,7 +24,7 @@ export const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
 
   return (
     <View style={containerStyle}>
-      <ActivityIndicator size={size} color={theme.colors.primary} />
+      <ActivityIndicator size={size} color={theme.colors.text} />
     </View>
   );
 }; 

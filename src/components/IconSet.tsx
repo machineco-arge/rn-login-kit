@@ -21,27 +21,27 @@ export const IconSet: React.FC<IconSetProps> = (props: IconSetProps) => {
   const {theme} = props;
   switch (props.type) {
     case 'User':
-      return <UserIcon size={30} color={theme.colors.navbarUnselected} />;
+      return <UserIcon size={30} color={theme.colors.iconSetSignInAndSignUpScreenIconsColor} />;
     case 'Mail':
-      return <EnvelopeIcon size={30} color={theme.colors.navbarUnselected} />;
+      return <EnvelopeIcon size={30} color={theme.colors.iconSetSignInAndSignUpScreenIconsColor} />;
     case 'Phone':
-      return <PhoneIcon size={30} color={theme.colors.navbarUnselected} />;
+      return <PhoneIcon size={30} color={theme.colors.iconSetSignInAndSignUpScreenIconsColor} />;
     case 'Password':
-      return <KeyIcon size={30} color={theme.colors.navbarUnselected} />;
+      return <KeyIcon size={30} color={theme.colors.iconSetSignInAndSignUpScreenIconsColor} />;
     case 'Sun':
-      return <SunIcon size={40} color={theme.colors.themeToggleCircle} />;
+      return <SunIcon size={40} color={theme.colors.iconSetThemeScreenIconsColor} />;
     case 'Moon':
-      return <MoonIcon size={40} color={theme.colors.themeToggleCircle} />;
+      return <MoonIcon size={40} color={theme.colors.iconSetThemeScreenIconsColor} />;
     case 'Reset':
-      return <ArrowUturnLeftIcon size={25} color={theme.colors.resetColor} />;
+      return <ArrowUturnLeftIcon size={25} color={theme.colors.iconSetAccountScreenResetColor} />;
     case 'EditPhoto':
-      return <PencilSquareIcon size={25} color={theme.colors.editColor} />;
+      return <PencilSquareIcon size={25} color={theme.colors.iconSetAccountScreenEditColor} />;
     case 'EditName':
-      return <PencilSquareIcon size={18} color={theme.colors.editColor} />;
+      return <PencilSquareIcon size={18} color={theme.colors.iconSetAccountScreenEditColor} />;
     case 'ImagePicker':
-      return <PhotoIcon size={25} color={theme.colors.imagePickerColor} />;
+      return <PhotoIcon size={25} color={theme.colors.iconSetAccountScreenImagePickerColor} />;
     case 'Delete':
-      return <TrashIcon size={25} color={theme.colors.deleteColor} />;
+      return <TrashIcon size={25} color={theme.colors.iconSetAccountScreenDeleteColor} />;
     default:
       return null;
   }
