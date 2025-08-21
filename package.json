@@ -49,7 +49,8 @@
     "react-native-gradients": "^2.1.1",
     "react-native-heroicons": "^4.0.0",
     "react-native-localize": "^3.5.2",
-    "react-native-reanimated": "^3.17.1"
+    "react-native-reanimated": "^3.17.1",
+    "react-native-image-crop-picker": "^0.50.1"
   },
   "devDependencies": {
     "@react-native/metro-config": "^0.80.2",
@@ -68,7 +69,5 @@
     "integration",
     "README.md"
   ],
-  "dependencies": {
-    "react-native-image-crop-picker": "^0.50.1"
-  }
+  "dependencies": {}
 }
