@@ -31,16 +31,15 @@ export const HaveAnAccount: React.FC<HaveAnAccountProps> = ({
   };
 
   const textStyle: TextStyle = {
-    fontFamily: theme.fonts.primary,
+    fontFamily: theme.fonts.primaryMedium,
     fontSize: 16,
     color: theme.colors.loginScreensHaveAnAccountTextColor,
   };
 
   const linkStyle: TextStyle = {
-    fontFamily: theme.fonts.primary,
+    fontFamily: theme.fonts.primarySemiBold,
     fontSize: 16,
     color: theme.colors.loginScreensHaveAnAccountButtonColor,
-    fontWeight: '600',
     marginLeft: 4,
   };
 

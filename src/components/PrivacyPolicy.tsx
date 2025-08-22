@@ -44,7 +44,7 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({
         style={styles.textContainer}
         onPress={pressPrivacyPolicy}>
         <Text style={[styles.text, {color: colors.loginScreensPrivacyPolicyCheckFalseColor}]}>
-            <Text style={[styles.link, {color: colors.loginScreensPrivacyPolicyTextColor}]}>{t('PrivacyPolicy')}</Text>
+            <Text style={[styles.link, {color: colors.loginScreensPrivacyPolicyTextColor, fontFamily: theme.fonts.primaryRegular}]}>{t('PrivacyPolicy')}</Text>
         </Text>
       </TouchableOpacity>
     </View>
@@ -74,6 +74,7 @@ const createStyles = () =>
       textAlign: 'center',
     } as TextStyle,
     link: {
+      fontSize: 12,
       textDecorationLine: 'underline',
     } as TextStyle,
   });

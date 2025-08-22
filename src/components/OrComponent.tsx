@@ -29,7 +29,7 @@ export const OrComponent: React.FC<OrComponentProps> = ({
   };
 
   const textStyle: TextStyle = {
-    fontFamily: theme.fonts.primary,
+    fontFamily: theme.fonts.primaryRegular,
     fontSize: 16,
     color: theme.colors.loginScreensHaveAnAccountTextColor,
     marginHorizontal: 16,

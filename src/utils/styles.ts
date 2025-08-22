@@ -53,7 +53,7 @@ export const createLoginScreenStyles = (theme: LoginKitTheme) => {
     } as ImageStyle,
 
     logoText: {
-      fontFamily: theme.fonts.primary,
+      fontFamily: theme.fonts.primarySemiBold,
       fontSize: Math.min(width * 0.12, 44),
       textAlign: 'center',
       marginTop: height * 0.001,
@@ -96,8 +96,7 @@ export const createLoginScreenStyles = (theme: LoginKitTheme) => {
     primaryButtonText: {
       color: theme.colors.loginScreensButtonTextColor,
       fontSize: 18,
-      fontFamily: theme.fonts.secondary,
-      fontWeight: '600',
+      fontFamily: theme.fonts.primarySemiBold,
     } as TextStyle,
 
     socialContainer: {
@@ -108,7 +107,7 @@ export const createLoginScreenStyles = (theme: LoginKitTheme) => {
     } as ViewStyle,
 
     orText: {
-      fontFamily: theme.fonts.primary,
+      fontFamily: theme.fonts.primaryRegular,
       fontSize: Math.min(width * 0.045, 18),
       color: theme.colors.text,
       textAlign: 'center',
@@ -145,15 +144,14 @@ export const createSignInScreenStyles = (theme: LoginKitTheme) => {
     } as ViewStyle,
 
     title: {
-      fontFamily: theme.fonts.primary,
+      fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.loginScreensTitleColor,
       fontSize: Math.min(width * 0.08, 32),
-      fontWeight: '600',
       marginTop: 16,
     },
 
     subtitle: {
-      fontFamily: theme.fonts.primary,
+      fontFamily: theme.fonts.primaryMedium,
       color: theme.colors.loginScreensSubTitleColor,
       fontSize: 16,
       marginTop: 16,
@@ -187,10 +185,9 @@ export const createSignInScreenStyles = (theme: LoginKitTheme) => {
     } as ViewStyle,
 
     loginButtonText: {
-      fontFamily: theme.fonts.primary,
+      fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.loginScreensButtonTextColor,
       fontSize: 18,
-      fontWeight: '600',
       paddingLeft: 8,
     },
 
@@ -235,14 +232,14 @@ export const createRegisterScreenStyles = (theme: LoginKitTheme) => {
     } as ViewStyle,
 
     title: {
-      fontFamily: theme.fonts.primary,
+      fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.loginScreensTitleColor,
       fontSize: Math.min(width * 0.08, 32),
       fontWeight: '600',
     },
 
     subtitle: {
-      fontFamily: theme.fonts.primary,
+      fontFamily: theme.fonts.primaryMedium,
       color: theme.colors.loginScreensSubTitleColor,
       fontSize: 16,
       marginTop: 8,
@@ -268,10 +265,9 @@ export const createRegisterScreenStyles = (theme: LoginKitTheme) => {
     } as ViewStyle,
 
     registerButtonText: {
-      fontFamily: theme.fonts.primary,
+      fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.loginScreensButtonTextColor,
       fontSize: 16,
-      fontWeight: '600',
       textAlign: 'center',
     },
 
@@ -309,7 +305,7 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
     },
     headerTitle: {
       fontSize: 28,
-      fontWeight: 'bold',
+      fontFamily: theme.fonts.primaryBold,
       color: theme.colors.accountScreenHeaderTitleColor,
     },
     editProfilePhotoHeaderContainer: {
@@ -318,6 +314,7 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
     },
     editProfilePhotoHeaderTitle: {
       fontSize: 16,
+      fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.accountScreenHeaderEditPhotoTitleColor,
       textAlign: 'center',
     },
@@ -356,7 +353,7 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
     },
     defaultAvatarText: {
       fontSize: 40,
-      fontWeight: 'bold',
+      fontFamily: theme.fonts.primaryMedium,
       color: theme.colors.accountScreenAvatarPhotoCardTextColor,
     },
     loadingOverlay: {
@@ -411,13 +408,14 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
     },
     infoLabel: {
       fontSize: 16,
-      fontWeight: '600',
+      fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.accountScreenInfoSectionLabelTextColor,
       flex: 2,
       maxWidth: 150,
     },
     infoValue: {
       fontSize: 16,
+      fontFamily: theme.fonts.primaryMedium,
       color: theme.colors.accountScreenInfoSectionValueTextColor,
       flex: 2,
       textAlign: 'right',
@@ -450,6 +448,7 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
     },
     actionButtonLabel: {
       fontSize: 12,
+      fontFamily: theme.fonts.primaryMedium,
       color: theme.colors.accountScreenInfoSectionLabelTextColor,
       marginTop: 5,
       textAlign: 'center',
@@ -457,8 +456,8 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
     },
     profileSettingsLogoutButtonText: {
       fontSize: 17,
+      fontFamily: theme.fonts.primaryRegular,
       color: theme.colors.accountScreenLogoutButtonColor,
-      fontWeight: '400',
     },
   });
 };
@@ -482,7 +481,14 @@ export const createStyleProfilePhotoCropper = (theme: LoginKitTheme) => {
     },
     title: {
       fontSize: 18,
-      fontWeight: '600',
+      fontFamily: theme.fonts.primarySemiBold,
+      color: theme.colors.accountScreenPhotoCropperTitleColor,
+      marginBottom: 20,
+      textAlign: 'center',
+    },
+    description : {
+      fontSize: 14, 
+      fontFamily: theme.fonts.primaryRegular,
       color: theme.colors.accountScreenPhotoCropperTitleColor,
       marginBottom: 20,
       textAlign: 'center',
@@ -521,7 +527,7 @@ export const createStyleProfilePhotoCropper = (theme: LoginKitTheme) => {
     },
     buttonText: {
       fontSize: 16,
-      fontWeight: '600',
+      fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.accountScreenPhotoCropperButtonTextColor,
     },
     disabledButton: {
@@ -555,7 +561,7 @@ export const createStyleEditNameModal = (theme: LoginKitTheme) => {
     },
     title: {
       fontSize: 18,
-      fontWeight: 'bold',
+      fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.accountScreenEditNameModalTitleColor,
       textAlign: 'center',
       marginBottom: 20,
@@ -566,6 +572,7 @@ export const createStyleEditNameModal = (theme: LoginKitTheme) => {
       borderRadius: 10,
       padding: 15,
       fontSize: 16,
+      fontFamily: theme.fonts.primaryMedium,
       color: theme.colors.accountScreenEditNameModalTextInputColor,
       backgroundColor: theme.colors.accountScreenEditNameModalTextInputBgColor,
       marginBottom: 20,
@@ -596,7 +603,7 @@ export const createStyleEditNameModal = (theme: LoginKitTheme) => {
     },
     buttonText: {
       fontSize: 16,
-      fontWeight: '600',
+      fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.accountScreenEditNameModalButtonTextColor,
     },
   });
@@ -623,7 +630,7 @@ export const createLanguageScreenStyles = (theme: LoginKitTheme) => {
     },
     headerTitle: {
       fontSize: Math.min(width * 0.07, 28),
-      fontWeight: 'bold',
+      fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.languageScreenHeaderTitleColor,
       textAlign: 'center',
       marginBottom: 8,
@@ -673,12 +680,13 @@ export const createLanguageScreenStyles = (theme: LoginKitTheme) => {
     },
     languageName: {
       fontSize: 18,
-      fontWeight: '600',
+      fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.languageScreenAllLanguagesTextColor,
       marginBottom: 4,
     },
     languageEnglishName: {
       fontSize: 14,
+      fontFamily: theme.fonts.primaryMedium,
       color: theme.colors.languageScreenEnglishVersionOfAllLanguagesTextColor,
     },
     selectedLanguageText: {
@@ -744,7 +752,7 @@ export const createLanguageScreenStyles = (theme: LoginKitTheme) => {
     applyButtonText: {
       color: theme.colors.languageScreenApplyButtonTextColor,
       fontSize: 18,
-      fontWeight: '600',
+      fontFamily: theme.fonts.primarySemiBold,
     },
     // Progress tracking styles
     progressContainer: {
@@ -766,13 +774,14 @@ export const createLanguageScreenStyles = (theme: LoginKitTheme) => {
     },
     progressTitle: {
       fontSize: 16,
-      fontWeight: '600',
+      fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.languageScreenProgressTitle,
       textAlign: 'center',
       marginBottom: 4,
     },
     progressSubtitle: {
       fontSize: 14,
+      fontFamily: theme.fonts.primaryMedium,
       color: theme.colors.languageScreenProgressSubTitle,
       textAlign: 'center',
     },
@@ -798,7 +807,8 @@ export const createLanguageScreenStyles = (theme: LoginKitTheme) => {
     loadingText: {
       color: theme.colors.languageScreenProgressBarContainer,
       fontSize: 14,
-      fontWeight: '500',
+      fontFamily: theme.fonts.primaryRegular,
+    
     },
   });
 }
@@ -825,15 +835,14 @@ export const createDarkLightModeScreenStyles = (theme: LoginKitTheme) => {
     },
     headerText: {
       fontSize: 28,
-      fontWeight: 'bold',
       letterSpacing: 1,
-      fontFamily: theme.fonts.primary,
+      fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.themeScreenHeaderTitleColor
     },
     subHeaderText: {
       fontSize: 16,
       marginTop: 5,
-      fontFamily: theme.fonts.secondary,
+      fontFamily: theme.fonts.primaryMedium,
       color: theme.colors.themeScreenSubHeaderTitleColor
     },
     card: {
@@ -873,7 +882,7 @@ export const createDarkLightModeScreenStyles = (theme: LoginKitTheme) => {
     toggleText: {
       marginTop: 20,
       fontSize: 18,
-      fontWeight: '600',
+      fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.themeScreenToggleTextColor
     },
   });
@@ -910,10 +919,9 @@ export const createCustomAlertStyles = (theme: LoginKitTheme) => {
     },
     titleText: {
       fontSize: 18,
-      fontWeight: '600',
       color: theme.colors.customAlertTitleTextColor,
       textAlign: 'center',
-      fontFamily: theme.fonts.primary,
+      fontFamily: theme.fonts.primarySemiBold,
     },
     messageContainer: {
       paddingVertical: 20,
@@ -924,7 +932,7 @@ export const createCustomAlertStyles = (theme: LoginKitTheme) => {
       color: theme.colors.customAlertTitleTextColor,
       textAlign: 'center',
       lineHeight: 22,
-      fontFamily: theme.fonts.primary,
+      fontFamily: theme.fonts.primaryMedium,
     },
     buttonContainer: {
       flexDirection: 'row',
@@ -952,8 +960,7 @@ export const createCustomAlertStyles = (theme: LoginKitTheme) => {
     buttonText: {
       fontSize: 16,
       color: theme.colors.customAlertButtonTextColor,
-      fontWeight: '600',
-      fontFamily: theme.fonts.primary,
+      fontFamily: theme.fonts.primarySemiBold,
     },
   });
 };
@@ -979,7 +986,7 @@ export const createHelpsFAQsScreenStyles = (theme: LoginKitTheme) => {
     },
     headerTitle: {
       fontSize: 28,
-      fontWeight: 'bold',
+      fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.faqsScreeenHeaderTitleColor,
       textAlign: 'center',
     },
@@ -997,7 +1004,7 @@ export const createHelpsFAQsScreenStyles = (theme: LoginKitTheme) => {
     },
     sectionTitle: {
       fontSize: 20,
-      fontWeight: 'bold',
+      fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.faqsScreeenSectionTitle,
       marginLeft: 12,
     },
@@ -1020,7 +1027,7 @@ export const createHelpsFAQsScreenStyles = (theme: LoginKitTheme) => {
     questionText: {
       flex: 1,
       fontSize: 16,
-      fontWeight: '600',
+      fontFamily: theme.fonts.primaryMedium,
       color: theme.colors.faqsScreeenQuestionTextColor,
     },
     toggleIcon: {
@@ -1039,6 +1046,7 @@ export const createHelpsFAQsScreenStyles = (theme: LoginKitTheme) => {
     },
     answerText: {
       fontSize: 15,
+      fontFamily: theme.fonts.primaryRegular,
       color: theme.colors.faqsScreeenAnswerTextColor,
       lineHeight: 22,
       marginTop: 8,

@@ -119,18 +119,36 @@ export interface LoginKitThemeColors {
   iconSetAccountScreenDeleteColor: string;
 }
 
+export interface LoginKitThemeFonts {
+  primaryBlack: string;
+  primaryExtraBold: string;
+  primaryBold: string;
+  primarySemiBold: string;
+  primaryMedium: string;
+  primaryRegular: string;
+  primaryLight: string;
+  primaryExtraLight: string;
+  primaryThin: string;
+  secondaryBlack?: string;
+  secondaryExtraBold?: string;
+  secondaryBold?: string;
+  secondarySemiBold?: string;
+  secondaryMedium?: string;
+  secondaryRegular?: string;
+  secondaryLight?: string;
+  secondaryExtraLight?: string;
+  secondaryThin?: string;
+}
+
 export interface LoginKitTheme {
   colors: LoginKitThemeColors;
-  fonts: {
-    primary: string;
-    secondary?: string;
-  };
+  fonts: LoginKitThemeFonts;
   borderRadius: number;
 }
 
 export interface ThemeOverrides {
   colors?: Partial<LoginKitThemeColors>;
-  fonts?: Partial<LoginKitTheme['fonts']>;
+  fonts?: Partial<LoginKitThemeFonts>;
   borderRadius?: number;
 }
 

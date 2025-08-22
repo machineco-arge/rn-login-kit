@@ -1,4 +1,4 @@
-import { LoginKitTheme, LoginKitThemeColors, ThemeOverrides } from '../types';
+import { LoginKitTheme, LoginKitThemeColors, LoginKitThemeFonts, ThemeOverrides } from '../types';
 
 const createBaseColors = (): LoginKitThemeColors => ({
   background: '#FFFFFF',
@@ -94,13 +94,25 @@ const createBaseColors = (): LoginKitThemeColors => ({
   accountScreenLogoutButtonColor: '#be2121ff',
 });
 
+const createBaseFonts = (): LoginKitThemeFonts => ({
+  primaryBlack: 'System',
+  primaryExtraBold: 'System',
+  primaryBold: 'System',
+  primarySemiBold: 'System',
+  primaryMedium: 'System',
+  primaryRegular: 'System',
+  primaryLight: 'System',
+  primaryExtraLight: 'System',
+  primaryThin: 'System',
+})
+
 export const createDefaultTheme = (overrides: ThemeOverrides = {}): LoginKitTheme => ({
   colors: {
     ...createBaseColors(),
     ...overrides.colors,
   },
   fonts: {
-    primary: 'System',
+    ...createBaseFonts(),
     ...overrides.fonts,
   },
   borderRadius: overrides.borderRadius ?? 12,
@@ -116,7 +128,7 @@ export const createLightTheme = (overrides: ThemeOverrides = {}): LoginKitTheme 
     ...overrides.colors,
   },
   fonts: {
-    primary: 'System',
+    ...createBaseFonts(),
     ...overrides.fonts,
   },
   borderRadius: overrides.borderRadius ?? 12,
@@ -132,7 +144,7 @@ export const createDarkTheme = (overrides: ThemeOverrides = {}): LoginKitTheme =
     ...overrides.colors,
   },
   fonts: {
-    primary: 'System',
+    ...createBaseFonts(),
     ...overrides.fonts,
   },
   borderRadius: overrides.borderRadius ?? 12,

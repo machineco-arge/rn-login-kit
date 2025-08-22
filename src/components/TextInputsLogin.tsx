@@ -40,7 +40,7 @@ export const TextInputsLogin: React.FC<TextInputsLoginProps> = ({
 
   const textInputStyle: TextStyle = {
     flex: 1,
-    fontFamily: theme.fonts.primary,
+    fontFamily: theme.fonts.primaryRegular,
     fontSize: 16,
     color: theme.colors.loginScreensTextInputTextColor,
     marginLeft: IconComponent ? 10 : 0,

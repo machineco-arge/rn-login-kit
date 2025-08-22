@@ -50,7 +50,7 @@ export const SocialLogin: React.FC<SocialLoginProps> = ({
   const textStyle: TextStyle = {
     flex: 1,
     fontSize: 16,
-    fontFamily: theme.fonts.primary,
+    fontFamily: theme.fonts.primarySemiBold,
     fontWeight: '500',
     marginLeft: 2,
     textAlign: 'left',
