@@ -113,6 +113,12 @@ export const createLoginScreenStyles = (theme: LoginKitTheme) => {
       textAlign: 'center',
       marginBottom: height * 0.015,
     } as TextStyle,
+
+    privacySection: {
+      marginBottom: height * 0.003,
+      marginLeft: width * 0.03,
+      alignItems: 'center',
+    } as ViewStyle,
   };
 };
 

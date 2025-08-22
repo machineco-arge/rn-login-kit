@@ -143,12 +143,14 @@ export const LoginScreen: React.FC<ScreenProps> = ({
 
       {/* Privacy Section */}
       {config.privacy.required && (
-        <PrivacyPolicy
-          theme={config.theme}
-          isChecked={isPrivacyChecked}
-          onCheckboxChange={setIsPrivacyChecked}
-          pressPrivacyPolicy={config.privacy.pressPrivacyPolicy}
-        />
+        <View style={styles.privacySection}>
+          <PrivacyPolicy
+            theme={config.theme}
+            isChecked={isPrivacyChecked}
+            onCheckboxChange={setIsPrivacyChecked}
+            pressPrivacyPolicy={config.privacy.pressPrivacyPolicy}
+          />
+        </View>
       )}
     </View>
   );
