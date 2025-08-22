@@ -128,6 +128,12 @@ export interface LoginKitTheme {
   borderRadius: number;
 }
 
+export interface ThemeOverrides {
+  colors?: Partial<LoginKitThemeColors>;
+  fonts?: Partial<LoginKitTheme['fonts']>;
+  borderRadius?: number;
+}
+
 // Social Auth Configuration
 export interface SocialAuthConfig {
   google?: {

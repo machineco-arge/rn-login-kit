@@ -54,6 +54,7 @@ export type {
   LoginKitConfig,
   LoginKitTheme,
   LoginKitThemeColors,
+  ThemeOverrides,
   SocialAuthConfig,
   NavigationConfig,
   LogoConfig,

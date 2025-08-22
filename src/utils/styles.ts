@@ -96,7 +96,7 @@ export const createLoginScreenStyles = (theme: LoginKitTheme) => {
     primaryButtonText: {
       color: theme.colors.loginScreensButtonTextColor,
       fontSize: 18,
-      fontFamily: theme.fonts.primary,
+      fontFamily: theme.fonts.secondary,
       fontWeight: '600',
     } as TextStyle,
 
@@ -827,11 +827,13 @@ export const createDarkLightModeScreenStyles = (theme: LoginKitTheme) => {
       fontSize: 28,
       fontWeight: 'bold',
       letterSpacing: 1,
+      fontFamily: theme.fonts.primary,
       color: theme.colors.themeScreenHeaderTitleColor
     },
     subHeaderText: {
       fontSize: 16,
       marginTop: 5,
+      fontFamily: theme.fonts.secondary,
       color: theme.colors.themeScreenSubHeaderTitleColor
     },
     card: {

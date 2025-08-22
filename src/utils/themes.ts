@@ -1,4 +1,4 @@
-import { LoginKitTheme, LoginKitThemeColors } from '../types';
+import { LoginKitTheme, LoginKitThemeColors, ThemeOverrides } from '../types';
 
 const createBaseColors = (): LoginKitThemeColors => ({
   background: '#FFFFFF',
@@ -94,41 +94,47 @@ const createBaseColors = (): LoginKitThemeColors => ({
   accountScreenLogoutButtonColor: '#be2121ff',
 });
 
-export const createDefaultTheme = (colors?: Partial<LoginKitThemeColors>): LoginKitTheme => ({
+export const createDefaultTheme = (overrides: ThemeOverrides = {}): LoginKitTheme => ({
   colors: {
     ...createBaseColors(),
-    ...colors,
+    ...overrides.colors,
   },
   fonts: {
     primary: 'System',
+    ...overrides.fonts,
   },
-  borderRadius: 12,
+  borderRadius: overrides.borderRadius ?? 12,
 });
 
-export const createLightTheme = (colors?: Partial<LoginKitThemeColors>): LoginKitTheme => ({
+export const createLightTheme = (overrides: ThemeOverrides = {}): LoginKitTheme => ({
+  ...createDefaultTheme(overrides),
   colors: {
     ...createBaseColors(),
     background: '#FFFFFF',
     text: '#000000',
     gradient: ['#007AFF', '#5856D6'],
-    ...colors,
+    ...overrides.colors,
   },
   fonts: {
     primary: 'System',
+    ...overrides.fonts,
   },
-  borderRadius: 12,
+  borderRadius: overrides.borderRadius ?? 12,
 });
 
-export const createDarkTheme = (colors?: Partial<LoginKitThemeColors>): LoginKitTheme => ({
+export const createDarkTheme = (overrides: ThemeOverrides = {}): LoginKitTheme => ({
+  ...createDefaultTheme(overrides),
   colors: {
     ...createBaseColors(),
     background: '#000000',
     text: '#FFFFFF',
     gradient: ['#5E5CE6', '#0A84FF'],
-    ...colors,
+    ...overrides.colors,
   },
   fonts: {
     primary: 'System',
+    ...overrides.fonts,
   },
-  borderRadius: 12,
+  borderRadius: overrides.borderRadius ?? 12,
+
 }); 
