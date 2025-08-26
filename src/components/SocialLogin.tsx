@@ -51,7 +51,6 @@ export const SocialLogin: React.FC<SocialLoginProps> = ({
     flex: 1,
     fontSize: 16,
     fontFamily: theme.fonts.primarySemiBold,
-    fontWeight: '500',
     marginLeft: 2,
     textAlign: 'left',
   };
@@ -77,7 +76,7 @@ export const SocialLogin: React.FC<SocialLoginProps> = ({
           ) : (
             <>
               {GoogleIcon && (
-                <View style={{ marginLeft: 12, }}>
+                <View style={{ marginLeft: -12, }}>
                   <GoogleIcon />
                 </View>
               )}
@@ -109,7 +108,7 @@ export const SocialLogin: React.FC<SocialLoginProps> = ({
           ) : (
             <>
               {AppleIcon && (
-                <View style={{ marginLeft: 12 }}>
+                <View style={{ marginLeft: -12 }}>
                   <AppleIcon />
                 </View>
               )}
