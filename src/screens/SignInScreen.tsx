@@ -65,7 +65,7 @@ export const SignInScreen: React.FC<ScreenProps> = ({
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       style={styles.container}>
       <View style={styles.gradientContainer}>
         <LinearGradient
