@@ -20,15 +20,15 @@ export const useRegister = ({ config }: UseRegisterProps) => {
   const [errorMissingInputs, setErrorMissingInputs] = useState(false);
   const [errorInvalidEmail, setErrorInvalidEmail] = useState(false);
 
-  const emailAuthService = new EmailAuthService(
-    config.apiConfig,
-    config.navigation.onGetUserName,
-  );
+  const emailAuthService = new EmailAuthService(config);
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   const handleRegister = useCallback(async () => {
-    if (!email || !password || !confirmPassword) {
+    if (
+      (config.emailAuth.enabledRegisterEmail && !email) || 
+      (config.emailAuth.enabledRegisterUserName && !name) || 
+      !password || !confirmPassword) {
       setErrorMissingInputs(true);
       return;
     }
@@ -38,14 +38,17 @@ export const useRegister = ({ config }: UseRegisterProps) => {
       return;
     }
 
-    if (!emailRegex.test(email)) {
+    if (config.emailAuth.enabledRegisterEmail && !emailRegex.test(email)) {
       setErrorInvalidEmail(true);
       return;
     }
 
+    const _userName = config.emailAuth.enabledRegisterUserName ? name : 'tempName';
+    const _email = config.emailAuth.enabledRegisterEmail ? email : 'tempName@example.com';
+
     try {
       setLoading(true);
-      const result = await emailAuthService.registerWithEmail(name, email, password);
+      const result = await emailAuthService.registerWithEmail(_userName, _email, password);
       
       if (result.success && result.user) {
         config.navigation.onLoginSuccess();
@@ -59,7 +62,17 @@ export const useRegister = ({ config }: UseRegisterProps) => {
     } finally {
       setLoading(false);
     }
-  }, [email, password, confirmPassword, name, emailAuthService, config.navigation, t]);
+  }, [
+    email, 
+    password, 
+    confirmPassword, 
+    name, 
+    emailAuthService, 
+    config.navigation, 
+    config.emailAuth.enabledRegisterEmail, 
+    config.emailAuth.enabledRegisterUserName, 
+    t
+  ]);
 
   return {
     email,

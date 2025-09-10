@@ -10,6 +10,8 @@ interface UseSignInProps {
 export const useSignIn = ({ config }: UseSignInProps) => {
   const { t } = useLoginKitTranslation('login');
   const [email, setEmail] = useState('');
+  const [companyName, setCompanyName] =  useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorSignIn, setErrorSignIn] = useState(false);
@@ -18,27 +20,33 @@ export const useSignIn = ({ config }: UseSignInProps) => {
   const [errorInvalidEmail, setErrorInvalidEmail] = useState(false);
   const [isPrivacyChecked, setIsPrivacyChecked] = useState(!config.privacy.required);
 
-  const emailAuthService = new EmailAuthService(
-    config.apiConfig,
-    config.navigation.onGetUserName,
-  );
+  const emailAuthService = new EmailAuthService(config);
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   const handleLogin = useCallback(async () => {
-    if (!email || !password) {
+    if (
+      !password ||
+      (config.emailAuth.enabledSignInUserName && !userName) ||
+      (config.emailAuth.enabledSignInEmail && !email) ||
+      (config.emailAuth.enabledSignInCompanyName && !companyName)
+    ) {
       setErrorMissingInputs(true);
       return;
     }
 
-    if (!emailRegex.test(email)) {
+    if (config.emailAuth.enabledSignInEmail && !emailRegex.test(email)) {
       setErrorInvalidEmail(true);
       return;
     }
 
+    const _companyName = config.emailAuth.enabledSignInCompanyName ? companyName : 'tempName';
+    const _userName = config.emailAuth.enabledSignInUserName ? userName : 'tempName';
+    const _email = config.emailAuth.enabledSignInEmail ? email : 'tempName@example.com';
+
     try {
       setLoading(true);
-      const result = await emailAuthService.signInWithEmail(email, password);
+      const result = await emailAuthService.signInWithEmail(_companyName, _email, _userName, password);
       
       if (result.success && result.user) {
         config.navigation.onLoginSuccess();
@@ -56,12 +64,27 @@ export const useSignIn = ({ config }: UseSignInProps) => {
     } finally {
       setLoading(false);
     }
-  }, [email, password, emailAuthService, config.navigation, t]);
+  }, [
+    email,
+    password,
+    companyName,
+    userName,
+    emailAuthService,
+    config.navigation,
+    config.emailAuth.enabledSignInCompanyName,
+    config.emailAuth.enabledSignInEmail,
+    config.emailAuth.enabledSignInUserName,
+    t,
+  ]);
 
 
   return {
     email,
     setEmail,
+    companyName,
+    setCompanyName,
+    userName,
+    setUserName,
     password,
     setPassword,
     loading,

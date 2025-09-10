@@ -221,10 +221,20 @@ export interface TranslationConfig {
   apiConfig?: TranslationAPIConfig; // For potential future on-the-fly translations
 }
 
+export interface EmailAuthConfig {
+  enabledRegister?: boolean;
+  enabledSignInCompanyName?: boolean;
+  enabledSignInEmail?: boolean;
+  enabledSignInUserName?: boolean;
+  enabledRegisterUserName?: boolean;
+  enabledRegisterEmail?: boolean;
+}
+
 // Main Configuration Interface
 export interface LoginKitConfig {
   theme: LoginKitTheme;
   socialAuth: SocialAuthConfig;
+  emailAuth: EmailAuthConfig;
   navigation: NavigationConfig;
   logo: LogoConfig;
   privacy: PrivacyConfig;

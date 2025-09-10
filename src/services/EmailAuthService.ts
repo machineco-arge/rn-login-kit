@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { userManager } from '../managers/UserManager';
-import { IUserInfo } from '../types';
+import { EmailAuthConfig, IUserInfo, LoginKitConfig } from '../types';
 
-interface EmailAuthConfig {
+interface ApiConfig {
   baseUrl: string;
   endpoints: {
     googleLogin: string;
@@ -19,35 +19,51 @@ interface EmailAuthResult {
 }
 
 export class EmailAuthService {
-  private apiConfig?: EmailAuthConfig;
+  private apiConfig?: ApiConfig;
+  private emailAuthConfig?: EmailAuthConfig;
   private onGetUserName?: () => Promise<string | null>;
 
-  constructor(apiConfig?: EmailAuthConfig, onGetUserName?: () => Promise<string | null>) {
-    this.apiConfig = apiConfig;
-    this.onGetUserName = onGetUserName;
+  constructor(config: LoginKitConfig) {
+    this.apiConfig = config.apiConfig;
+    this.emailAuthConfig = config.emailAuth;
+    this.onGetUserName = config.navigation.onGetUserName;
   }
 
-  async signInWithEmail(email: string, password: string): Promise<EmailAuthResult> {
+  async signInWithEmail(_companyName: string, _email: string, _userName: string, password: string): Promise<EmailAuthResult> {
     if (!this.apiConfig?.baseUrl || !this.apiConfig?.endpoints?.userLogin) {
       throw new Error('Email authentication not configured');
     }
 
     try {
-      const requestData = {
-        email: email,
+      const requestData: { email?: string; password: string; companyName?: string; userName?: string } = {
         password: password,
       };
 
+      if (this.emailAuthConfig?.enabledSignInCompanyName) {
+        requestData.companyName = _companyName;
+      }
+
+      if (this.emailAuthConfig?.enabledSignInEmail) {
+        requestData.email = _email;
+      }
+
+      if (this.emailAuthConfig?.enabledSignInUserName) {
+        requestData.userName = _userName;
+      }
+
+
       const response = await axios.post(
         this.apiConfig.baseUrl + this.apiConfig.endpoints.userLogin,
-        requestData
+        requestData,
       );
 
+      const name = this.emailAuthConfig?.enabledSignInUserName ? _userName : this.emailAuthConfig?.enabledSignInCompanyName ? _companyName : _email.split('@')[0] || 'User';
+      const nameMail = `${name}@example.com`
       if (response.status === 200) {
         const userInfo: IUserInfo = {
           idToken: response.data.userToken,
-          name: email.split('@')[0] || 'User',
-          email: email || 'No Email Provided',
+          name: name,
+          email: this.emailAuthConfig?.enabledSignInEmail ? _email : nameMail || 'No Email Provided',
           photo: null,
           providerId: 'userSignIn',
         };
@@ -76,30 +92,38 @@ export class EmailAuthService {
     }
   }
 
-  async registerWithEmail(name: string, email: string, password: string): Promise<EmailAuthResult> {
+  async registerWithEmail(_userName: string, _email: string, password: string): Promise<EmailAuthResult> {
     if (!this.apiConfig?.baseUrl || !this.apiConfig?.endpoints?.userRegister) {
       throw new Error('Email registration not configured');
     }
 
     try {
-      const requestData = {
-        email: email,
+      const requestData: { email?: string; password: string; userName?: string } = {
         password: password,
       };
+
+      if (this.emailAuthConfig?.enabledRegisterEmail) {
+        requestData.email = _email;
+      }
+
+      if (this.emailAuthConfig?.enabledRegisterUserName) {
+        requestData.userName = _userName;
+      }
 
       const response = await axios.post(
         this.apiConfig.baseUrl + this.apiConfig.endpoints.userRegister,
         requestData
       );
 
+      const companyName = 'tempName'
       if (response.status === 200) {
         // Registration successful, now automatically login to get the JWT token
-        const loginResult = await this.signInWithEmail(email, password);
+        const loginResult = await this.signInWithEmail(companyName, _email, _userName, password);
         
         if (loginResult.success && loginResult.user) {
           // Update the user name from registration
-          if (name && loginResult.user.name !== name) {
-            loginResult.user.name = name;
+          if (_userName && loginResult.user.name !== _userName) {
+            loginResult.user.name = _userName;
             await userManager.setCurrentUser(loginResult.user, this.onGetUserName);
           }
           

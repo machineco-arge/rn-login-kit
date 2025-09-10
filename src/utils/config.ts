@@ -10,9 +10,15 @@ interface CreateDefaultConfigParams {
   navigation: NavigationConfig;
   logoSource: any; // ImageSourcePropType
   logoText?: string;
-  enableAppleLogin?: boolean;
-  enableGoogleLogin?: boolean;
-  requirePrivacyAcceptance?: boolean;
+  enableAppleLogin: boolean;
+  enableGoogleLogin: boolean;
+  enableRegister: boolean;
+  enableSignInCompanyName: boolean;
+  enableSignInEmail: boolean;
+  enableSignInUserName: boolean;
+  enableRegisterUserName: boolean;
+  enableRegisterEmail: boolean;
+  requirePrivacyAcceptance: boolean;
   pressPrivacyPolicy?: () => void;
   translationConfig: TranslationConfig;
   apiConfig?: {
@@ -36,6 +42,12 @@ export const createDefaultConfig = (params: CreateDefaultConfigParams): LoginKit
     logoText,
     enableAppleLogin = true,
     enableGoogleLogin = true,
+    enableRegister = true,
+    enableSignInCompanyName = true,
+    enableSignInEmail = true,
+    enableSignInUserName = true,
+    enableRegisterUserName = true,
+    enableRegisterEmail = true,
     requirePrivacyAcceptance = true,
     pressPrivacyPolicy,
     translationConfig,
@@ -53,6 +65,14 @@ export const createDefaultConfig = (params: CreateDefaultConfigParams): LoginKit
       apple: enableAppleLogin ? {
         enabled: true,
       } : undefined,
+    },
+    emailAuth: {
+      enabledRegister: enableRegister,
+      enabledSignInCompanyName: enableSignInCompanyName,
+      enabledSignInEmail: enableSignInEmail,
+      enabledSignInUserName: enableSignInUserName,
+      enabledRegisterUserName: enableRegisterUserName,
+      enabledRegisterEmail: enableRegisterEmail,
     },
     navigation,
     logo: {

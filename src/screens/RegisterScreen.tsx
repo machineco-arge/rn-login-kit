@@ -82,27 +82,33 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
         </View>
 
         <View style={styles.formSection}>
-          <View style={styles.inputContainer}>
-            <TextInputsLogin
-              theme={config.theme}
-              type="User"
-              placeholder={t('placeholderEnterFullName')}
-              value={name}
-              onChangeText={setName}
-              IconComponent={IconSet}
-            />
-          </View>
 
-          <View style={styles.inputContainer}>
-            <TextInputsLogin
-              theme={config.theme}
-              type="Mail"
-              placeholder={t('placeholderEnterEmail')}
-              value={email}
-              onChangeText={setEmail}
-              IconComponent={IconSet}
-            />
+          {config.emailAuth.enabledRegisterUserName && (
+            <View style={styles.inputContainer}>
+              <TextInputsLogin
+                theme={config.theme}
+                type="User"
+                placeholder={t('placeholderEnterUserName')}
+                value={name}
+                onChangeText={setName}
+                IconComponent={IconSet}
+              />
+            </View>
+          )}
+          
+          {config.emailAuth.enabledRegisterEmail && (
+            <View style={styles.inputContainer}>
+              <TextInputsLogin
+                theme={config.theme}
+                type="Mail"
+                placeholder={t('placeholderEnterEmail')}
+                value={email}
+                onChangeText={setEmail}
+                IconComponent={IconSet}
+              />
           </View>
+          )}
+          
 
           <View style={styles.inputContainer}>
             <TextInputsLogin

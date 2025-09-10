@@ -35,6 +35,10 @@ export const SignInScreen: React.FC<ScreenProps> = ({
   const {
     email,
     setEmail,
+    userName,
+    setUserName,
+    companyName,
+    setCompanyName,
     password,
     setPassword,
     loading,
@@ -91,16 +95,45 @@ export const SignInScreen: React.FC<ScreenProps> = ({
         </View>
 
         <View style={styles.formSection}>
-          <View style={styles.inputContainer}>
-            <TextInputsLogin
-              theme={config.theme}
-              type="Mail"
-              placeholder={t('placeholderEnterEmail')}
-              value={email}
-              onChangeText={setEmail}
-              IconComponent={IconSet}
-            />
-          </View>
+
+          {config.emailAuth.enabledSignInCompanyName && (
+            <View style={styles.inputContainer}>
+              <TextInputsLogin
+                theme={config.theme}
+                type="Company"
+                placeholder={t('placeholderCompanyName')}
+                value={companyName}
+                onChangeText={setCompanyName}
+                IconComponent={IconSet}
+              />
+            </View>
+          )}
+
+          {config.emailAuth.enabledSignInEmail && (
+            <View style={styles.inputContainer}>
+              <TextInputsLogin
+                theme={config.theme}
+                type="Mail"
+                placeholder={t('placeholderEnterEmail')}
+                value={email}
+                onChangeText={setEmail}
+                IconComponent={IconSet}
+              />
+            </View>
+          )}
+
+          {config.emailAuth.enabledSignInUserName && (
+            <View style={styles.inputContainer}>
+              <TextInputsLogin
+                theme={config.theme}
+                type="User"
+                placeholder={t('placeholderEnterUserName')}
+                value={userName}
+                onChangeText={setUserName}
+                IconComponent={IconSet}
+              />
+            </View>
+          )}
 
           <View style={styles.passwordInputContainer}>
             <TextInputsLogin
@@ -148,11 +181,14 @@ export const SignInScreen: React.FC<ScreenProps> = ({
         )}
 
         {/* Have an Account Section */}
-        <HaveAnAccount
-          theme={config.theme}
-          screen="signIn"
-          onPress={() => config.navigation.onRegisterPress?.()}
-        />
+        {config.emailAuth.enabledRegister && (
+          <HaveAnAccount
+            theme={config.theme}
+            screen="signIn"
+            onPress={() => config.navigation.onRegisterPress?.()}
+          />
+        )}
+        
       </ScrollView>
 
       {/* Privacy Section */}

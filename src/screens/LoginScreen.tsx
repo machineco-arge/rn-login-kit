@@ -13,6 +13,7 @@ import {useSocialAuth} from '../hooks/useSocialAuth';
 import {useLoginKitTranslation} from '../hooks/useLoginKitTranslation';
 import {LoadingIndicator} from '../components/LoadingIndicator';
 import { createLoginScreenStyles } from '../utils/styles';
+import { OrComponent } from '../components/OrComponent';
 
 
 export const LoginScreen: React.FC<ScreenProps> = ({
@@ -28,7 +29,7 @@ export const LoginScreen: React.FC<ScreenProps> = ({
   const {t} = useLoginKitTranslation('login');
 
   // Use centralized social auth hook
-  const { isSocialLoginLoading, handleSocialLogin } = useSocialAuth({
+  const {isSocialLoginLoading, handleSocialLogin} = useSocialAuth({
     config,
     isPrivacyChecked,
   });
@@ -83,24 +84,28 @@ export const LoginScreen: React.FC<ScreenProps> = ({
           {showEmailLogin && (
             <View style={styles.emailLoginSection}>
               {/* Register Button */}
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                  style={[
-                    styles.primaryButton,
-                    !isPrivacyChecked &&
-                      config.privacy.required &&
-                      styles.disabledButton,
-                  ]}
-                  onPress={() => config.navigation.onRegisterPress?.()}
-                  disabled={!isPrivacyChecked && config.privacy.required}>
-                  <Text style={styles.primaryButtonText}>
-                    {t('userRegister')}
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              {config.emailAuth.enabledRegister && (
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity
+                    style={[
+                      styles.primaryButton,
+                      !isPrivacyChecked &&
+                        config.privacy.required &&
+                        styles.disabledButton,
+                    ]}
+                    onPress={() => config.navigation.onRegisterPress?.()}
+                    disabled={!isPrivacyChecked && config.privacy.required}>
+                    <Text style={styles.primaryButtonText}>
+                      {t('userRegister')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )}
 
               {/* OR Text */}
-              <Text style={styles.orText}>{t('userSignInOr')}</Text>
+              {config.emailAuth.enabledRegister && (
+                <Text style={styles.orText}>{t('userSignInOr')}</Text>
+              )}
 
               {/* Login Button */}
               <View style={styles.buttonContainer}>
@@ -119,6 +124,11 @@ export const LoginScreen: React.FC<ScreenProps> = ({
                 </TouchableOpacity>
               </View>
             </View>
+          )}
+
+          {/* OR Text */}
+          {!config.emailAuth.enabledRegister && (
+           <OrComponent theme={config.theme} text={t('userSignInOr')} />
           )}
 
           {/* Social Login Buttons */}

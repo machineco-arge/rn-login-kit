@@ -9,7 +9,7 @@ import { LoginKitTheme } from '../types';
 
 interface TextInputsLoginProps {
   theme: LoginKitTheme;
-  type: 'User' | 'Mail' | 'Password';
+  type: 'User' | 'Mail' | 'Password' | 'Company';
   placeholder: string;
   value: string;
   onChangeText: (text: string) => void;
