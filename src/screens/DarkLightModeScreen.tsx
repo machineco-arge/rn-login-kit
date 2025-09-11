@@ -11,7 +11,7 @@ import { IconSet } from '../components/IconSet';
 export const DarkLightModeScreen: React.FC<ScreenProps> = ({
   config,
 }) => {
-  const {t} = useLoginKitTranslation('photo-app');
+  const {t} = useLoginKitTranslation('login');
   const {animatedStyle, theme, toggleTheme} = useDarkLightMode();
   const styles = createDarkLightModeScreenStyles(config.theme);
 

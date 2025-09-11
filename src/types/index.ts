@@ -34,6 +34,17 @@ export interface LoginKitThemeColors {
   loginScreensButtonTextColor: string;
   loginScreensLogoTextColor: string;
 
+  // Profile & Settings
+  profileSettingsHeaderContainerBottomBorderColor: string;
+  profileSettingsHeaderTitleColor: string;
+  profileSettingsProfilePhotoBgColor: string;
+  profileSettingsUserNameColor: string;
+  profileSettingsBioColor: string;
+  profileSettingsStatsColor: string;
+  profileSettingsMenuItemBottomBorderColor: string;
+  profileSettingsMenuItemTextColor: string;
+  profileSettingsChevronColor: string;
+
   // Account Screen
   accountScreenPhotoCropperBgColor: string;
   accountScreenPhotoCropperTitleColor: string;
@@ -117,6 +128,7 @@ export interface LoginKitThemeColors {
   iconSetAccountScreenEditColor: string;
   iconSetAccountScreenImagePickerColor: string;
   iconSetAccountScreenDeleteColor: string;
+  iconSetProfileSettingsPpIconColor: string;
 }
 
 export interface LoginKitThemeFonts {
@@ -259,4 +271,27 @@ export interface ScreenProps {
   showProfileManagement?: boolean;
   GoogleIcon?: React.ComponentType<any>;
   AppleIcon?: React.ComponentType<any>;
+}
+
+export interface IMenuList {
+  title: string;
+  onPress?: () => void;
+}
+
+export interface IMenuItemsButtonProps {
+  title: string;
+  onPress: () => void;
+  config: LoginKitConfig,
+}
+
+export interface IMenuItemsProps {
+  config: LoginKitConfig;
+  menuList: IMenuList[];
+}
+
+export interface ProfileSettigsProps {
+  config: LoginKitConfig;
+  menuList: IMenuList[];
+  biography?: string;
+  stats?: string;
 }

@@ -6,6 +6,7 @@ export {LanguageScreen} from './screens/LanguageScreen';
 export {DarkLightModeScreen} from './screens/DarkLightModeScreen';
 export {SignInScreen} from './screens/SignInScreen';
 export {HelpsFAQsScreen} from './screens/HelpsFAQsScreen';
+export {ProfileSettingsScreen} from './screens/ProfileSettingsScreen';
 
 // Main Components
 export {SocialLogin} from './components/SocialLogin';
@@ -18,6 +19,8 @@ export {ProfilePhotoCropper} from './components/ProfilePhotoCropper';
 export {EditNameModal} from './components/EditNameModal';
 export {IconSet} from './components/IconSet';
 export {CustomAlert} from './components/CustomAlert';
+export {MenuItemsButton} from './components/MenuItemsButton';
+export {MenuItems} from './components/MenuItems';
 
 // Configuration and I18n
 export {initializeI18nWithCdn, loginKitI18n} from './config/i18n';
@@ -48,6 +51,7 @@ export {useLoginKitTranslation} from './hooks/useLoginKitTranslation';
 export {useAutoTranslation} from './hooks/useAutoTranslation';
 export {useDarkLightMode} from './hooks/useDarkLightMode';
 export {useThemeContext, ThemeProvider} from './hooks/useThemeContext';
+export {useProfileSettings} from './hooks/useProfileSettings';
 
 // Types
 export type {
@@ -64,6 +68,11 @@ export type {
   IUserInfo,
   AppTranslationResources,
   TranslationConfig,
+  EmailAuthConfig,
+  IMenuList,
+  IMenuItemsButtonProps,
+  IMenuItemsProps,
+  ProfileSettigsProps,
 } from './types';
 export type { Theme, ThemeContextType } from './hooks/useThemeContext';
 

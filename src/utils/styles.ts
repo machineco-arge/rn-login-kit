@@ -1059,3 +1059,102 @@ export const createHelpsFAQsScreenStyles = (theme: LoginKitTheme) => {
     },
   });
 };
+
+export const createStyleProfileSettings = (theme: LoginKitTheme) => {
+  return StyleSheet.create({
+    gradientContainer: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+    },
+    profileSettingsMainContainer: {
+      flex: 1,
+    },
+    profileSettingsContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    profileSettingsHeaderContainer: {
+      top: '5%',
+      paddingTop: 20,
+      paddingBottom: 20,
+      alignItems: 'center',
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.profileSettingsHeaderContainerBottomBorderColor,
+    },
+    profileSettingsHeaderTitle: {
+      fontSize: 20,
+      fontFamily: theme.fonts.primarySemiBold,
+      color: theme.colors.profileSettingsHeaderTitleColor,
+    },
+    profileSettingsScrollView: {
+      flex: 1,
+      top: '5%',
+    },
+    profileSettingsProfileSection: {
+      alignItems: 'center',
+      paddingVertical: 0,
+      paddingHorizontal: 16,
+    },
+    profileSettingsProfilePhotoContainer: {
+      width: 100,
+      height: 100,
+      borderRadius: 50,
+      overflow: 'hidden',
+      marginBottom: 16,
+      marginTop: 16,
+      backgroundColor: theme.colors.profileSettingsProfilePhotoBgColor,
+    },
+    profileSettingsProfilePhoto: {
+      width: '100%',
+      height: '100%',
+    },
+    profileSettingsIconContainer: {
+      width: '100%',
+      height: '100%',
+      justifyContent: 'center',
+      alignItems: 'center',
+      transform: [{scale: 2.5}],
+    },
+    profileSettingsUserName: {
+      fontSize: 24,
+      fontFamily: theme.fonts.primaryMedium,
+      color: theme.colors.profileSettingsUserNameColor,
+      marginBottom: 8,
+    },
+    profileSettingsBio: {
+      fontSize: 16,
+      fontFamily: theme.fonts.primaryLight,
+      color: theme.colors.profileSettingsBioColor,
+      textAlign: 'center',
+      marginBottom: 8,
+    },
+    profileSettingsStats: {
+      fontSize: 14,
+      fontFamily: theme.fonts.primaryRegular,
+      color: theme.colors.profileSettingsStatsColor,
+    },
+    profileSettingsMenuItem: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingVertical: 16,
+      paddingHorizontal: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.profileSettingsMenuItemBottomBorderColor,
+    },
+    profileSettingsMenuItemText: {
+      fontSize: 17,
+      fontFamily: theme.fonts.primaryMedium,
+      color: theme.colors.profileSettingsMenuItemTextColor,
+    },
+    profileSettingsChevron: {
+      fontSize: 24,
+      fontFamily: theme.fonts.primaryBold,
+      color: theme.colors.profileSettingsChevronColor,
+    },
+  });
+};

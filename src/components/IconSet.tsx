@@ -23,6 +23,8 @@ export const IconSet: React.FC<IconSetProps> = (props: IconSetProps) => {
   switch (props.type) {
     case 'User':
       return <UserIcon size={30} color={theme.colors.iconSetSignInAndSignUpScreenIconsColor} />;
+    case 'UserXL':
+      return <UserIcon size={45} color={theme.colors.iconSetProfileSettingsPpIconColor} />;
     case 'Mail':
       return <EnvelopeIcon size={30} color={theme.colors.iconSetSignInAndSignUpScreenIconsColor} />;
     case 'Phone':
