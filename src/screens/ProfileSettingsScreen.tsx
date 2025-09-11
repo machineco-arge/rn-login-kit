@@ -8,7 +8,7 @@ import { userManager } from "../managers/UserManager";
 import { IconSet } from "../components/IconSet";
 import { useLoginKitTranslation } from "../hooks/useLoginKitTranslation";
 import { ProfileSettigsProps } from "../types";
-import { MenuItems } from "components/MenuItems";
+import { MenuItems } from "../components/MenuItems";
 
 export const ProfileSettingsScreen: React.FC<ProfileSettigsProps> = (
   props: ProfileSettigsProps
