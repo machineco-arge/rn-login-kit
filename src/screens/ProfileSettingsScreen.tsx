@@ -2,8 +2,14 @@ import React from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import {LinearGradient} from 'react-native-gradients';
 import FastImage from 'react-native-fast-image';
-import { IconSet, MenuItems, ProfileSettigsProps, useLoginKitTranslation, useProfileSettings, userManager } from 'index';
+import { MenuItems } from '../components/MenuItems';
 import { createStyleProfileSettings } from 'utils/styles';
+import { useProfileSettings } from 'hooks/useProfileSettings';
+import { userManager } from 'managers/UserManager';
+import { IconSet } from '../components/IconSet';
+import { useLoginKitTranslation } from '../hooks/useLoginKitTranslation';
+import { ProfileSettigsProps } from '../types';
+
 
 export const ProfileSettingsScreen: React.FC<ProfileSettigsProps> = (props: ProfileSettigsProps) => {
   const {userInfo} = useProfileSettings();
