@@ -7,6 +7,7 @@ export {DarkLightModeScreen} from './screens/DarkLightModeScreen';
 export {SignInScreen} from './screens/SignInScreen';
 export {HelpsFAQsScreen} from './screens/HelpsFAQsScreen';
 export {ProfileSettingsScreen} from './screens/ProfileSettingsScreen';
+export {TermsPoliciesScreen} from './screens/TermsPoliciesScreen';
 
 // Main Components
 export {SocialLogin} from './components/SocialLogin';
@@ -19,7 +20,6 @@ export {ProfilePhotoCropper} from './components/ProfilePhotoCropper';
 export {EditNameModal} from './components/EditNameModal';
 export {IconSet} from './components/IconSet';
 export {CustomAlert} from './components/CustomAlert';
-export {MenuItemsButton} from './components/MenuItemsButton';
 export {MenuItems} from './components/MenuItems';
 
 // Configuration and I18n
@@ -69,10 +69,9 @@ export type {
   AppTranslationResources,
   TranslationConfig,
   EmailAuthConfig,
-  IMenuList,
-  IMenuItemsButtonProps,
   IMenuItemsProps,
   ProfileSettigsProps,
+  TermsPoliciesProps,
 } from './types';
 export type { Theme, ThemeContextType } from './hooks/useThemeContext';
 
@@ -94,4 +93,6 @@ export {
   createDarkLightModeScreenStyles,
   createCustomAlertStyles,
   createHelpsFAQsScreenStyles,
+  createStyleProfileSettings,
+  createTermsPolicyStyles,
 } from './utils/styles';

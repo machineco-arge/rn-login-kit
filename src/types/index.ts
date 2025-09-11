@@ -273,25 +273,28 @@ export interface ScreenProps {
   AppleIcon?: React.ComponentType<any>;
 }
 
-export interface IMenuList {
-  title: string;
-  onPress?: () => void;
-}
-
-export interface IMenuItemsButtonProps {
+export interface IMenuItemsProps {
   title: string;
   onPress: () => void;
   config: LoginKitConfig,
 }
 
-export interface IMenuItemsProps {
-  config: LoginKitConfig;
-  menuList: IMenuList[];
-}
-
 export interface ProfileSettigsProps {
   config: LoginKitConfig;
-  menuList: IMenuList[];
+  menuList: {
+    title: string;
+    onPress?: () => void;
+  }[];
   biography?: string;
   stats?: string;
+}
+
+
+export interface TermsPoliciesProps {
+  config: LoginKitConfig;
+  content: {
+    heading: string;
+    paragraphs: string[];
+  }[];
+  title: string;
 }

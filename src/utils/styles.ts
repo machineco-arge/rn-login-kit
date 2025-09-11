@@ -1,11 +1,16 @@
-import {StyleSheet, Dimensions, ViewStyle, Platform, TextStyle} from 'react-native';
-import {LoginKitTheme} from '../types';
-import { ImageStyle } from 'react-native-fast-image';
+import {
+  StyleSheet,
+  Dimensions,
+  ViewStyle,
+  Platform,
+  TextStyle,
+} from "react-native";
+import { LoginKitTheme } from "../types";
+import { ImageStyle } from "react-native-fast-image";
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 export const createLoginScreenStyles = (theme: LoginKitTheme) => {
-
   return {
     container: {
       flex: 1,
@@ -13,7 +18,7 @@ export const createLoginScreenStyles = (theme: LoginKitTheme) => {
     } as ViewStyle,
 
     gradientContainer: {
-      position: 'absolute',
+      position: "absolute",
       top: 0,
       left: 0,
       right: 0,
@@ -22,60 +27,60 @@ export const createLoginScreenStyles = (theme: LoginKitTheme) => {
 
     loadingContainer: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       backgroundColor: theme.colors.background,
     } as ViewStyle,
 
     contentContainer: {
       flex: 1,
       paddingHorizontal: width * 0.05,
-      justifyContent: 'space-between',
+      justifyContent: "space-between",
     } as ViewStyle,
 
     logoSection: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
     } as ViewStyle,
 
     logoContainer: {
       width: width * 0.5,
       height: height * 0.22,
-      alignSelf: 'center',
-      justifyContent: 'center',
-      alignItems: 'center',
+      alignSelf: "center",
+      justifyContent: "center",
+      alignItems: "center",
     } as ViewStyle,
 
     logoImage: {
-      width: '100%',
-      height: '100%',
+      width: "100%",
+      height: "100%",
     } as ImageStyle,
 
     logoText: {
       fontFamily: theme.fonts.primarySemiBold,
       fontSize: Math.min(width * 0.12, 44),
-      textAlign: 'center',
+      textAlign: "center",
       marginTop: height * 0.001,
       color: theme.colors.loginScreensLogoTextColor,
     } as TextStyle,
 
     buttonsSection: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       marginBottom: height * 0.05,
     } as ViewStyle,
 
     emailLoginSection: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100%',
+      justifyContent: "center",
+      alignItems: "center",
+      width: "100%",
     } as ViewStyle,
 
     buttonContainer: {
-      width: '100%',
+      width: "100%",
       paddingHorizontal: width * 0.05,
     } as ViewStyle,
 
@@ -84,8 +89,8 @@ export const createLoginScreenStyles = (theme: LoginKitTheme) => {
       paddingVertical: 16,
       paddingHorizontal: 24,
       borderRadius: theme.borderRadius,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
       marginBottom: 16,
     } as ViewStyle,
 
@@ -100,24 +105,24 @@ export const createLoginScreenStyles = (theme: LoginKitTheme) => {
     } as TextStyle,
 
     socialContainer: {
-      width: '100%',
+      width: "100%",
       flex: 1,
-      justifyContent: 'center',
-      marginTop: Platform.OS === 'ios' ? height * 0.05 : height * 0.01 - 50,
+      justifyContent: "center",
+      marginTop: Platform.OS === "ios" ? height * 0.05 : height * 0.01 - 50,
     } as ViewStyle,
 
     orText: {
       fontFamily: theme.fonts.primaryRegular,
       fontSize: Math.min(width * 0.045, 18),
       color: theme.colors.text,
-      textAlign: 'center',
+      textAlign: "center",
       marginBottom: height * 0.015,
     } as TextStyle,
 
     privacySection: {
       marginBottom: height * 0.003,
       marginLeft: width * 0.03,
-      alignItems: 'center',
+      alignItems: "center",
     } as ViewStyle,
   };
 };
@@ -130,7 +135,7 @@ export const createSignInScreenStyles = (theme: LoginKitTheme) => {
     } as ViewStyle,
 
     gradientContainer: {
-      position: 'absolute',
+      position: "absolute",
       top: 0,
       left: 0,
       right: 0,
@@ -177,9 +182,9 @@ export const createSignInScreenStyles = (theme: LoginKitTheme) => {
 
     loginButton: {
       backgroundColor: theme.colors.loginScreensButtonsColor,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
       paddingVertical: 16,
       marginBottom: 24,
       borderRadius: theme.borderRadius,
@@ -198,14 +203,14 @@ export const createSignInScreenStyles = (theme: LoginKitTheme) => {
     },
 
     socialSection: {
-      marginBottom: Platform.OS === 'ios' ? 0 : height * 0.06,
-      marginTop: Platform.OS === 'ios' ? height * 0.04 : height * 0.08,
+      marginBottom: Platform.OS === "ios" ? 0 : height * 0.06,
+      marginTop: Platform.OS === "ios" ? height * 0.04 : height * 0.08,
     } as ViewStyle,
 
     privacySection: {
       marginBottom: height * 0.003,
       marginLeft: width * 0.03,
-      alignItems: 'center',
+      alignItems: "center",
     } as ViewStyle,
   });
 };
@@ -218,7 +223,7 @@ export const createRegisterScreenStyles = (theme: LoginKitTheme) => {
     } as ViewStyle,
 
     gradientContainer: {
-      position: 'absolute',
+      position: "absolute",
       top: 0,
       left: 0,
       right: 0,
@@ -241,7 +246,7 @@ export const createRegisterScreenStyles = (theme: LoginKitTheme) => {
       fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.loginScreensTitleColor,
       fontSize: Math.min(width * 0.08, 32),
-      fontWeight: '600',
+      fontWeight: "600",
     },
 
     subtitle: {
@@ -274,13 +279,13 @@ export const createRegisterScreenStyles = (theme: LoginKitTheme) => {
       fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.loginScreensButtonTextColor,
       fontSize: 16,
-      textAlign: 'center',
+      textAlign: "center",
     },
 
     privacySection: {
       marginBottom: height * 0.03,
       marginLeft: width * 0.03,
-      alignItems: 'center',
+      alignItems: "center",
     } as ViewStyle,
   });
 };
@@ -292,7 +297,7 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
       backgroundColor: theme.colors.background,
     },
     gradientContainer: {
-      position: 'absolute',
+      position: "absolute",
       top: 0,
       left: 0,
       right: 0,
@@ -305,9 +310,9 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
       paddingBottom: 30,
     },
     headerContainer: {
-      position: 'relative',
-      alignItems: 'center',
-      marginTop: '15%',
+      position: "relative",
+      alignItems: "center",
+      marginTop: "15%",
     },
     headerTitle: {
       fontSize: 28,
@@ -315,29 +320,29 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
       color: theme.colors.accountScreenHeaderTitleColor,
     },
     editProfilePhotoHeaderContainer: {
-      alignItems: 'center',
+      alignItems: "center",
       marginBottom: 20,
     },
     editProfilePhotoHeaderTitle: {
       fontSize: 16,
       fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.accountScreenHeaderEditPhotoTitleColor,
-      textAlign: 'center',
+      textAlign: "center",
     },
     profileSection: {
-      alignItems: 'center',
+      alignItems: "center",
       marginBottom: 40,
       backgroundColor: theme.colors.accountScreenEditPhotoCardBgColor,
       borderRadius: 20,
       padding: 20,
       shadowColor: theme.colors.textShadow,
-      shadowOffset: {width: 0, height: 2},
+      shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
       shadowRadius: 4,
       elevation: 3,
     },
     profileImageContainer: {
-      position: 'relative',
+      position: "relative",
       marginBottom: 20,
     },
     profileImage: {
@@ -345,17 +350,19 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
       height: 180,
       borderRadius: 100,
       borderWidth: 3,
-      borderColor: theme.colors.accountScreenPhotoCropperPreviewContainerBorderColor,
+      borderColor:
+        theme.colors.accountScreenPhotoCropperPreviewContainerBorderColor,
     },
     defaultAvatarContainer: {
       width: 180,
       height: 180,
       borderRadius: 100,
       backgroundColor: theme.colors.accountScreenAvatarPhotoCardBgColor,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       borderWidth: 3,
-      borderColor: theme.colors.accountScreenPhotoCropperPreviewContainerBorderColor,
+      borderColor:
+        theme.colors.accountScreenPhotoCropperPreviewContainerBorderColor,
     },
     defaultAvatarText: {
       fontSize: 40,
@@ -363,20 +370,20 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
       color: theme.colors.accountScreenAvatarPhotoCardTextColor,
     },
     loadingOverlay: {
-      position: 'absolute',
+      position: "absolute",
       top: 0,
       left: 0,
       right: 0,
       bottom: 0,
       borderRadius: 100,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      justifyContent: 'center',
-      alignItems: 'center',
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      justifyContent: "center",
+      alignItems: "center",
     },
     actionButtonsContainer: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'center',
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "center",
       gap: 15,
       marginTop: 15,
     },
@@ -385,8 +392,8 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
       height: 50,
       borderRadius: 25,
       backgroundColor: theme.colors.accountScreenEditPhotoActionButtonsBgColor,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       borderWidth: 1,
       borderColor: theme.colors.accountScreenEditPhotoActionButtonsBorderColor,
     },
@@ -396,15 +403,15 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
       padding: 20,
       marginBottom: 20,
       shadowColor: theme.colors.textShadow,
-      shadowOffset: {width: 0, height: 2},
+      shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
       shadowRadius: 4,
       elevation: 3,
     },
     infoRow: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
       paddingVertical: 15,
       borderBottomWidth: 1,
       borderBottomColor: theme.colors.accountScreenInfoSectionBorderColor,
@@ -424,7 +431,7 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
       fontFamily: theme.fonts.primaryMedium,
       color: theme.colors.accountScreenInfoSectionValueTextColor,
       flex: 2,
-      textAlign: 'right',
+      textAlign: "right",
     },
     editableInfoValue: {
       color: theme.colors.accountScreenInfoSectionLabelTextColor,
@@ -439,14 +446,14 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
     },
     // Action buttons grid layout
     actionButtonsGrid: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
       marginTop: 15,
-      width: '100%',
+      width: "100%",
     },
     actionButtonWithLabel: {
-      alignItems: 'center',
+      alignItems: "center",
       opacity: 1,
     },
     actionButtonDisabled: {
@@ -457,7 +464,7 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
       fontFamily: theme.fonts.primaryMedium,
       color: theme.colors.accountScreenInfoSectionLabelTextColor,
       marginTop: 5,
-      textAlign: 'center',
+      textAlign: "center",
       width: 80,
     },
     profileSettingsLogoutButtonText: {
@@ -474,15 +481,15 @@ export const createStyleProfilePhotoCropper = (theme: LoginKitTheme) => {
   return StyleSheet.create({
     modalBackground: {
       flex: 1,
-      backgroundColor: 'rgba(0, 0, 0, 0.8)',
-      justifyContent: 'center',
-      alignItems: 'center',
+      backgroundColor: "rgba(0, 0, 0, 0.8)",
+      justifyContent: "center",
+      alignItems: "center",
     },
     container: {
       backgroundColor: theme.colors.accountScreenPhotoCropperBgColor,
       borderRadius: 20,
       padding: 20,
-      alignItems: 'center',
+      alignItems: "center",
       width: width * 0.9,
     },
     title: {
@@ -490,30 +497,31 @@ export const createStyleProfilePhotoCropper = (theme: LoginKitTheme) => {
       fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.accountScreenPhotoCropperTitleColor,
       marginBottom: 20,
-      textAlign: 'center',
+      textAlign: "center",
     },
-    description : {
-      fontSize: 14, 
+    description: {
+      fontSize: 14,
       fontFamily: theme.fonts.primaryRegular,
       color: theme.colors.accountScreenPhotoCropperTitleColor,
       marginBottom: 20,
-      textAlign: 'center',
+      textAlign: "center",
     },
     previewContainer: {
       width: CROP_SIZE * 0.6,
       height: CROP_SIZE * 0.6,
       borderRadius: (CROP_SIZE * 0.6) / 2,
-      overflow: 'hidden',
+      overflow: "hidden",
       marginBottom: 20,
       borderWidth: 3,
-      borderColor: theme.colors.accountScreenPhotoCropperPreviewContainerBorderColor,
+      borderColor:
+        theme.colors.accountScreenPhotoCropperPreviewContainerBorderColor,
     },
     previewImage: {
-      width: '100%',
-      height: '100%',
+      width: "100%",
+      height: "100%",
     },
     buttonContainer: {
-      flexDirection: 'row',
+      flexDirection: "row",
       gap: 15,
     },
     button: {
@@ -523,7 +531,7 @@ export const createStyleProfilePhotoCropper = (theme: LoginKitTheme) => {
       borderWidth: 1,
       borderColor: theme.colors.accountScreenPhotoCropperButtonBorderColor,
       minWidth: 100,
-      alignItems: 'center',
+      alignItems: "center",
     },
     primaryButton: {
       backgroundColor: theme.colors.accountScreenPhotoCropperOkButtonColor,
@@ -546,9 +554,9 @@ export const createStyleEditNameModal = (theme: LoginKitTheme) => {
   return StyleSheet.create({
     modalBackground: {
       flex: 1,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      justifyContent: 'center',
-      alignItems: 'center',
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      justifyContent: "center",
+      alignItems: "center",
     },
     container: {
       backgroundColor: theme.colors.accountScreenEditNameModalBgColor,
@@ -556,7 +564,7 @@ export const createStyleEditNameModal = (theme: LoginKitTheme) => {
       padding: 20,
       margin: 20,
       minWidth: 300,
-      shadowColor: '#000',
+      shadowColor: "#000",
       shadowOffset: {
         width: 0,
         height: 2,
@@ -569,7 +577,7 @@ export const createStyleEditNameModal = (theme: LoginKitTheme) => {
       fontSize: 18,
       fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.accountScreenEditNameModalTitleColor,
-      textAlign: 'center',
+      textAlign: "center",
       marginBottom: 20,
     },
     textInput: {
@@ -584,15 +592,15 @@ export const createStyleEditNameModal = (theme: LoginKitTheme) => {
       marginBottom: 20,
     },
     buttonContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
+      flexDirection: "row",
+      justifyContent: "space-between",
       gap: 10,
     },
     button: {
       flex: 1,
       paddingVertical: 12,
       borderRadius: 10,
-      alignItems: 'center',
+      alignItems: "center",
     },
     primaryButton: {
       backgroundColor: theme.colors.accountScreenEditNameModalOkButtonColor,
@@ -613,7 +621,7 @@ export const createStyleEditNameModal = (theme: LoginKitTheme) => {
       color: theme.colors.accountScreenEditNameModalButtonTextColor,
     },
   });
-}; 
+};
 
 export const createLanguageScreenStyles = (theme: LoginKitTheme) => {
   return StyleSheet.create({
@@ -622,14 +630,14 @@ export const createLanguageScreenStyles = (theme: LoginKitTheme) => {
       backgroundColor: theme.colors.background,
     },
     gradientContainer: {
-      position: 'absolute',
+      position: "absolute",
       top: 0,
       left: 0,
       right: 0,
       bottom: 0,
     },
     headerContainer: {
-      alignItems: 'center',
+      alignItems: "center",
       paddingTop: height * 0.1,
       paddingBottom: height * 0.03,
       paddingHorizontal: 20,
@@ -638,7 +646,7 @@ export const createLanguageScreenStyles = (theme: LoginKitTheme) => {
       fontSize: Math.min(width * 0.07, 28),
       fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.languageScreenHeaderTitleColor,
-      textAlign: 'center',
+      textAlign: "center",
       marginBottom: 8,
     },
     scrollContainer: {
@@ -654,9 +662,9 @@ export const createLanguageScreenStyles = (theme: LoginKitTheme) => {
       borderRadius: 12,
       marginBottom: 12,
       borderWidth: 2,
-      borderColor: 'transparent',
+      borderColor: "transparent",
       shadowColor: theme.colors.textShadow,
-      shadowOffset: {width: 0, height: 2},
+      shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
       shadowRadius: 4,
       elevation: 3,
@@ -673,8 +681,8 @@ export const createLanguageScreenStyles = (theme: LoginKitTheme) => {
       backgroundColor: theme.colors.languageScreenCurrentLanguageItemBgColor,
     },
     languageContent: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       padding: 16,
     },
     languageFlag: {
@@ -710,28 +718,28 @@ export const createLanguageScreenStyles = (theme: LoginKitTheme) => {
       height: 30,
       borderRadius: 15,
       backgroundColor: theme.colors.languageScreenCurrentLanguageColor,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       marginLeft: 10,
     },
     currentIndicatorText: {
-      color: 'white',
+      color: "white",
       fontSize: 16,
-      fontWeight: 'bold',
+      fontWeight: "bold",
     },
     selectedIndicator: {
       width: 30,
       height: 30,
       borderRadius: 15,
       backgroundColor: theme.colors.languageScreenCurrentLanguageItemBgColor,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       marginLeft: 10,
     },
     selectedIndicatorText: {
       color: theme.colors.languageScreenCurrentLanguageColor,
       fontSize: 16,
-      fontWeight: 'bold',
+      fontWeight: "bold",
     },
     actionContainer: {
       paddingHorizontal: 20,
@@ -743,11 +751,11 @@ export const createLanguageScreenStyles = (theme: LoginKitTheme) => {
       paddingVertical: 16,
       paddingHorizontal: 32,
       borderRadius: 12,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
       marginBottom: 15,
       shadowColor: theme.colors.textShadow,
-      shadowOffset: {width: 0, height: 2},
+      shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.2,
       shadowRadius: 4,
       elevation: 5,
@@ -768,7 +776,7 @@ export const createLanguageScreenStyles = (theme: LoginKitTheme) => {
       borderRadius: 12,
       padding: 16,
       shadowColor: theme.colors.textShadow,
-      shadowOffset: {width: 0, height: 2},
+      shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
       shadowRadius: 4,
       elevation: 3,
@@ -782,54 +790,52 @@ export const createLanguageScreenStyles = (theme: LoginKitTheme) => {
       fontSize: 16,
       fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.languageScreenProgressTitle,
-      textAlign: 'center',
+      textAlign: "center",
       marginBottom: 4,
     },
     progressSubtitle: {
       fontSize: 14,
       fontFamily: theme.fonts.primaryMedium,
       color: theme.colors.languageScreenProgressSubTitle,
-      textAlign: 'center',
+      textAlign: "center",
     },
     progressBarContainer: {
       height: 8,
       backgroundColor: theme.colors.languageScreenProgressBarContainer,
       borderRadius: 4,
       marginBottom: 12,
-      overflow: 'hidden',
+      overflow: "hidden",
     },
     progressBarFill: {
-      height: '100%',
+      height: "100%",
       backgroundColor: theme.colors.languageScreenProgressBarFill,
       borderRadius: 4,
       minWidth: 4,
     },
     loadingContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
       gap: 8,
     },
     loadingText: {
       color: theme.colors.languageScreenProgressBarContainer,
       fontSize: 14,
       fontFamily: theme.fonts.primaryRegular,
-    
     },
   });
-}
+};
 
 export const createDarkLightModeScreenStyles = (theme: LoginKitTheme) => {
-
   return StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
       padding: 20,
     },
     gradientContainer: {
-      position: 'absolute',
+      position: "absolute",
       top: 0,
       left: 0,
       right: 0,
@@ -837,31 +843,31 @@ export const createDarkLightModeScreenStyles = (theme: LoginKitTheme) => {
     },
     header: {
       marginBottom: 30,
-      alignItems: 'center',
+      alignItems: "center",
     },
     headerText: {
       fontSize: 28,
       letterSpacing: 1,
       fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.themeScreenHeaderTitleColor
+      color: theme.colors.themeScreenHeaderTitleColor,
     },
     subHeaderText: {
       fontSize: 16,
       marginTop: 5,
       fontFamily: theme.fonts.primaryMedium,
-      color: theme.colors.themeScreenSubHeaderTitleColor
+      color: theme.colors.themeScreenSubHeaderTitleColor,
     },
     card: {
       width: width * 0.8,
       padding: 20,
       borderRadius: 20,
-      alignItems: 'center',
-      shadowOffset: {width: 0, height: 5},
+      alignItems: "center",
+      shadowOffset: { width: 0, height: 5 },
       shadowOpacity: 0.3,
       shadowRadius: 10,
       elevation: 10,
       backgroundColor: theme.colors.themeScreenCardBgColor,
-      shadowColor: theme.colors.themeScreenCardShadowColor
+      shadowColor: theme.colors.themeScreenCardShadowColor,
     },
     iconContainer: {
       marginBottom: 20,
@@ -870,16 +876,16 @@ export const createDarkLightModeScreenStyles = (theme: LoginKitTheme) => {
       width: 200,
       height: 60,
       borderRadius: 30,
-      justifyContent: 'center',
+      justifyContent: "center",
       padding: 5,
-      backgroundColor: theme.colors.themeScreenToggleContainerColor
+      backgroundColor: theme.colors.themeScreenToggleContainerColor,
     },
     toggleCircle: {
       width: 100,
       height: 50,
       borderRadius: 25,
-      shadowColor: '#000',
-      shadowOffset: {width: 0, height: 2},
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.2,
       shadowRadius: 5,
       elevation: 5,
@@ -889,25 +895,24 @@ export const createDarkLightModeScreenStyles = (theme: LoginKitTheme) => {
       marginTop: 20,
       fontSize: 18,
       fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.themeScreenToggleTextColor
+      color: theme.colors.themeScreenToggleTextColor,
     },
   });
 };
 
 export const createCustomAlertStyles = (theme: LoginKitTheme) => {
-
   return StyleSheet.create({
     modalBackground: {
       flex: 1,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      justifyContent: 'center',
-      alignItems: 'center',
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      justifyContent: "center",
+      alignItems: "center",
     },
     alertContainer: {
       width: width * 0.85,
       backgroundColor: theme.colors.customAlertCardBgColor,
       borderRadius: 15,
-      overflow: 'hidden',
+      overflow: "hidden",
       elevation: 5,
       shadowColor: theme.colors.textShadow,
       shadowOffset: {
@@ -926,7 +931,7 @@ export const createCustomAlertStyles = (theme: LoginKitTheme) => {
     titleText: {
       fontSize: 18,
       color: theme.colors.customAlertTitleTextColor,
-      textAlign: 'center',
+      textAlign: "center",
       fontFamily: theme.fonts.primarySemiBold,
     },
     messageContainer: {
@@ -936,20 +941,20 @@ export const createCustomAlertStyles = (theme: LoginKitTheme) => {
     messageText: {
       fontSize: 16,
       color: theme.colors.customAlertTitleTextColor,
-      textAlign: 'center',
+      textAlign: "center",
       lineHeight: 22,
       fontFamily: theme.fonts.primaryMedium,
     },
     buttonContainer: {
-      flexDirection: 'row',
+      flexDirection: "row",
       borderTopWidth: 1,
       borderTopColor: theme.colors.customAlertBorderColor,
     },
     button: {
       flex: 1,
       paddingVertical: 15,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
     },
     cancelButton: {
       backgroundColor: theme.colors.customAlertCancelColor,
@@ -978,7 +983,7 @@ export const createHelpsFAQsScreenStyles = (theme: LoginKitTheme) => {
       backgroundColor: theme.colors.background,
     },
     gradientContainer: {
-      position: 'absolute',
+      position: "absolute",
       top: 0,
       left: 0,
       right: 0,
@@ -987,14 +992,14 @@ export const createHelpsFAQsScreenStyles = (theme: LoginKitTheme) => {
     headerContainer: {
       paddingTop: 100,
       paddingBottom: 20,
-      alignItems: 'center',
+      alignItems: "center",
       paddingHorizontal: 20,
     },
     headerTitle: {
       fontSize: 28,
       fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.faqsScreeenHeaderTitleColor,
-      textAlign: 'center',
+      textAlign: "center",
     },
     scrollViewContent: {
       paddingHorizontal: 16,
@@ -1004,8 +1009,8 @@ export const createHelpsFAQsScreenStyles = (theme: LoginKitTheme) => {
       marginBottom: 24,
     },
     sectionHeader: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       marginBottom: 16,
     },
     sectionTitle: {
@@ -1025,9 +1030,9 @@ export const createHelpsFAQsScreenStyles = (theme: LoginKitTheme) => {
       shadowRadius: 4,
     },
     questionContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
       padding: 16,
     },
     questionText: {
@@ -1039,10 +1044,10 @@ export const createHelpsFAQsScreenStyles = (theme: LoginKitTheme) => {
     toggleIcon: {
       color: theme.colors.faqsScreeenTooggleIconColor,
       marginLeft: 12,
-      transform: [{ rotate: '0deg' }],
+      transform: [{ rotate: "0deg" }],
     },
     toggleIconOpen: {
-        transform: [{ rotate: '180deg' }],
+      transform: [{ rotate: "180deg" }],
     },
     answerContainer: {
       paddingHorizontal: 16,
@@ -1063,7 +1068,7 @@ export const createHelpsFAQsScreenStyles = (theme: LoginKitTheme) => {
 export const createStyleProfileSettings = (theme: LoginKitTheme) => {
   return StyleSheet.create({
     gradientContainer: {
-      position: 'absolute',
+      position: "absolute",
       top: 0,
       left: 0,
       right: 0,
@@ -1074,16 +1079,17 @@ export const createStyleProfileSettings = (theme: LoginKitTheme) => {
     },
     profileSettingsContainer: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
     },
     profileSettingsHeaderContainer: {
-      top: '5%',
+      top: "5%",
       paddingTop: 20,
       paddingBottom: 20,
-      alignItems: 'center',
+      alignItems: "center",
       borderBottomWidth: 1,
-      borderBottomColor: theme.colors.profileSettingsHeaderContainerBottomBorderColor,
+      borderBottomColor:
+        theme.colors.profileSettingsHeaderContainerBottomBorderColor,
     },
     profileSettingsHeaderTitle: {
       fontSize: 20,
@@ -1092,10 +1098,10 @@ export const createStyleProfileSettings = (theme: LoginKitTheme) => {
     },
     profileSettingsScrollView: {
       flex: 1,
-      top: '5%',
+      top: "5%",
     },
     profileSettingsProfileSection: {
-      alignItems: 'center',
+      alignItems: "center",
       paddingVertical: 0,
       paddingHorizontal: 16,
     },
@@ -1103,21 +1109,21 @@ export const createStyleProfileSettings = (theme: LoginKitTheme) => {
       width: 100,
       height: 100,
       borderRadius: 50,
-      overflow: 'hidden',
+      overflow: "hidden",
       marginBottom: 16,
       marginTop: 16,
       backgroundColor: theme.colors.profileSettingsProfilePhotoBgColor,
     },
     profileSettingsProfilePhoto: {
-      width: '100%',
-      height: '100%',
+      width: "100%",
+      height: "100%",
     },
     profileSettingsIconContainer: {
-      width: '100%',
-      height: '100%',
-      justifyContent: 'center',
-      alignItems: 'center',
-      transform: [{scale: 2.5}],
+      width: "100%",
+      height: "100%",
+      justifyContent: "center",
+      alignItems: "center",
+      transform: [{ scale: 2.5 }],
     },
     profileSettingsUserName: {
       fontSize: 24,
@@ -1129,7 +1135,7 @@ export const createStyleProfileSettings = (theme: LoginKitTheme) => {
       fontSize: 16,
       fontFamily: theme.fonts.primaryLight,
       color: theme.colors.profileSettingsBioColor,
-      textAlign: 'center',
+      textAlign: "center",
       marginBottom: 8,
     },
     profileSettingsStats: {
@@ -1138,9 +1144,9 @@ export const createStyleProfileSettings = (theme: LoginKitTheme) => {
       color: theme.colors.profileSettingsStatsColor,
     },
     profileSettingsMenuItem: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
       paddingVertical: 16,
       paddingHorizontal: 16,
       borderBottomWidth: 1,
@@ -1155,6 +1161,53 @@ export const createStyleProfileSettings = (theme: LoginKitTheme) => {
       fontSize: 24,
       fontFamily: theme.fonts.primaryBold,
       color: theme.colors.profileSettingsChevronColor,
+    },
+  });
+};
+
+export const createTermsPolicyStyles = (theme: LoginKitTheme) => {
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    gradientContainer: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+    },
+    scrollView: {
+      padding: 20,
+      paddingBottom: 60,
+    },
+    headerContainer: {
+      paddingTop: 10,
+      paddingBottom: 10,
+      alignItems: "center",
+      paddingHorizontal: 20,
+    },
+    title: {
+      fontSize: 26,
+      marginVertical: 15,
+      textAlign: "center",
+      fontFamily: theme.fonts.primaryExtraBold,
+      color: theme.colors.text,
+    },
+    heading: {
+      fontSize: 20,
+      fontFamily: theme.fonts.primaryBold,
+      marginTop: 20,
+      marginBottom: 10,
+      color: theme.colors.text,
+    },
+    paragraph: {
+      fontSize: 15,
+      lineHeight: 22,
+      marginBottom: 35,
+      fontFamily: theme.fonts.primaryRegular,
+      color: theme.colors.text,
     },
   });
 };
