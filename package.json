@@ -1,6 +1,6 @@
 {
   "name": "@machineco-arge/rn-login-kit",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Reusable React Native Login Kit with Social Authentication",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
