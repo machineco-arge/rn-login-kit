@@ -1,20 +1,16 @@
-import {View} from 'react-native';
-import React from 'react';
-import {MenuItemsButton} from './MenuItemsButton';
-import { IMenuItemsProps, IMenuList } from '../types';
+import { Text, TouchableOpacity } from "react-native";
+import React from "react";
+import { createStyleProfileSettings } from '../utils/styles';
+import { IMenuItemsProps } from '../types';
 
-export const MenuItems: React.FC<IMenuItemsProps>  = (props: IMenuItemsProps) => {
-  const menuList: IMenuList[] = props.menuList;
+export const MenuItems: React.FC<IMenuItemsProps> = ({title, onPress, config}: IMenuItemsProps) => {
+  const StyleProfileSettings = createStyleProfileSettings(config.theme);
+
   return (
-    <View>
-      {menuList.map((item, index) => (
-        <MenuItemsButton
-          key={index}
-          title={item.title}
-          onPress={item.onPress ? item.onPress : (() => {})}
-          config={props.config}
-        />
-      ))}
-    </View>
+    <TouchableOpacity
+      style={StyleProfileSettings.profileSettingsMenuItem} onPress={onPress}>
+      <Text style={StyleProfileSettings.profileSettingsMenuItemText}>{title}</Text>
+      <Text style={StyleProfileSettings.profileSettingsChevron}>›</Text>
+    </TouchableOpacity>
   );
 };

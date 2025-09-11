@@ -1,20 +1,25 @@
-import React from 'react';
-import {View, Text, ScrollView} from 'react-native';
-import {LinearGradient} from 'react-native-gradients';
-import FastImage from 'react-native-fast-image';
-import { MenuItems } from '../components/MenuItems';
-import { createStyleProfileSettings } from '../utils/styles';
-import { useProfileSettings } from '../hooks/useProfileSettings';
-import { userManager } from '../managers/UserManager';
-import { IconSet } from '../components/IconSet';
-import { useLoginKitTranslation } from '../hooks/useLoginKitTranslation';
-import { ProfileSettigsProps } from '../types';
+import React from "react";
+import { View, Text, ScrollView } from "react-native";
+import { LinearGradient } from "react-native-gradients";
+import FastImage from "react-native-fast-image";
+import { createStyleProfileSettings } from "../utils/styles";
+import { useProfileSettings } from "../hooks/useProfileSettings";
+import { userManager } from "../managers/UserManager";
+import { IconSet } from "../components/IconSet";
+import { useLoginKitTranslation } from "../hooks/useLoginKitTranslation";
+import { ProfileSettigsProps } from "../types";
+import { MenuItems } from "components/MenuItems";
 
-
-export const ProfileSettingsScreen: React.FC<ProfileSettigsProps> = (props: ProfileSettigsProps) => {
-  const {userInfo} = useProfileSettings();
+export const ProfileSettingsScreen: React.FC<ProfileSettigsProps> = (
+  props: ProfileSettigsProps
+) => {
+  const { userInfo } = useProfileSettings();
   const StyleProfileSettings = createStyleProfileSettings(props.config.theme);
-  const {t} = useLoginKitTranslation('login');
+  const { t } = useLoginKitTranslation("login");
+
+  const menuList: ProfileSettigsProps["menuList"] = props.menuList;
+
+
   return (
     <View style={StyleProfileSettings.profileSettingsMainContainer}>
       <View style={StyleProfileSettings.gradientContainer}>
@@ -25,7 +30,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettigsProps> = (props: Prof
             offset: `${
               (index / (props.config.theme.colors.gradient.length - 1)) * 100
             }%`,
-            opacity: '1',
+            opacity: "1",
           }))}
         />
       </View>
@@ -33,20 +38,22 @@ export const ProfileSettingsScreen: React.FC<ProfileSettigsProps> = (props: Prof
         {/* Header */}
         <View style={StyleProfileSettings.profileSettingsHeaderContainer}>
           <Text style={StyleProfileSettings.profileSettingsHeaderTitle}>
-            {t('_settings_profileSettings')}
+            {t("_settings_profileSettings")}
           </Text>
         </View>
 
         <ScrollView
-          contentContainerStyle={{paddingBottom: '40%'}}
-          style={StyleProfileSettings.profileSettingsScrollView}>
+          contentContainerStyle={{ paddingBottom: "40%" }}
+          style={StyleProfileSettings.profileSettingsScrollView}
+        >
           {/* Profile Section */}
           <View style={StyleProfileSettings.profileSettingsProfileSection}>
             <View
-              style={StyleProfileSettings.profileSettingsProfilePhotoContainer}>
+              style={StyleProfileSettings.profileSettingsProfilePhotoContainer}
+            >
               {userManager.hasCustomPhoto() ? (
                 <FastImage
-                  source={{uri: userInfo?.photo!}}
+                  source={{ uri: userInfo?.photo! }}
                   resizeMode={FastImage.resizeMode.cover}
                   style={StyleProfileSettings.profileSettingsProfilePhoto}
                 />
@@ -57,7 +64,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettigsProps> = (props: Prof
               )}
             </View>
             <Text style={StyleProfileSettings.profileSettingsUserName}>
-              {userInfo?.name || userInfo?.email || 'User'}
+              {userInfo?.name || userInfo?.email || "User"}
             </Text>
             {props.biography && (
               <Text style={StyleProfileSettings.profileSettingsBio}>
@@ -72,7 +79,16 @@ export const ProfileSettingsScreen: React.FC<ProfileSettigsProps> = (props: Prof
           </View>
 
           {/* Menu Items */}
-          <MenuItems config={props.config} menuList={props.menuList} />
+          <View>
+            {menuList.map((item, index) => (
+              <MenuItems
+                key={index}
+                title={item.title}
+                onPress={item.onPress ? item.onPress : () => {}}
+                config={props.config}
+              />
+            ))}
+          </View>
         </ScrollView>
       </View>
     </View>
