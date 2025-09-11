@@ -10,7 +10,7 @@ import {
   TrashIcon,
   BuildingLibraryIcon
 } from 'react-native-heroicons/outline';
-import {SunIcon, MoonIcon} from 'react-native-heroicons/solid';
+import {SunIcon, MoonIcon, UserCircleIcon} from 'react-native-heroicons/solid';
 import {LoginKitTheme} from '../types';
 
 interface IconSetProps {
@@ -24,7 +24,7 @@ export const IconSet: React.FC<IconSetProps> = (props: IconSetProps) => {
     case 'User':
       return <UserIcon size={30} color={theme.colors.iconSetSignInAndSignUpScreenIconsColor} />;
     case 'UserXL':
-      return <UserIcon size={45} color={theme.colors.iconSetProfileSettingsPpIconColor} />;
+      return <UserCircleIcon size={45} color={theme.colors.iconSetProfileSettingsPpIconColor} />;
     case 'Mail':
       return <EnvelopeIcon size={30} color={theme.colors.iconSetSignInAndSignUpScreenIconsColor} />;
     case 'Phone':
