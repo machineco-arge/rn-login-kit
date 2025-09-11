@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, ScrollView, SafeAreaView, View } from "react-native";
+import { Text, ScrollView, View } from "react-native";
 import { LinearGradient } from "react-native-gradients";
 import { createTermsPolicyStyles } from "../utils/styles";
 import { TermsPoliciesProps } from "../types";
@@ -9,7 +9,7 @@ export const TermsPoliciesScreen: React.FC<TermsPoliciesProps> = (props: TermsPo
   const content: TermsPoliciesProps["content"] = props.content;
 
   return (
-    <SafeAreaView style={style.container}>
+    <View style={style.container}>
       <View style={style.gradientContainer}>
         <LinearGradient
           angle={45}
@@ -38,6 +38,6 @@ export const TermsPoliciesScreen: React.FC<TermsPoliciesProps> = (props: TermsPo
           </View>
         ))}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };

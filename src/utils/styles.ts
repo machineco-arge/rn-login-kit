@@ -1190,7 +1190,6 @@ export const createTermsPolicyStyles = (theme: LoginKitTheme) => {
     },
     title: {
       fontSize: 26,
-      marginVertical: 15,
       textAlign: "center",
       fontFamily: theme.fonts.primaryExtraBold,
       color: theme.colors.text,
@@ -1200,7 +1199,7 @@ export const createTermsPolicyStyles = (theme: LoginKitTheme) => {
       fontFamily: theme.fonts.primaryBold,
       marginTop: 20,
       marginBottom: 10,
-      color: theme.colors.text,
+      color: theme.colors.faqsScreeenAnswerTextColor,
     },
     paragraph: {
       fontSize: 15,
