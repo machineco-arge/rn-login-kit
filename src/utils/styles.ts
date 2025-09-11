@@ -1183,8 +1183,8 @@ export const createTermsPolicyStyles = (theme: LoginKitTheme) => {
       paddingBottom: 60,
     },
     headerContainer: {
-      paddingTop: 10,
-      paddingBottom: 10,
+      paddingTop: height * 0.1,
+      paddingBottom: height * 0.03,
       alignItems: "center",
       paddingHorizontal: 20,
     },
