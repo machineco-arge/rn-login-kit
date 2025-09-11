@@ -1,7 +1,7 @@
 import {Text, TouchableOpacity} from 'react-native';
 import React from 'react';
-import { IMenuItemsButtonProps } from 'types';
-import { createStyleProfileSettings } from 'utils/styles';
+import { IMenuItemsButtonProps } from '../types';
+import { createStyleProfileSettings } from '../utils/styles';
 
 export const MenuItemsButton: React.FC<IMenuItemsButtonProps> = ({title, onPress, config}: IMenuItemsButtonProps) => {
   const StyleProfileSettings = createStyleProfileSettings(config.theme);;

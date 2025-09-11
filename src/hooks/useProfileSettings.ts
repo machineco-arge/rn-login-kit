@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 import { useCurrentUser } from './useCurrentUser';
-import { userManager } from 'managers/UserManager';
+import { userManager } from '../managers/UserManager';
 
 export const useProfileSettings = () => {
   // Use custom hook for user management

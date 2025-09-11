@@ -1,7 +1,7 @@
 import {View} from 'react-native';
 import React from 'react';
 import {MenuItemsButton} from './MenuItemsButton';
-import { IMenuItemsProps, IMenuList } from 'types';
+import { IMenuItemsProps, IMenuList } from '../types';
 
 export const MenuItems: React.FC<IMenuItemsProps>  = (props: IMenuItemsProps) => {
   const menuList: IMenuList[] = props.menuList;
