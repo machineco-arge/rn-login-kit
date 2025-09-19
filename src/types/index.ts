@@ -193,6 +193,7 @@ export interface NavigationConfig {
   onLogout?: () => void;
   onUserNameUpdate?: (newName: string) => Promise<void>;
   onGetUserName?: () => Promise<string | null>;
+  onPermissionAccessGalery?: () => Promise<boolean>;
 }
 
 // Logo Configuration

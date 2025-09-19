@@ -112,10 +112,19 @@ export const useAccountSettings = ({
     }
   };
 
+  const handleSelectFromGallery = async (): Promise<void> => {
+    if (config.navigation.onPermissionAccessGalery) {
+      const hasPermission = await config.navigation.onPermissionAccessGalery();
+      if (hasPermission) {
+        console.log('[PERMISSION] hasPermission --> TRUE')
+        handleSelectFromGalleryAccess();
+      }
+    }
+  }
   /**
    * Handle selecting photo from device gallery
    */
-  const handleSelectFromGallery = async (): Promise<void> => {
+  const handleSelectFromGalleryAccess = async (): Promise<void> => {
     try {
       setIsLoading(true);
 
