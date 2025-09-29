@@ -1,11 +1,12 @@
-import React from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import {
-  View,
   Text,
   TouchableOpacity,
   StyleSheet,
   ViewStyle,
   TextStyle,
+  Animated,
+  Easing,
 } from 'react-native';
 import Checkbox from '@react-native-community/checkbox';
 import {LoginKitTheme} from '../types';
@@ -16,6 +17,7 @@ interface PrivacyPolicyProps {
   isChecked: boolean;
   onCheckboxChange: (checked: boolean) => void;
   pressPrivacyPolicy: () => void;
+  triggerAnimation?: boolean;
 }
 
 export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({
@@ -23,31 +25,88 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({
   isChecked,
   onCheckboxChange,
   pressPrivacyPolicy,
+  triggerAnimation,
 }) => {
-  const colors = theme.colors;
   const {t} = useLoginKitTranslation('login');
+  const colors = theme.colors;
+  const shakeAnimation = useRef(new Animated.Value(0)).current;
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    if (triggerAnimation) {
+      setIsError(true);
+      shakeAnimation.setValue(0);
+      Animated.sequence([
+        Animated.timing(shakeAnimation, {
+          toValue: 10,
+          duration: 100,
+          useNativeDriver: true,
+          easing: Easing.linear,
+        }),
+        Animated.timing(shakeAnimation, {
+          toValue: -10,
+          duration: 100,
+          useNativeDriver: true,
+          easing: Easing.linear,
+        }),
+        Animated.timing(shakeAnimation, {
+          toValue: 10,
+          duration: 100,
+          useNativeDriver: true,
+          easing: Easing.linear,
+        }),
+        Animated.timing(shakeAnimation, {
+          toValue: 0,
+          duration: 100,
+          useNativeDriver: true,
+          easing: Easing.linear,
+        }),
+      ]).start(() => {
+        setIsError(false);
+      });
+    }
+  }, [triggerAnimation, shakeAnimation]);
+
+  const animatedStyle = {
+    transform: [{translateX: shakeAnimation}],
+  };
 
   const styles = createStyles();
 
   return (
-    <View style={styles.container}>
+    <Animated.View style={[styles.container, animatedStyle]}>
       <Checkbox
         value={isChecked}
         onValueChange={onCheckboxChange}
         tintColors={{
           true: colors.loginScreensPrivacyPolicyCheckTrueColor,
-          false: colors.loginScreensPrivacyPolicyCheckFalseColor,
+          false: isError
+            ? 'red'
+            : colors.loginScreensPrivacyPolicyCheckFalseColor,
         }}
         style={styles.checkbox}
       />
       <TouchableOpacity
         style={styles.textContainer}
         onPress={pressPrivacyPolicy}>
-        <Text style={[styles.text, {color: colors.loginScreensPrivacyPolicyCheckFalseColor}]}>
-            <Text style={[styles.link, {color: colors.loginScreensPrivacyPolicyTextColor, fontFamily: theme.fonts.primaryRegular}]}>{t('PrivacyPolicy')}</Text>
+        <Text
+          style={[
+            styles.text,
+            {color: colors.loginScreensPrivacyPolicyCheckFalseColor},
+          ]}>
+          <Text
+            style={[
+              styles.link,
+              {
+                color: colors.loginScreensPrivacyPolicyTextColor,
+                fontFamily: theme.fonts.primaryRegular,
+              },
+            ]}>
+            {t('PrivacyPolicy')}
+          </Text>
         </Text>
       </TouchableOpacity>
-    </View>
+    </Animated.View>
   );
 };
 

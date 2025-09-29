@@ -13,7 +13,6 @@ import { LoginKitTheme, SocialAuthConfig } from '../types';
 interface SocialLoginProps {
   theme: LoginKitTheme;
   socialConfig: SocialAuthConfig;
-  disabled?: boolean;
   loading?: boolean;
   onGooglePress?: () => void;
   onApplePress?: () => void;
@@ -26,7 +25,6 @@ interface SocialLoginProps {
 export const SocialLogin: React.FC<SocialLoginProps> = ({
   theme,
   socialConfig,
-  disabled = false,
   loading = false,
   onGooglePress,
   onApplePress,
@@ -44,7 +42,7 @@ export const SocialLogin: React.FC<SocialLoginProps> = ({
     borderRadius: theme.borderRadius,
     borderWidth: 1,
     borderColor: theme.colors.loginScreensTextInputBorderColor,
-    opacity: disabled || loading ? 0.5 : 1,
+    opacity: loading ? 0.5 : 1,
   };
 
   const textStyle: TextStyle = {
@@ -69,7 +67,7 @@ export const SocialLogin: React.FC<SocialLoginProps> = ({
             { backgroundColor: '#ffffff' }
           ]}
           onPress={onGooglePress}
-          disabled={disabled || loading}
+          disabled={loading}
         >
           {loading ? (
             <ActivityIndicator size="small" color="#666" />
@@ -101,7 +99,7 @@ export const SocialLogin: React.FC<SocialLoginProps> = ({
             { backgroundColor: '#000000' }
           ]}
           onPress={onApplePress}
-          disabled={disabled || loading}
+          disabled={loading}
         >
           {loading ? (
             <ActivityIndicator size="small" color="#ffffff" />
@@ -126,4 +124,4 @@ export const SocialLogin: React.FC<SocialLoginProps> = ({
       )}
     </View>
   );
-}; 
+};

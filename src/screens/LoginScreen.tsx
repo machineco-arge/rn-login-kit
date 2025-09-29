@@ -26,6 +26,7 @@ export const LoginScreen: React.FC<ScreenProps> = ({
   const [isPrivacyChecked, setIsPrivacyChecked] = useState(
     !config.privacy.required,
   );
+  const [animatePrivacyPolicy, setAnimatePrivacyPolicy] = useState(false);
   const {t} = useLoginKitTranslation('login');
 
   // Use centralized social auth hook
@@ -35,6 +36,17 @@ export const LoginScreen: React.FC<ScreenProps> = ({
   });
 
   const styles = createLoginScreenStyles(config.theme);
+
+  const handleSocialLoginPress = (provider: 'google' | 'apple') => {
+    if (!isPrivacyChecked && config.privacy.required) {
+      setAnimatePrivacyPolicy(true);
+      setTimeout(() => {
+        setAnimatePrivacyPolicy(false);
+      }, 1000);
+    } else {
+      handleSocialLogin(provider);
+    }
+  };
 
   if (isSocialLoginLoading) {
     return <LoadingIndicator theme={config.theme} />;
@@ -137,10 +149,9 @@ export const LoginScreen: React.FC<ScreenProps> = ({
               <SocialLogin
                 theme={config.theme}
                 socialConfig={config.socialAuth}
-                disabled={!isPrivacyChecked && config.privacy.required}
                 loading={isSocialLoginLoading}
-                onGooglePress={() => handleSocialLogin('google')}
-                onApplePress={() => handleSocialLogin('apple')}
+                onGooglePress={() => handleSocialLoginPress('google')}
+                onApplePress={() => handleSocialLoginPress('apple')}
                 GoogleIcon={GoogleIcon}
                 AppleIcon={AppleIcon}
                 googleText={t('socialLoginWithGoogle')}
@@ -159,6 +170,7 @@ export const LoginScreen: React.FC<ScreenProps> = ({
             isChecked={isPrivacyChecked}
             onCheckboxChange={setIsPrivacyChecked}
             pressPrivacyPolicy={config.privacy.pressPrivacyPolicy}
+            triggerAnimation={animatePrivacyPolicy}
           />
         </View>
       )}
