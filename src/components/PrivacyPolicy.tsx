@@ -1,6 +1,5 @@
 import React, {useRef, useEffect, useState} from 'react';
 import {
-  View,
   Text,
   TouchableOpacity,
   StyleSheet,
@@ -76,17 +75,17 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({
 
   return (
     <Animated.View style={[styles.container, animatedStyle]}>
-      <View style={{ borderColor: isError ? 'red' : 'transparent', borderWidth: 1.5, borderRadius: 5 }}>
-        <Checkbox
-          value={isChecked}
-          onValueChange={onCheckboxChange}
-          tintColors={{
-            true: colors.loginScreensPrivacyPolicyCheckTrueColor,
-            false: colors.loginScreensPrivacyPolicyCheckFalseColor,
-          }}
-          style={styles.checkbox}
-        />
-      </View>
+      <Checkbox
+        value={isChecked}
+        onValueChange={onCheckboxChange}
+        tintColors={{
+          true: colors.loginScreensPrivacyPolicyCheckTrueColor,
+          false: isError
+            ? 'red'
+            : colors.loginScreensPrivacyPolicyCheckFalseColor,
+        }}
+        style={styles.checkbox}
+      />
       <TouchableOpacity
         style={styles.textContainer}
         onPress={pressPrivacyPolicy}>
