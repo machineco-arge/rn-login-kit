@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -31,6 +31,18 @@ export const SignInScreen: React.FC<ScreenProps> = ({
 }) => {
   const {t} = useLoginKitTranslation('login');
   const styles = createSignInScreenStyles(config.theme);
+  
+  const [animatePrivacyPolicy, setAnimatePrivacyPolicy] = useState(false);
+  const handleSocialLoginPress = (provider: 'google' | 'apple') => {
+    if (!isPrivacyChecked && config.privacy.required) {
+      setAnimatePrivacyPolicy(true);
+      setTimeout(() => {
+        setAnimatePrivacyPolicy(false);
+      }, 1000);
+    } else {
+      handleSocialLogin(provider);
+    }
+  };
 
   const {
     email,
@@ -168,10 +180,9 @@ export const SignInScreen: React.FC<ScreenProps> = ({
             <SocialLogin
               theme={config.theme}
               socialConfig={config.socialAuth}
-              disabled={!isPrivacyChecked && config.privacy.required}
               loading={isSocialLoginLoading}
-              onGooglePress={() => handleSocialLogin('google')}
-              onApplePress={() => handleSocialLogin('apple')}
+              onGooglePress={() => handleSocialLoginPress('google')}
+              onApplePress={() => handleSocialLoginPress('apple')}
               GoogleIcon={GoogleIcon}
               AppleIcon={AppleIcon}
               googleText={t('socialLoginWithGoogle')}
@@ -199,6 +210,7 @@ export const SignInScreen: React.FC<ScreenProps> = ({
             isChecked={isPrivacyChecked}
             onCheckboxChange={setIsPrivacyChecked}
             pressPrivacyPolicy={config.privacy.pressPrivacyPolicy}
+            triggerAnimation={animatePrivacyPolicy}
           />
         </View>
       )}
