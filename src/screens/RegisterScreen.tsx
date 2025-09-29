@@ -19,7 +19,7 @@ import {HaveAnAccount} from '../components/HaveAnAccount';
 import {OrComponent} from '../components/OrComponent';
 import { IconSet } from '../components/IconSet';
 import { CustomAlert } from '..';
-
+import { usePrivacyCheck } from '../hooks/usePrivacyCheck';
 
 export const RegisterScreen: React.FC<ScreenProps> = ({
   config,
@@ -50,6 +50,11 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
     setErrorInvalidEmail
   } = useRegister({
     config,
+  });
+
+  const { animatePrivacyPolicy, handlePressWithPrivacyCheck } = usePrivacyCheck({
+    isPrivacyChecked,
+    isPrivacyRequired: config.privacy.required,
   });
 
   if (loading) {
@@ -135,14 +140,8 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
           </View>
 
           <TouchableOpacity
-            style={[
-              styles.registerButton,
-              !isPrivacyChecked &&
-                config.privacy.required &&
-                styles.disabledButton,
-            ]}
-            onPress={handleRegister}
-            disabled={!isPrivacyChecked && config.privacy.required}>
+            style={styles.registerButton}
+            onPress={() => handlePressWithPrivacyCheck(handleRegister)}>
             <Text style={styles.registerButtonText}>
               {t('userRegisterCreateAccount')}
             </Text>
@@ -167,6 +166,7 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
             isChecked={isPrivacyChecked}
             onCheckboxChange={setIsPrivacyChecked}
             pressPrivacyPolicy={config.privacy.pressPrivacyPolicy}
+            triggerAnimation={animatePrivacyPolicy}
           />
         </View>
       )}

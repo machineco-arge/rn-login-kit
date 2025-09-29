@@ -52,6 +52,7 @@ export {useAutoTranslation} from './hooks/useAutoTranslation';
 export {useDarkLightMode} from './hooks/useDarkLightMode';
 export {useThemeContext, ThemeProvider} from './hooks/useThemeContext';
 export {useProfileSettings} from './hooks/useProfileSettings';
+export {usePrivacyCheck} from './hooks/usePrivacyCheck';
 
 // Types
 export type {

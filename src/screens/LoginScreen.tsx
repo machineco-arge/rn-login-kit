@@ -14,7 +14,7 @@ import {useLoginKitTranslation} from '../hooks/useLoginKitTranslation';
 import {LoadingIndicator} from '../components/LoadingIndicator';
 import { createLoginScreenStyles } from '../utils/styles';
 import { OrComponent } from '../components/OrComponent';
-
+import { usePrivacyCheck } from '../hooks/usePrivacyCheck';
 
 export const LoginScreen: React.FC<ScreenProps> = ({
   config,
@@ -26,7 +26,6 @@ export const LoginScreen: React.FC<ScreenProps> = ({
   const [isPrivacyChecked, setIsPrivacyChecked] = useState(
     !config.privacy.required,
   );
-  const [animatePrivacyPolicy, setAnimatePrivacyPolicy] = useState(false);
   const {t} = useLoginKitTranslation('login');
 
   // Use centralized social auth hook
@@ -37,16 +36,10 @@ export const LoginScreen: React.FC<ScreenProps> = ({
 
   const styles = createLoginScreenStyles(config.theme);
 
-  const handleSocialLoginPress = (provider: 'google' | 'apple') => {
-    if (!isPrivacyChecked && config.privacy.required) {
-      setAnimatePrivacyPolicy(true);
-      setTimeout(() => {
-        setAnimatePrivacyPolicy(false);
-      }, 1000);
-    } else {
-      handleSocialLogin(provider);
-    }
-  };
+  const { animatePrivacyPolicy, handlePressWithPrivacyCheck } = usePrivacyCheck({
+    isPrivacyChecked,
+    isPrivacyRequired: config.privacy.required,
+  });
 
   if (isSocialLoginLoading) {
     return <LoadingIndicator theme={config.theme} />;
@@ -99,14 +92,8 @@ export const LoginScreen: React.FC<ScreenProps> = ({
               {config.emailAuth.enabledRegister && (
                 <View style={styles.buttonContainer}>
                   <TouchableOpacity
-                    style={[
-                      styles.primaryButton,
-                      !isPrivacyChecked &&
-                        config.privacy.required &&
-                        styles.disabledButton,
-                    ]}
-                    onPress={() => config.navigation.onRegisterPress?.()}
-                    disabled={!isPrivacyChecked && config.privacy.required}>
+                    style={styles.primaryButton}
+                    onPress={() => config.navigation.onRegisterPress?.()}>
                     <Text style={styles.primaryButtonText}>
                       {t('userRegister')}
                     </Text>
@@ -122,14 +109,8 @@ export const LoginScreen: React.FC<ScreenProps> = ({
               {/* Login Button */}
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
-                  style={[
-                    styles.primaryButton,
-                    !isPrivacyChecked &&
-                      config.privacy.required &&
-                      styles.disabledButton,
-                  ]}
-                  onPress={() => config.navigation.onSignInPress?.()}
-                  disabled={!isPrivacyChecked && config.privacy.required}>
+                  style={styles.primaryButton}
+                  onPress={() => config.navigation.onSignInPress?.()}>
                   <Text style={styles.primaryButtonText}>
                     {t('userSignInLogin')}
                   </Text>
@@ -150,8 +131,8 @@ export const LoginScreen: React.FC<ScreenProps> = ({
                 theme={config.theme}
                 socialConfig={config.socialAuth}
                 loading={isSocialLoginLoading}
-                onGooglePress={() => handleSocialLoginPress('google')}
-                onApplePress={() => handleSocialLoginPress('apple')}
+                onGooglePress={() => handlePressWithPrivacyCheck(() => handleSocialLogin('google'))}
+                onApplePress={() => handlePressWithPrivacyCheck(() => handleSocialLogin('apple'))}
                 GoogleIcon={GoogleIcon}
                 AppleIcon={AppleIcon}
                 googleText={t('socialLoginWithGoogle')}

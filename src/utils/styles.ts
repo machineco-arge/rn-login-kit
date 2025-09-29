@@ -94,10 +94,6 @@ export const createLoginScreenStyles = (theme: LoginKitTheme) => {
       marginBottom: 16,
     } as ViewStyle,
 
-    disabledButton: {
-      opacity: 0.5,
-    } as ViewStyle,
-
     primaryButtonText: {
       color: theme.colors.loginScreensButtonTextColor,
       fontSize: 18,
@@ -191,10 +187,6 @@ export const createSignInScreenStyles = (theme: LoginKitTheme) => {
       marginTop: 8,
     } as ViewStyle,
 
-    disabledButton: {
-      opacity: 0.5,
-    } as ViewStyle,
-
     loginButtonText: {
       fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.loginScreensButtonTextColor,
@@ -269,10 +261,6 @@ export const createRegisterScreenStyles = (theme: LoginKitTheme) => {
       paddingVertical: 16,
       borderRadius: theme.borderRadius,
       marginTop: height * 0.04,
-    } as ViewStyle,
-
-    disabledButton: {
-      opacity: 0.5,
     } as ViewStyle,
 
     registerButtonText: {

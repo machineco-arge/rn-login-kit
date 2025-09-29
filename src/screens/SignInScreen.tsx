@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -21,7 +21,7 @@ import {HaveAnAccount} from '../components/HaveAnAccount';
 import {OrComponent} from '../components/OrComponent';
 import { IconSet } from '../components/IconSet';
 import { CustomAlert } from '..';
-
+import { usePrivacyCheck } from '../hooks/usePrivacyCheck';
 
 export const SignInScreen: React.FC<ScreenProps> = ({
   config,
@@ -31,18 +31,6 @@ export const SignInScreen: React.FC<ScreenProps> = ({
 }) => {
   const {t} = useLoginKitTranslation('login');
   const styles = createSignInScreenStyles(config.theme);
-  
-  const [animatePrivacyPolicy, setAnimatePrivacyPolicy] = useState(false);
-  const handleSocialLoginPress = (provider: 'google' | 'apple') => {
-    if (!isPrivacyChecked && config.privacy.required) {
-      setAnimatePrivacyPolicy(true);
-      setTimeout(() => {
-        setAnimatePrivacyPolicy(false);
-      }, 1000);
-    } else {
-      handleSocialLogin(provider);
-    }
-  };
 
   const {
     email,
@@ -70,9 +58,11 @@ export const SignInScreen: React.FC<ScreenProps> = ({
   });
 
   // Use centralized social auth hook
-  const { isSocialLoginLoading, handleSocialLogin } = useSocialAuth({
-    config,
+  const { isSocialLoginLoading, handleSocialLogin } = useSocialAuth({config, isPrivacyChecked});
+
+  const { animatePrivacyPolicy, handlePressWithPrivacyCheck } = usePrivacyCheck({
     isPrivacyChecked,
+    isPrivacyRequired: config.privacy.required,
   });
 
   if (loading || isSocialLoginLoading) {
@@ -160,14 +150,8 @@ export const SignInScreen: React.FC<ScreenProps> = ({
           </View>
 
           <TouchableOpacity
-            style={[
-              styles.loginButton,
-              !isPrivacyChecked &&
-                config.privacy.required &&
-                styles.disabledButton,
-            ]}
-            onPress={handleLogin}
-            disabled={!isPrivacyChecked && config.privacy.required}>
+            style={styles.loginButton}
+            onPress={() => handlePressWithPrivacyCheck(handleLogin)}>
             <Text style={styles.loginButtonText}>{t('userSignInLogin')}</Text>
           </TouchableOpacity>
         </View>
@@ -181,8 +165,8 @@ export const SignInScreen: React.FC<ScreenProps> = ({
               theme={config.theme}
               socialConfig={config.socialAuth}
               loading={isSocialLoginLoading}
-              onGooglePress={() => handleSocialLoginPress('google')}
-              onApplePress={() => handleSocialLoginPress('apple')}
+              onGooglePress={() => handlePressWithPrivacyCheck(() => handleSocialLogin('google'))}
+              onApplePress={() => handlePressWithPrivacyCheck(() => handleSocialLogin('apple'))}
               GoogleIcon={GoogleIcon}
               AppleIcon={AppleIcon}
               googleText={t('socialLoginWithGoogle')}
