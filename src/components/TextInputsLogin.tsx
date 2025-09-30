@@ -73,10 +73,12 @@ export const TextInputsLogin: React.FC<TextInputsLoginProps> = ({
           type === 'Mail' ? 'email' : type === 'Password' ? 'password' : 'name'
         }
         textContentType={
-          type === 'Mail'
+          type === 'Password'
+            ? isPasswordVisible
+              ? 'none'
+              : 'password'
+            : type === 'Mail'
             ? 'emailAddress'
-            : type === 'Password'
-            ? 'password'
             : 'name'
         }
       />
