@@ -49,7 +49,7 @@ export const TextInputsLogin: React.FC<TextInputsLoginProps> = ({
     flex: 1,
     fontFamily:
       Platform.OS === 'android' && isSecure
-        ? undefined
+        ? 'monospace'
         : theme.fonts.primaryRegular,
     fontSize: 16,
     color: theme.colors.loginScreensTextInputTextColor,
