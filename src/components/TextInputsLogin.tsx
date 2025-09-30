@@ -5,7 +5,6 @@ import {
   ViewStyle,
   TextStyle,
   TouchableOpacity,
-  Platform,
 } from 'react-native';
 import {LoginKitTheme} from '../types';
 import {IconSet} from './IconSet';
@@ -47,10 +46,7 @@ export const TextInputsLogin: React.FC<TextInputsLoginProps> = ({
 
   const textInputStyle: TextStyle = {
     flex: 1,
-    fontFamily:
-      Platform.OS === 'android' && isSecure
-        ? 'monospace'
-        : theme.fonts.primaryRegular,
+    fontFamily: theme.fonts.primaryRegular,
     fontSize: 16,
     color: theme.colors.loginScreensTextInputTextColor,
     marginLeft: IconComponent ? 10 : 0,
