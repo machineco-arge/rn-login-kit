@@ -5,6 +5,7 @@ import {
   ViewStyle,
   TextStyle,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import {LoginKitTheme} from '../types';
 import {IconSet} from './IconSet';
@@ -42,9 +43,14 @@ export const TextInputsLogin: React.FC<TextInputsLoginProps> = ({
     marginBottom: 8,
   };
 
+  const isSecure = type === 'Password' ? !isPasswordVisible : passwordClose;
+
   const textInputStyle: TextStyle = {
     flex: 1,
-    fontFamily: theme.fonts.primaryRegular,
+    fontFamily:
+      Platform.OS === 'android' && isSecure
+        ? undefined
+        : theme.fonts.primaryRegular,
     fontSize: 16,
     color: theme.colors.loginScreensTextInputTextColor,
     marginLeft: IconComponent ? 10 : 0,
@@ -61,12 +67,13 @@ export const TextInputsLogin: React.FC<TextInputsLoginProps> = ({
     <View style={containerStyle}>
       {IconComponent && <IconComponent type={type} theme={theme} />}
       <TextInput
+        key={isPasswordVisible ? 'visible' : 'hidden'}
         style={textInputStyle}
         placeholder={placeholder}
         placeholderTextColor={placeholderTextColor}
         value={value}
         onChangeText={onChangeText}
-        secureTextEntry={type === 'Password' ? !isPasswordVisible : passwordClose}
+        secureTextEntry={isSecure}
         keyboardType={type === 'Mail' ? 'email-address' : 'default'}
         autoCapitalize={type === 'Mail' ? 'none' : 'words'}
         autoComplete={
