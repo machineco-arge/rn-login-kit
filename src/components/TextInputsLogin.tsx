@@ -67,14 +67,15 @@ export const TextInputsLogin: React.FC<TextInputsLoginProps> = ({
     <View style={containerStyle}>
       {IconComponent && <IconComponent type={type} theme={theme} />}
       <TextInput
+        key={isPasswordVisible ? 'visible' : 'hidden'}
         style={textInputStyle}
         placeholder={placeholder}
         placeholderTextColor={placeholderTextColor}
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={isSecure}
-        keyboardType={type === 'Mail' ? 'email-address' : 'default'}
-        autoCapitalize={type === 'Mail' ? 'none' : 'words'}
+        keyboardType={type === 'Password' ? 'default' : type === 'Mail' ? 'email-address' : 'default'}
+        autoCapitalize={type === 'Password' ? 'none' : type === 'Mail' ? 'none' : 'words'}
         autoComplete={
           type === 'Mail' ? 'email' : type === 'Password' ? 'password' : 'name'
         }
