@@ -107,6 +107,7 @@ export const SignInScreen: React.FC<ScreenProps> = ({
                 value={companyName}
                 onChangeText={setCompanyName}
                 IconComponent={IconSet}
+                passwordClose={false}
               />
             </View>
           )}
@@ -120,6 +121,7 @@ export const SignInScreen: React.FC<ScreenProps> = ({
                 value={email}
                 onChangeText={setEmail}
                 IconComponent={IconSet}
+                passwordClose={false}
               />
             </View>
           )}
@@ -133,6 +135,7 @@ export const SignInScreen: React.FC<ScreenProps> = ({
                 value={userName}
                 onChangeText={setUserName}
                 IconComponent={IconSet}
+                passwordClose={false}
               />
             </View>
           )}
@@ -144,7 +147,7 @@ export const SignInScreen: React.FC<ScreenProps> = ({
               placeholder={t('placeholderEnterPassword')}
               value={password}
               onChangeText={setPassword}
-              secureTextEntry={true}
+              passwordClose={true}
               IconComponent={IconSet}
             />
           </View>

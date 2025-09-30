@@ -97,6 +97,7 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
                 value={name}
                 onChangeText={setName}
                 IconComponent={IconSet}
+                passwordClose={false}
               />
             </View>
           )}
@@ -110,6 +111,7 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
                 value={email}
                 onChangeText={setEmail}
                 IconComponent={IconSet}
+                passwordClose={false}
               />
           </View>
           )}
@@ -122,7 +124,7 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
               placeholder={t('placeholderEnterPassword')}
               value={password}
               onChangeText={setPassword}
-              secureTextEntry={true}
+              passwordClose={true}
               IconComponent={IconSet}
             />
           </View>
@@ -134,7 +136,7 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
               placeholder={t('placeholderConfirmPassword')}
               value={confirmPassword}
               onChangeText={setConfirmPassword}
-              secureTextEntry={true}
+              passwordClose={true}
               IconComponent={IconSet}
             />
           </View>

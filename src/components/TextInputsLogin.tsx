@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   TextInput,
   ViewStyle,
   TextStyle,
+  TouchableOpacity,
 } from 'react-native';
-import { LoginKitTheme } from '../types';
+import {LoginKitTheme} from '../types';
+import {IconSet} from './IconSet';
 
 interface TextInputsLoginProps {
   theme: LoginKitTheme;
@@ -13,8 +15,8 @@ interface TextInputsLoginProps {
   placeholder: string;
   value: string;
   onChangeText: (text: string) => void;
-  secureTextEntry?: boolean;
-  IconComponent?: React.ComponentType<{ type: string; theme: LoginKitTheme }>;
+  passwordClose?: boolean;
+  IconComponent?: React.ComponentType<{type: string; theme: LoginKitTheme}>;
 }
 
 export const TextInputsLogin: React.FC<TextInputsLoginProps> = ({
@@ -23,9 +25,11 @@ export const TextInputsLogin: React.FC<TextInputsLoginProps> = ({
   placeholder,
   value,
   onChangeText,
-  secureTextEntry = false,
+  passwordClose = false,
   IconComponent,
 }) => {
+  const [isPasswordVisible, setPasswordVisible] = useState(false);
+
   const containerStyle: ViewStyle = {
     flexDirection: 'row',
     alignItems: 'center',
@@ -46,37 +50,44 @@ export const TextInputsLogin: React.FC<TextInputsLoginProps> = ({
     marginLeft: IconComponent ? 10 : 0,
   };
 
-  const placeholderTextColor = theme.colors.loginScreensTextInputSecondaryTextColor;
+  const placeholderTextColor =
+    theme.colors.loginScreensTextInputSecondaryTextColor;
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!isPasswordVisible);
+  };
 
   return (
     <View style={containerStyle}>
-      {IconComponent && (
-        <IconComponent type={type} theme={theme} />
-      )}
+      {IconComponent && <IconComponent type={type} theme={theme} />}
       <TextInput
         style={textInputStyle}
         placeholder={placeholder}
         placeholderTextColor={placeholderTextColor}
         value={value}
         onChangeText={onChangeText}
-        secureTextEntry={secureTextEntry}
+        secureTextEntry={type === 'Password' ? !isPasswordVisible : passwordClose}
         keyboardType={type === 'Mail' ? 'email-address' : 'default'}
         autoCapitalize={type === 'Mail' ? 'none' : 'words'}
         autoComplete={
-          type === 'Mail' 
-            ? 'email' 
-            : type === 'Password' 
-            ? 'password' 
-            : 'name'
+          type === 'Mail' ? 'email' : type === 'Password' ? 'password' : 'name'
         }
         textContentType={
-          type === 'Mail' 
-            ? 'emailAddress' 
-            : type === 'Password' 
-            ? 'password' 
+          type === 'Mail'
+            ? 'emailAddress'
+            : type === 'Password'
+            ? 'password'
             : 'name'
         }
       />
+      {type === 'Password' && (
+        <TouchableOpacity onPress={togglePasswordVisibility}>
+          <IconSet
+            type={isPasswordVisible ? 'EyeSlash' : 'Eye'}
+            theme={theme}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
-}; 
+};
