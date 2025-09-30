@@ -67,7 +67,6 @@ export const TextInputsLogin: React.FC<TextInputsLoginProps> = ({
     <View style={containerStyle}>
       {IconComponent && <IconComponent type={type} theme={theme} />}
       <TextInput
-        key={isPasswordVisible ? 'visible' : 'hidden'}
         style={textInputStyle}
         placeholder={placeholder}
         placeholderTextColor={placeholderTextColor}
