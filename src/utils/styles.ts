@@ -438,7 +438,8 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
       alignItems: "center",
       justifyContent: "space-between",
       marginTop: 15,
-      width: "100%",
+      width: width * 0.9,
+      marginHorizontal: width * 0.1,
     },
     actionButtonWithLabel: {
       alignItems: "center",
