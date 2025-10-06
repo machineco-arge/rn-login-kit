@@ -86,12 +86,12 @@ export const createLoginScreenStyles = (theme: LoginKitTheme) => {
 
     primaryButton: {
       backgroundColor: theme.colors.loginScreensButtonsColor,
-      paddingVertical: 16,
-      paddingHorizontal: 24,
+      paddingVertical: height * 0.015,
+      paddingHorizontal: width * 0.15,
       borderRadius: theme.borderRadius,
       alignItems: "center",
       justifyContent: "center",
-      marginBottom: 16,
+      marginBottom: height * 0.02,
     } as ViewStyle,
 
     primaryButtonText: {

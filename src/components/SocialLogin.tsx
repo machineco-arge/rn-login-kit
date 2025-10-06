@@ -7,6 +7,7 @@ import {
   ViewStyle,
   TextStyle,
   ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import { LoginKitTheme, SocialAuthConfig } from '../types';
 
@@ -33,12 +34,15 @@ export const SocialLogin: React.FC<SocialLoginProps> = ({
   GoogleIcon,
   AppleIcon,
 }) => {
+
+  const { height } = Dimensions.get("window");
+  
   const buttonStyle: ViewStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    padding: 16,
-    marginBottom: 16,
+    padding: height * 0.015,
+    marginTop: height * 0.02,
     borderRadius: theme.borderRadius,
     borderWidth: 1,
     borderColor: theme.colors.loginScreensTextInputBorderColor,
