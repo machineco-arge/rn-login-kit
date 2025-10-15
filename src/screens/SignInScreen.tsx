@@ -225,7 +225,7 @@ export const SignInScreen: React.FC<ScreenProps> = ({
         theme={config.theme}
         visible={errorSignIn}
         title={t('_error_')}
-        message={`${t('userSignInErrorAlertMessage')} ${errorMessage}`}
+        message={`${t('userSignInErrorAlertMessage')} ${t(errorMessage)}`}
         onOK={() => setErrorSignIn(false)}
         okText={t('ok')}
       />
