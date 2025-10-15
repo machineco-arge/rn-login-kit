@@ -59,6 +59,7 @@ export const useSignIn = ({ config }: UseSignInProps) => {
           setErrorMessage('userSignInErrorAlreadyActiveSession');
           setErrorSignIn(true);
         } else {
+          setErrorMessage('');
           setErrorSignIn(true);
         }
       }
