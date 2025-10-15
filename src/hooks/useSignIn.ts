@@ -18,6 +18,7 @@ export const useSignIn = ({ config }: UseSignInProps) => {
   const [errorPassword, setErrorPassword] = useState(false);
   const [errorMissingInputs, setErrorMissingInputs] = useState(false);
   const [errorInvalidEmail, setErrorInvalidEmail] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [isPrivacyChecked, setIsPrivacyChecked] = useState(!config.privacy.required);
 
   const emailAuthService = new EmailAuthService(config);
@@ -54,6 +55,9 @@ export const useSignIn = ({ config }: UseSignInProps) => {
         console.log(`${t('_error_')} ${t('userSignInErrorAlertMessage')}`, { error: result.error || 'Unknown error' });
         if (result.error == 'Şifre hatalı') {
           setErrorPassword(true);
+        } else if(result.error == 'Zaten aktif bir oturum var.') {
+          setErrorMessage('userSignInErrorAlreadyActiveSession');
+          setErrorSignIn(true);
         } else {
           setErrorSignIn(true);
         }
@@ -98,6 +102,7 @@ export const useSignIn = ({ config }: UseSignInProps) => {
     errorSignIn,
     setErrorSignIn,
     errorPassword,
-    setErrorPassword
+    setErrorPassword,
+    errorMessage,
   };
 }; 
