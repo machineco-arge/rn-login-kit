@@ -19,6 +19,7 @@ export const useRegister = ({ config }: UseRegisterProps) => {
   const [errorPassword, setErrorPassword] = useState(false);
   const [errorMissingInputs, setErrorMissingInputs] = useState(false);
   const [errorInvalidEmail, setErrorInvalidEmail] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const emailAuthService = new EmailAuthService(config);
 
@@ -54,6 +55,9 @@ export const useRegister = ({ config }: UseRegisterProps) => {
         config.navigation.onLoginSuccess();
       } else {
         console.log(`${t('_error_')} ${t('userRegisterErrorAlertMessage')}`, { error: result.error || 'Unknown error' });
+        if (result.error == 'Bu e-posta ile kayıtlı başka bir kullanıcı mevcut') {
+          setErrorMessage('userRegisterErrorAlertMessageAnotherUserUseThisEmail');
+        }
         setErrorRegister(true);
       }
     } catch (error) {
@@ -94,6 +98,7 @@ export const useRegister = ({ config }: UseRegisterProps) => {
     errorPassword,
     setErrorPassword,
     errorInvalidEmail,
-    setErrorInvalidEmail
+    setErrorInvalidEmail,
+    errorMessage,
   };
 }; 

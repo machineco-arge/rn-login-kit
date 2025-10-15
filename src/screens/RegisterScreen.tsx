@@ -47,7 +47,8 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
     errorPassword,
     setErrorPassword,
     errorInvalidEmail,
-    setErrorInvalidEmail
+    setErrorInvalidEmail,
+    errorMessage
   } = useRegister({
     config,
   });
@@ -204,7 +205,7 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
       theme={config.theme}
       visible={errorRegister}
       title={t('_error_')}
-      message={t('userRegisterErrorAlertMessage')}
+      message={`${t('userRegisterErrorAlertMessage')} ${t(errorMessage)}`}
       onOK={() => setErrorRegister(false)}
       okText={t('ok')}
     />
