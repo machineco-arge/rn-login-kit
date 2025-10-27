@@ -153,7 +153,7 @@ export const SignInScreen: React.FC<ScreenProps> = ({
 
           <TouchableOpacity
             style={styles.loginButton}
-            onPress={() => handleLogin}>
+            onPress={handleLogin}>
             <Text style={styles.loginButtonText}>{t('userSignInLogin')}</Text>
           </TouchableOpacity>
         </View>
