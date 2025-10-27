@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -8,13 +8,13 @@ import FastImage from 'react-native-fast-image';
 import {LinearGradient} from 'react-native-gradients';
 import {ScreenProps} from '../types';
 import {SocialLogin} from '../components/SocialLogin';
-import {PrivacyPolicy} from '../components/PrivacyPolicy';
 import {useSocialAuth} from '../hooks/useSocialAuth';
 import {useLoginKitTranslation} from '../hooks/useLoginKitTranslation';
 import {LoadingIndicator} from '../components/LoadingIndicator';
 import { createLoginScreenStyles } from '../utils/styles';
 import { OrComponent } from '../components/OrComponent';
-import { usePrivacyCheck } from '../hooks/usePrivacyCheck';
+import { usePrivacyCheckSocial } from '../hooks/usePrivacyCheckSocial';
+import { CustomAlert } from '../components/CustomAlert';
 
 export const LoginScreen: React.FC<ScreenProps> = ({
   config,
@@ -23,23 +23,18 @@ export const LoginScreen: React.FC<ScreenProps> = ({
   GoogleIcon,
   AppleIcon,
 }) => {
-  const [isPrivacyChecked, setIsPrivacyChecked] = useState(
-    !config.privacy.required,
-  );
   const {t} = useLoginKitTranslation('login');
 
   // Use centralized social auth hook
-  const {isSocialLoginLoading, handleSocialLogin} = useSocialAuth({
-    config,
-    isPrivacyChecked,
-  });
+  const { isSocialLoginLoading, handleSocialLogin } = useSocialAuth({config});
+
+  const { visiblePrivacyAlert, setVisiblePrivacyAlert, handleVisiblePrivacyAlert, handleAcceptAndContinue } = usePrivacyCheckSocial({
+      isPrivacyRequired: config.privacy.required,
+      handleSocialLogin
+    });
 
   const styles = createLoginScreenStyles(config.theme);
 
-  const { animatePrivacyPolicy, handlePressWithPrivacyCheck } = usePrivacyCheck({
-    isPrivacyChecked,
-    isPrivacyRequired: config.privacy.required,
-  });
 
   if (isSocialLoginLoading) {
     return <LoadingIndicator theme={config.theme} />;
@@ -131,8 +126,8 @@ export const LoginScreen: React.FC<ScreenProps> = ({
                 theme={config.theme}
                 socialConfig={config.socialAuth}
                 loading={isSocialLoginLoading}
-                onGooglePress={() => handlePressWithPrivacyCheck(() => handleSocialLogin('google'))}
-                onApplePress={() => handlePressWithPrivacyCheck(() => handleSocialLogin('apple'))}
+                onGooglePress={() => handleVisiblePrivacyAlert('google')}
+                onApplePress={() => handleVisiblePrivacyAlert('apple')}
                 GoogleIcon={GoogleIcon}
                 AppleIcon={AppleIcon}
                 googleText={t('socialLoginWithGoogle')}
@@ -143,18 +138,21 @@ export const LoginScreen: React.FC<ScreenProps> = ({
         </View>
       </View>
 
-      {/* Privacy Section */}
+     {/* Privacy Section */}
       {config.privacy.required && (
-        <View style={styles.privacySection}>
-          <PrivacyPolicy
-            theme={config.theme}
-            isChecked={isPrivacyChecked}
-            onCheckboxChange={setIsPrivacyChecked}
-            pressPrivacyPolicy={config.privacy.pressPrivacyPolicy}
-            triggerAnimation={animatePrivacyPolicy}
-          />
-        </View>
-      )}
+        <CustomAlert
+          config={config}
+          visible={visiblePrivacyAlert}
+          title={t("info")}
+          message={t('PrivacyPolicy')}
+          isFromPrivacy={true}
+          onClose={() => setVisiblePrivacyAlert(false)}
+          onOK={handleAcceptAndContinue}
+          okText={t("confirm")}
+          onInspect={config.privacy.pressPrivacyPolicy}
+          inspectText={t("inspect")}
+             />
+           )}
     </View>
   );
 };

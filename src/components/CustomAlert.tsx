@@ -12,13 +12,16 @@ interface CustomAlertProps {
   title: string;
   message: string;
   onCancel?: () => void;
+  onClose?: () => void;
   onConfirm?: () => void;
   onOK?: () => void;
   onSendToPrint?: () => void;
+  onInspect?: () => void;
   okText?: string;
   cancelText?: string;
   confirmText?: string;
   sendToPrintText?: string;
+  inspectText?: string;
   isLoading?: boolean;
 }
 
@@ -34,13 +37,16 @@ export const CustomAlert: React.FC<
   title,
   message,
   onCancel,
+  onClose,
   onConfirm,
   onOK,
   onSendToPrint,
+  onInspect,
   okText = 'Tamam',
   cancelText = 'İptal',
   confirmText = 'Tamam',
   sendToPrintText = 'Gönder',
+  inspectText = 'İncele',
   isLoading = false,
 }) => {
   const scaleAnim = useRef(new Animated.Value(0)).current;
@@ -66,7 +72,7 @@ export const CustomAlert: React.FC<
       transparent
       visible={visible}
       animationType="fade"
-      onRequestClose={onCancel}>
+      onRequestClose={onCancel || onClose}>
       <View style={styles.modalBackground}>
         <Animated.View
           style={[
@@ -81,7 +87,7 @@ export const CustomAlert: React.FC<
             {isFromPrivacy && config.privacy.required && (
             <TouchableOpacity
               style={styles.modalCloseIcon}
-              onPress={onCancel}>
+              onPress={onCancel || onClose}>
               <XCircleIcon
                 size={35}
                 color={config.theme.colors.customAlertCancelColor}
@@ -107,6 +113,20 @@ export const CustomAlert: React.FC<
                 ) : (
                   <Text style={styles.buttonText}>
                     {cancelText}
+                  </Text>
+                )}
+              </TouchableOpacity>
+            )}
+            {onInspect && (
+              <TouchableOpacity
+                style={[styles.button, styles.cancelButton]}
+                disabled={isLoading}
+                onPress={onInspect}>
+                {isLoading ? (
+                  <ActivityIndicator color="#fff" size="small" />
+                ) : (
+                  <Text style={styles.buttonText}>
+                    {inspectText}
                   </Text>
                 )}
               </TouchableOpacity>

@@ -4,10 +4,9 @@ import { LoginKitConfig } from '../types';
 
 interface UseSocialAuthProps {
   config: LoginKitConfig;
-  isPrivacyChecked: boolean;
 }
 
-export const useSocialAuth = ({ config, isPrivacyChecked }: UseSocialAuthProps) => {
+export const useSocialAuth = ({ config }: UseSocialAuthProps) => {
   const [isSocialLoginLoading, setIsSocialLoginLoading] = useState(false);
 
   // Initialize Social Auth Service
@@ -20,7 +19,7 @@ export const useSocialAuth = ({ config, isPrivacyChecked }: UseSocialAuthProps) 
   }, [config.socialAuth, config.apiConfig, config.navigation.onGetUserName]);
 
   const handleSocialLogin = async (provider: 'google' | 'apple') => {
-    if (!isPrivacyChecked && config.privacy.required) {
+    if (config.privacy.required) {
       return;
     }
 

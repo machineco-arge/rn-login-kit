@@ -53,6 +53,7 @@ export {useDarkLightMode} from './hooks/useDarkLightMode';
 export {useThemeContext, ThemeProvider} from './hooks/useThemeContext';
 export {useProfileSettings} from './hooks/useProfileSettings';
 export {usePrivacyCheck} from './hooks/usePrivacyCheck';
+export {usePrivacyCheckSocial} from './hooks/usePrivacyCheckSocial';
 
 // Types
 export type {
