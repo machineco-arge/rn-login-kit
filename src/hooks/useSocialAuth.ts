@@ -19,9 +19,6 @@ export const useSocialAuth = ({ config }: UseSocialAuthProps) => {
   }, [config.socialAuth, config.apiConfig, config.navigation.onGetUserName]);
 
   const handleSocialLogin = async (provider: 'google' | 'apple') => {
-    if (config.privacy.required) {
-      return;
-    }
 
     try {
       setIsSocialLoginLoading(true);
