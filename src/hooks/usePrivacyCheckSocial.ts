@@ -1,19 +1,20 @@
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 
 interface UsePrivacyCheckSocialProps {
   isPrivacyRequired: boolean | undefined;
+  pressPrivacyPolicy: () => void;
   handleSocialLogin: (provider: "apple" | "google") => Promise<void>
 }
 
 export const usePrivacyCheckSocial = ({
-  isPrivacyRequired, handleSocialLogin
+  isPrivacyRequired, handleSocialLogin, pressPrivacyPolicy
 }: UsePrivacyCheckSocialProps) => {
   const [visiblePrivacyAlert, setVisiblePrivacyAlert] = useState(false);
-  const [myProvider, setMyProvider] = useState<'apple' | 'google' | null>(null)
+  const myProvider = useRef<'apple' | 'google' | null>(null);
 
   const handleVisiblePrivacyAlert = (provider: 'apple' | 'google') => {
-    setMyProvider(provider);
-    console.log('provider is: ', myProvider)
+    myProvider.current = provider;
+    console.log('provider is: ', myProvider.current)
     if(isPrivacyRequired) {
       setVisiblePrivacyAlert(true);
     } else {
@@ -25,17 +26,22 @@ export const usePrivacyCheckSocial = ({
   const handleAcceptAndContinue = () => {
     console.log('Pressed Accept and Continue');
 
-    if(!myProvider) {
+    if(!myProvider.current) {
       console.log('Provider is null');
       return;
     };
     
     setVisiblePrivacyAlert(false);
-    handleSocialLogin(myProvider);
+    handleSocialLogin(myProvider.current);
+  }
+
+  const handleInspect = () => {
+    setVisiblePrivacyAlert(false);
+    pressPrivacyPolicy();
   }
 
   return {
-    visiblePrivacyAlert, setVisiblePrivacyAlert,
+    visiblePrivacyAlert, setVisiblePrivacyAlert, handleInspect,
     handleVisiblePrivacyAlert, handleAcceptAndContinue
   };
 };

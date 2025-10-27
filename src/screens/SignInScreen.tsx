@@ -58,9 +58,10 @@ export const SignInScreen: React.FC<ScreenProps> = ({
   // Use centralized social auth hook
   const { isSocialLoginLoading, handleSocialLogin } = useSocialAuth({config});
 
-  const { visiblePrivacyAlert, setVisiblePrivacyAlert, handleVisiblePrivacyAlert, handleAcceptAndContinue } = usePrivacyCheckSocial({
+  const { visiblePrivacyAlert, setVisiblePrivacyAlert, handleVisiblePrivacyAlert, handleAcceptAndContinue, handleInspect } = usePrivacyCheckSocial({
       isPrivacyRequired: config.privacy.required,
-      handleSocialLogin
+      handleSocialLogin,
+      pressPrivacyPolicy: config.privacy.pressPrivacyPolicy,
     });
 
   if (loading || isSocialLoginLoading) {
@@ -198,7 +199,7 @@ export const SignInScreen: React.FC<ScreenProps> = ({
           onClose={() => setVisiblePrivacyAlert(false)}
           onOK={handleAcceptAndContinue}
           okText={t("confirm")}
-          onInspect={config.privacy.pressPrivacyPolicy}
+          onInspect={handleInspect}
           inspectText={t("inspect")}
         />
       )}
