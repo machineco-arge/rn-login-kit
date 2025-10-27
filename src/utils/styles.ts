@@ -923,6 +923,11 @@ export const createCustomAlertStyles = (theme: LoginKitTheme) => {
       textAlign: "center",
       fontFamily: theme.fonts.primarySemiBold,
     },
+    modalCloseIcon: {
+      position: "absolute",
+      marginLeft: "98%",
+      marginTop: "3%",
+    },
     messageContainer: {
       paddingVertical: 20,
       paddingHorizontal: 20,

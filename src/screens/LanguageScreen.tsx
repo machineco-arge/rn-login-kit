@@ -199,7 +199,7 @@ export const LanguageScreen: React.FC<ScreenProps> = ({config}) => {
 
       {/* Language Change Success Alert */}
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={languageChangeSuccess}
         title={t('languageChanged')}
         message={t('languageChangedMessage')}
@@ -209,7 +209,7 @@ export const LanguageScreen: React.FC<ScreenProps> = ({config}) => {
 
       {/* Language Change Error Alert */}
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={languageChangeError}
         title={t('_error_')}
         message={t('languageChangeError')}

@@ -175,7 +175,7 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
       )}
 
     <CustomAlert
-      theme={config.theme}
+      config={config}
       visible={errorMissingInputs}
       title={t('_error_')}
       message={t('userRegisterPleaseEnterAllInformation')}
@@ -184,7 +184,7 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
     />
     
     <CustomAlert
-      theme={config.theme}
+      config={config}
       visible={errorPassword}
       title={t('_error_')}
       message={t('userRegisterPasswordsNotMatchErrorAlert')}
@@ -193,7 +193,7 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
     />
 
     <CustomAlert
-      theme={config.theme}
+      config={config}
       visible={errorInvalidEmail}
       title={t('_error_')}
       message={t('userSignInEnterValidEmailAlert')}
@@ -202,7 +202,7 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
     />
 
     <CustomAlert
-      theme={config.theme}
+      config={config}
       visible={errorRegister}
       title={t('_error_')}
       message={`${t('userRegisterErrorAlertMessage')} ${t(errorMessage)}`}

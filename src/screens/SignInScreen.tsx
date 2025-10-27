@@ -204,7 +204,7 @@ export const SignInScreen: React.FC<ScreenProps> = ({
       )}
 
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={errorMissingInputs}
         title={t('_error_')}
         message={t('userSignInEnterEmailAndPasswordAlert')}
@@ -213,7 +213,7 @@ export const SignInScreen: React.FC<ScreenProps> = ({
       />
 
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={errorInvalidEmail}
         title={t('_error_')}
         message={t('userSignInEnterValidEmailAlert')}
@@ -222,7 +222,7 @@ export const SignInScreen: React.FC<ScreenProps> = ({
       />
 
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={errorSignIn}
         title={t('_error_')}
         message={`${t('userSignInErrorAlertMessage')} ${t(errorMessage)}`}
@@ -231,7 +231,7 @@ export const SignInScreen: React.FC<ScreenProps> = ({
       />
 
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={errorPassword}
         title={t('_error_')}
         message={t('userSignInErrorWrongPasswordAlertMessage')}

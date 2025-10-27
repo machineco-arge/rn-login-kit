@@ -296,7 +296,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
 
       {/* Photo Edit Success Alert */}
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={photoEditSuccess}
         title={t('_success_')}
         message={t('profilePhotoUpdatedMessage')}
@@ -306,7 +306,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
 
       {/* Photo Edit Error Alert */}
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={photoEditError}
         title={t('_error_')}
         message={t('profilePhotoErrorMessage')}
@@ -326,7 +326,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
 
       {/* No Profile Photo Alert */}
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={visibleNoProfilePhotoAlert}
         title={t('noProfilePhotoTitle')}
         message={t('noProfilePhotoMessage')}
@@ -336,7 +336,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
 
       {/* Select Photo Error Alert */}
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={visibleSelectPhotoErrorAlert}
         title={t('_error_')}
         message={t('selectPhotoErrorMessage')}
@@ -346,7 +346,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
 
       {/* Reset Confirmation Alert */}
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={visibleResetConfirmAlert}
         title={t('resetProfilePhotoTitle')}
         message={t('resetProfilePhotoMessage')}
@@ -358,7 +358,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
 
       {/* Reset Success Alert */}
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={visibleResetSuccessAlert}
         title={t('_success_')}
         message={t('profilePhotoResetSuccessMessage')}
@@ -368,7 +368,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
 
       {/* Reset Error Alert */}
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={visibleResetErrorAlert}
         title={t('_error_')}
         message={t('profilePhotoResetErrorMessage')}
@@ -378,7 +378,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
 
       {/* Delete Confirmation Alert */}
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={visibleDeleteConfirmAlert}
         title={t('delete')}
         message={t('deleteProfilePhotoMessage')}
@@ -390,7 +390,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
 
       {/* Delete Success Alert */}
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={visibleDeleteSuccessAlert}
         title={t('_success_')}
         message={t('profilePhotoDeletedSuccessMessage')}
@@ -400,7 +400,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
 
       {/* Delete Error Alert */}
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={visibleDeleteErrorAlert}
         title={t('_error_')}
         message={t('profilePhotoDeleteErrorMessage')}
@@ -410,7 +410,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
 
       {/* Invalid Name Alert */}
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={visibleInvalidNameAlert}
         title={t('_error_')}
         message={t('invalidNameMessage')}
@@ -420,7 +420,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
 
       {/* Name Update Success Alert */}
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={visibleNameUpdateSuccessAlert}
         title={t('_success_')}
         message={t('nameUpdatedSuccessMessage')}
@@ -430,7 +430,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
 
       {/* Name Update Error Alert */}
       <CustomAlert
-        theme={config.theme}
+        config={config}
         visible={visibleNameUpdateErrorAlert}
         title={t('_error_')}
         message={t('nameUpdateErrorMessage')}

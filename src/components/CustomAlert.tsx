@@ -1,11 +1,13 @@
 import React from 'react';
 import {Modal, View, Text, TouchableOpacity, Animated, ActivityIndicator} from 'react-native';
 import {useEffect, useRef} from 'react';
-import {LoginKitTheme} from '../types';
+import {LoginKitConfig} from '../types';
 import {createCustomAlertStyles} from '../utils/styles';
+import { XCircleIcon } from 'react-native-heroicons/outline';
 
 interface CustomAlertProps {
-  theme: LoginKitTheme;
+  config: LoginKitConfig;
+  isFromPrivacy?: boolean;
   visible: boolean;
   title: string;
   message: string;
@@ -26,7 +28,8 @@ interface CustomAlertProps {
 export const CustomAlert: React.FC<
   CustomAlertProps
 > = ({
-  theme,
+  config,
+  isFromPrivacy = false,
   visible,
   title,
   message,
@@ -41,7 +44,7 @@ export const CustomAlert: React.FC<
   isLoading = false,
 }) => {
   const scaleAnim = useRef(new Animated.Value(0)).current;
-  const styles = createCustomAlertStyles(theme);
+  const styles = createCustomAlertStyles(config.theme);
 
   useEffect(() => {
     if (visible) {
@@ -75,6 +78,16 @@ export const CustomAlert: React.FC<
           {/* Alert Title */}
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>{title}</Text>
+            {isFromPrivacy && config.privacy.required && (
+            <TouchableOpacity
+              style={styles.modalCloseIcon}
+              onPress={onCancel}>
+              <XCircleIcon
+                size={35}
+                color={config.theme.colors.customAlertCancelColor}
+              />
+            </TouchableOpacity>
+            )}
           </View>
 
           {/* Alert Message */}
