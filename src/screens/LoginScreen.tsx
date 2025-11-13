@@ -65,11 +65,11 @@ export const LoginScreen: React.FC<ScreenProps> = ({
               source={config.logo.source as any}
               style={[
                 styles.logoImage,
-                config.logo.width &&
-                  config.logo.height &&
+                config.logo.logoWidth &&
+                  config.logo.logoHeight &&
                   ({
-                    width: config.logo.width,
-                    height: config.logo.height,
+                    width: config.logo.logoWidth,
+                    height: config.logo.logoHeight,
                   } as any),
               ]}
               resizeMode="contain"
@@ -77,6 +77,16 @@ export const LoginScreen: React.FC<ScreenProps> = ({
           </View>
           {config.logo.text && (
             <Text style={styles.logoText}>{config.logo.text}</Text>
+          )}
+          {config.logo.logoTextImage && (
+            <FastImage
+                source={config.logo.logoTextImage as any}
+                style={[
+                  styles.logoImage,
+                  { width: config.logo.logoTextImageWidth, height: config.logo.logoTextImageHeight },
+                ]}
+                resizeMode="contain"
+              />
           )}
         </View>
 

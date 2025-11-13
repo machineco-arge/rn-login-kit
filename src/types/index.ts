@@ -200,8 +200,11 @@ export interface NavigationConfig {
 export interface LogoConfig {
   source: ImageSourcePropType;
   text?: string;
-  width?: number;
-  height?: number;
+  logoWidth?: number;
+  logoHeight?: number;
+  logoTextImage?: string;
+  logoTextImageWidth?: number;
+  logoTextImageHeight?: number;
 }
 
 // Privacy Policy Configuration

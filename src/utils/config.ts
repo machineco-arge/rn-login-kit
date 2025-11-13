@@ -9,7 +9,12 @@ interface CreateDefaultConfigParams {
   };
   navigation: NavigationConfig;
   logoSource: any; // ImageSourcePropType
+  logoWidth?: number;
+  logoHeight?: number;
   logoText?: string;
+  logoTextImage?: string;
+  logoTextImageWidth?: number;
+  logoTextImageHeight?: number;
   enableAppleLogin: boolean;
   enableGoogleLogin: boolean;
   enableRegister: boolean;
@@ -39,7 +44,12 @@ export const createDefaultConfig = (params: CreateDefaultConfigParams): LoginKit
     googleClientIds,
     navigation,
     logoSource,
+    logoWidth,
+    logoHeight,
     logoText,
+    logoTextImage,
+    logoTextImageWidth,
+    logoTextImageHeight,
     enableAppleLogin = true,
     enableGoogleLogin = true,
     enableRegister = true,
@@ -78,6 +88,11 @@ export const createDefaultConfig = (params: CreateDefaultConfigParams): LoginKit
     logo: {
       source: logoSource,
       text: logoText,
+      logoWidth: logoWidth,
+      logoHeight: logoHeight,
+      logoTextImage: logoTextImage,
+      logoTextImageWidth: logoTextImageWidth,
+      logoTextImageHeight: logoTextImageHeight,
     },
     privacy: {
       required: requirePrivacyAcceptance,
