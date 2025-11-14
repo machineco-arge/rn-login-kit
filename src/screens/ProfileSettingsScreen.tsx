@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Dimensions } from "react-native";
 import { LinearGradient } from "react-native-gradients";
 import FastImage from "react-native-fast-image";
 import { createStyleProfileSettings } from "../utils/styles";
@@ -43,7 +43,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettigsProps> = (
         </View>
 
         <ScrollView
-          contentContainerStyle={{ paddingBottom: "40%" }}
+          contentContainerStyle={{ paddingBottom: "40%", width: Dimensions.get("window").width }}
           style={StyleProfileSettings.profileSettingsScrollView}
         >
           {/* Profile Section */}
