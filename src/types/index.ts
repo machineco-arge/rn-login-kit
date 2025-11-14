@@ -291,6 +291,8 @@ export interface ProfileSettigsProps {
   }[];
   biography?: string;
   stats?: string;
+  proMemberText?: string;
+  proMemberTextColor?: string;
 }
 
 

@@ -66,6 +66,11 @@ export const ProfileSettingsScreen: React.FC<ProfileSettigsProps> = (
             <Text style={StyleProfileSettings.profileSettingsUserName}>
               {userInfo?.name || userInfo?.email || "User"}
             </Text>
+            {props.proMemberText && (
+              <Text style={[StyleProfileSettings.profileProMember, {color: props.proMemberTextColor || props.config.theme.colors.profileSettingsBioColor}]}>
+                {props.proMemberText}
+              </Text>
+            )}
             {props.biography && (
               <Text style={StyleProfileSettings.profileSettingsBio}>
                 {props.biography}

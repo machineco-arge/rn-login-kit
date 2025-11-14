@@ -1125,6 +1125,12 @@ export const createStyleProfileSettings = (theme: LoginKitTheme) => {
       color: theme.colors.profileSettingsUserNameColor,
       marginBottom: 8,
     },
+    profileProMember: {
+      fontSize: 16,
+      fontFamily: theme.fonts.primarySemiBold,
+      textAlign: "center",
+      marginBottom: 8,
+    },
     profileSettingsBio: {
       fontSize: 16,
       fontFamily: theme.fonts.primaryLight,
