@@ -139,29 +139,31 @@ export class SocialAuthService {
         throw new Error('No identity token received from Apple');
       }
 
+      if(!this.apiBaseUrl && !this.endpoints?.appleLogin) {
+        return {success: false, error: 'Apple authentication is not enabled'};
+      }
+
+      // Save to backend if configured
+      const response = await this.authenticateWithBackend('apple', {
+        identityToken,
+        email,
+        fullName: fullName
+          ? {
+              firstName: fullName.givenName,
+              lastName: fullName.familyName,
+            }
+          : undefined,
+        appleUserId: appleAuthRequestResponse.user,
+        providerId: 'apple.com',
+      });
+
       const user: IUserInfo = {
-        idToken: identityToken,
+        idToken: response.data.userToken || '',
         name: fullName?.givenName || 'Apple User',
         email: email || 'No Email Provided',
         photo: null,
         providerId: 'apple.com',
       };
-
-      // Save to backend if configured
-      if (this.apiBaseUrl && this.endpoints?.appleLogin) {
-        await this.authenticateWithBackend('apple', {
-          identityToken,
-          email,
-          fullName: fullName
-            ? {
-                firstName: fullName.givenName,
-                lastName: fullName.familyName,
-              }
-            : undefined,
-          appleUserId: appleAuthRequestResponse.user,
-          providerId: 'apple.com',
-        });
-      }
 
       // Save user session
       await this.saveUserSession(user, this.onGetUserName);
