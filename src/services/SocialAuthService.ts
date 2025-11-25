@@ -133,6 +133,7 @@ export class SocialAuthService {
       }
 
       const {identityToken, email, fullName} = appleAuthRequestResponse;
+      console.log('ID Token:', identityToken);
 
       if (!identityToken) {
         throw new Error('No identity token received from Apple');
