@@ -164,7 +164,6 @@ export class SocialAuthService {
         photo: null,
         providerId: 'apple.com',
       };
-      console.log('Authenticated User:', user);
 
       // Save user session
       await this.saveUserSession(user, this.onGetUserName);
