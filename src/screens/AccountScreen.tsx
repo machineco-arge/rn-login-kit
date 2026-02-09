@@ -287,7 +287,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
             {config.navigation.onDeleteAccountPress && (
               <TouchableOpacity onPress={() => config.navigation.onDeleteAccountPress?.()}>
                 <Text style={styles.profileSettingsLogoutButtonText}>
-                  {t('deleteAccount')}
+                  {t('deleteAccountButton')}
                 </Text>
               </TouchableOpacity>
             )}
