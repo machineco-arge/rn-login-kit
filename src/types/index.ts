@@ -194,6 +194,7 @@ export interface NavigationConfig {
   onUserNameUpdate?: (newName: string) => Promise<void>;
   onGetUserName?: () => Promise<string | null>;
   onPermissionAccessGalery?: () => Promise<boolean>;
+  onDeleteAccountPress?: () => void;
 }
 
 // Logo Configuration

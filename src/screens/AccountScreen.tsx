@@ -260,7 +260,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
 
         {/* Provider Information Section */}
         <View style={styles.infoSection}>
-          <View style={[styles.infoRow, styles.lastInfoRow]}>
+          <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>{t('loginMethod')}</Text>
             <Text style={styles.infoValue}>
               {currentUser.providerId === 'google.com'
@@ -274,13 +274,24 @@ export const AccountScreen: React.FC<ScreenProps> = ({
                 : t('unknown')}
             </Text>
           </View>
-          
-          {/* Logout Button */}
-          <TouchableOpacity onPress={handleLogout}>
-            <Text style={styles.profileSettingsLogoutButtonText}>
-              {t('logOut')}
-            </Text>
-          </TouchableOpacity>
+
+          <View style={[styles.infoRow, styles.lastInfoRow]}>
+            {/* Logout Button */}
+            <TouchableOpacity onPress={handleLogout}>
+              <Text style={styles.profileSettingsLogoutButtonText}>
+                {t('logOut')}
+              </Text>
+            </TouchableOpacity>
+
+            {/* Delete Account Button */}
+            {config.navigation.onDeleteAccountPress && (
+              <TouchableOpacity onPress={() => config.navigation.onDeleteAccountPress?.()}>
+                <Text style={styles.profileSettingsLogoutButtonText}>
+                  {t('deleteAccount')}
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
       </ScrollView>
 
