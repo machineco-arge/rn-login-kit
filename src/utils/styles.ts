@@ -464,63 +464,107 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
   });
 };
 
-export const createStyleProfilePhotoCropper = (theme: LoginKitTheme) => {
-  const CROP_SIZE = width * 0.8;
-
-  return StyleSheet.create({
-    modalBackground: {
-      flex: 1,
-      backgroundColor: "rgba(0, 0, 0, 0.8)",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    container: {
-      backgroundColor: theme.colors.accountScreenPhotoCropperBgColor,
-      borderRadius: 20,
-      padding: 20,
-      alignItems: "center",
-      width: width * 0.9,
+export const createStyleProfilePhotoCropper = (
+  theme: LoginKitTheme,
+  insets: { top: number; bottom: number },
+  CROP_CIRCLE_SIZE: number
+) =>
+  StyleSheet.create({
+    rootContainer: { flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.95)' },
+    header: {
+      paddingTop: Platform.OS === 'ios' ? insets.top + 8 : 16,
+      paddingHorizontal: 20,
+      paddingBottom: 12,
+      alignItems: 'center',
     },
     title: {
       fontSize: 18,
       fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.accountScreenPhotoCropperTitleColor,
-      marginBottom: 20,
-      textAlign: "center",
+      textAlign: 'center',
     },
-    description: {
-      fontSize: 14,
-      fontFamily: theme.fonts.primaryRegular,
-      color: theme.colors.accountScreenPhotoCropperTitleColor,
-      marginBottom: 20,
-      textAlign: "center",
-    },
-    previewContainer: {
-      width: CROP_SIZE * 0.6,
-      height: CROP_SIZE * 0.6,
-      borderRadius: (CROP_SIZE * 0.6) / 2,
-      overflow: "hidden",
-      marginBottom: 20,
+    cropArea: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+    cropContainer: {
+      width: CROP_CIRCLE_SIZE,
+      height: CROP_CIRCLE_SIZE,
+      borderRadius: CROP_CIRCLE_SIZE / 2,
+      overflow: 'hidden',
+      justifyContent: 'center',
+      alignItems: 'center',
       borderWidth: 3,
       borderColor:
         theme.colors.accountScreenPhotoCropperPreviewContainerBorderColor,
     },
-    previewImage: {
-      width: "100%",
-      height: "100%",
+    controlsContainer: {
+      paddingHorizontal: 20,
+      paddingTop: 12,
+      paddingBottom:
+        Platform.OS === 'ios'
+          ? insets.bottom + 24
+          : Math.max(insets.bottom, 48) + 24,
+    },
+    toolRow: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: 32,
+      marginBottom: 20,
+    },
+    sliderContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 20,
+      paddingHorizontal: 4,
+      gap: 10,
+    },
+    sliderTrack: { flex: 1, height: 36, justifyContent: 'center' },
+    sliderTrackLine: {
+      height: 3,
+      backgroundColor: 'rgba(255,255,255,0.2)',
+      borderRadius: 1.5,
+    },
+    sliderFill: {
+      height: 3,
+      backgroundColor:
+        theme.colors.accountScreenPhotoCropperPreviewContainerBorderColor,
+      borderRadius: 1.5,
+      position: 'absolute',
+      left: 0,
+      top: (36 - 3) / 2,
+    },
+    sliderThumb: {
+      width: 22,
+      height: 22,
+      borderRadius: 11,
+      backgroundColor:
+        theme.colors.accountScreenPhotoCropperPreviewContainerBorderColor,
+      position: 'absolute',
+      top: (36 - 22) / 2,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.3,
+      shadowRadius: 3,
+      elevation: 4,
+    },
+    sliderLabel: {
+      fontSize: 11,
+      fontFamily: theme.fonts.primaryRegular,
+      color: 'rgba(255,255,255,0.5)',
+      width: 28,
+      textAlign: 'center',
     },
     buttonContainer: {
-      flexDirection: "row",
+      flexDirection: 'row',
+      justifyContent: 'space-between',
       gap: 15,
     },
     button: {
-      paddingHorizontal: 20,
-      paddingVertical: 12,
-      borderRadius: 10,
+      flex: 1,
+      paddingVertical: 14,
+      borderRadius: 12,
       borderWidth: 1,
       borderColor: theme.colors.accountScreenPhotoCropperButtonBorderColor,
-      minWidth: 100,
-      alignItems: "center",
+      alignItems: 'center',
     },
     primaryButton: {
       backgroundColor: theme.colors.accountScreenPhotoCropperOkButtonColor,
@@ -533,11 +577,30 @@ export const createStyleProfilePhotoCropper = (theme: LoginKitTheme) => {
       fontFamily: theme.fonts.primarySemiBold,
       color: theme.colors.accountScreenPhotoCropperButtonTextColor,
     },
-    disabledButton: {
-      opacity: 0.6,
+    disabledButton: { opacity: 0.6 },
+    actionButtonWithLabel: {
+      alignItems: "center",
+      opacity: 1,
+    },
+    actionButton: {
+      width: 50,
+      height: 50,
+      borderRadius: 25,
+      backgroundColor: theme.colors.accountScreenEditPhotoActionButtonsBgColor,
+      justifyContent: "center",
+      alignItems: "center",
+      borderWidth: 1,
+      borderColor: theme.colors.accountScreenEditPhotoActionButtonsBorderColor,
+    },
+    actionButtonLabel: {
+      fontSize: 12,
+      fontFamily: theme.fonts.primaryMedium,
+      color: theme.colors.accountScreenInfoSectionLabelTextColor,
+      marginTop: 5,
+      textAlign: "center",
+      width: 80,
     },
   });
-};
 
 export const createStyleEditNameModal = (theme: LoginKitTheme) => {
   return StyleSheet.create({
