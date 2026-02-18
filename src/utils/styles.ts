@@ -472,7 +472,7 @@ export const createStyleProfilePhotoCropper = (
   StyleSheet.create({
     rootContainer: { flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.95)' },
     header: {
-      paddingTop: Platform.OS === 'ios' ? insets.top + 8 : 16,
+      paddingTop: Platform.OS === 'ios' ? (insets.top + 8) : (insets.top + 16),
       paddingHorizontal: 20,
       paddingBottom: 12,
       alignItems: 'center',
