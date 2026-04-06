@@ -129,6 +129,28 @@ export interface LoginKitThemeColors {
   iconSetAccountScreenImagePickerColor: string;
   iconSetAccountScreenDeleteColor: string;
   iconSetProfileSettingsPpIconColor: string;
+
+  // new
+  PRIMARY_950: string;
+  PRIMARY_900: string;
+  PRIMARY_800: string;
+  PRIMARY_700: string;
+  PRIMARY_600: string;
+  PRIMARY_500: string;
+  PRIMARY_400: string;
+  PRIMARY_300: string;
+  PRIMARY_200: string;
+  PRIMARY_100: string;
+  PRIMARY_50: string;
+
+  SECONDARY_100: string;
+  SECONDARY_50: string;
+
+  TERTIARY_TEXT_DARK: string;
+  TERTIARY_TEXT_LIGHT: string;
+
+  TRANSPARENT_PRIMARY: string;
+  TRANSPARENT_SECONDARY: string;
 }
 
 export interface LoginKitThemeFonts {
