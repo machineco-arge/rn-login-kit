@@ -1026,7 +1026,7 @@ export const createStyleProfileSettings = (theme: LoginKitTheme) => {
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingVertical: 16,
-      paddingHorizontal: 16,
+      // paddingHorizontal: 16,
       borderBottomWidth: 1,
       borderBottomColor: theme.colors.PRIMARY_300,
     },
