@@ -5,6 +5,8 @@ import {
   ViewStyle,
   TextStyle,
   TouchableOpacity,
+  StyleSheet,
+  Text,
 } from 'react-native';
 import {LoginKitTheme} from '../types';
 import {IconSet} from './IconSet';
@@ -17,6 +19,7 @@ interface TextInputsLoginProps {
   onChangeText: (text: string) => void;
   passwordClose?: boolean;
   IconComponent?: React.ComponentType<{type: string; theme: LoginKitTheme}>;
+  errorText?: string;
 }
 
 export const TextInputsLogin: React.FC<TextInputsLoginProps> = ({
@@ -26,73 +29,83 @@ export const TextInputsLogin: React.FC<TextInputsLoginProps> = ({
   value,
   onChangeText,
   passwordClose = false,
-  IconComponent,
+  errorText,
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
 
-  const containerStyle: ViewStyle = {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: theme.colors.loginScreensTextInputBgColor,
-    borderWidth: 1,
-    borderColor: theme.colors.loginScreensTextInputBorderColor,
-    borderRadius: theme.borderRadius,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    marginBottom: 8,
-  };
-
   const isSecure = type === 'Password' ? !isPasswordVisible : passwordClose;
 
-  const textInputStyle: TextStyle = {
-    flex: 1,
-    fontFamily: theme.fonts.primaryRegular,
-    fontSize: 16,
-    color: theme.colors.loginScreensTextInputTextColor,
-    marginLeft: IconComponent ? 10 : 0,
-  };
-
   const placeholderTextColor =
-    theme.colors.loginScreensTextInputSecondaryTextColor;
+    theme.colors.PRIMARY_400;
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!isPasswordVisible);
   };
 
+  const styles = StyleSheet.create({
+    container: {
+      marginBottom: 12,
+    },
+    inputWrapper: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: errorText ? theme.colors.PRIMARY_50 : theme.colors.TERTIARY_TEXT_LIGHT,
+      borderWidth: 1,
+      borderColor: errorText ? '#B91C1C' : theme.colors.PRIMARY_200,
+      borderRadius: 4,
+      paddingHorizontal: 16,
+      height: 40,
+    } as ViewStyle,
+    textInput: {
+      flex: 1,
+      fontFamily: theme.fonts.primaryRegular,
+      fontSize: 14,
+      color: theme.colors.PRIMARY_950,
+    } as TextStyle,
+    errorLabel: {
+      color: '#B91C1C',
+      fontSize: 12,
+      fontFamily: theme.fonts.primaryRegular,
+      marginTop: 4,
+    } as TextStyle,
+  });
+
   return (
-    <View style={containerStyle}>
-      {IconComponent && <IconComponent type={type} theme={theme} />}
-      <TextInput
-        key={isPasswordVisible ? 'visible' : 'hidden'}
-        style={textInputStyle}
-        placeholder={placeholder}
-        placeholderTextColor={placeholderTextColor}
-        value={value}
-        onChangeText={onChangeText}
-        secureTextEntry={isSecure}
-        keyboardType={type === 'Password' ? 'default' : type === 'Mail' ? 'email-address' : 'default'}
-        autoCapitalize={type === 'Password' ? 'none' : type === 'Mail' ? 'none' : 'words'}
-        autoComplete={
-          type === 'Mail' ? 'email' : type === 'Password' ? 'password' : 'name'
-        }
-        textContentType={
-          type === 'Password'
-            ? isPasswordVisible
-              ? 'none'
-              : 'password'
-            : type === 'Mail'
-            ? 'emailAddress'
-            : 'name'
-        }
-      />
-      {type === 'Password' && (
-        <TouchableOpacity onPress={togglePasswordVisibility}>
-          <IconSet
-            type={isPasswordVisible ? 'EyeSlash' : 'Eye'}
-            theme={theme}
-          />
-        </TouchableOpacity>
-      )}
+    <View style={styles.container}>
+      <View style={styles.inputWrapper}>
+        <TextInput
+          key={isPasswordVisible ? 'visible' : 'hidden'}
+          style={styles.textInput}
+          placeholder={placeholder}
+          placeholderTextColor={placeholderTextColor}
+          value={value}
+          onChangeText={onChangeText}
+          secureTextEntry={isSecure}
+          keyboardType={type === 'Password' ? 'default' : type === 'Mail' ? 'email-address' : 'default'}
+          autoCapitalize={type === 'Password' ? 'none' : type === 'Mail' ? 'none' : 'none'}
+          autoComplete={
+            type === 'Mail' ? 'email' : type === 'Password' ? 'password' : 'name'
+          }
+          textContentType={
+            type === 'Password'
+              ? isPasswordVisible
+                ? 'none'
+                : 'password'
+              : type === 'Mail'
+              ? 'emailAddress'
+              : 'name'
+          }
+        />
+        {type === 'Password' && (
+          <TouchableOpacity onPress={togglePasswordVisibility}>
+            <IconSet
+              type={isPasswordVisible ? 'EyeSlash' : 'Eye'}
+              theme={theme}
+            />
+          </TouchableOpacity>
+        )}
+      </View>
+      {!!errorText && <Text style={styles.errorLabel}>{errorText}</Text>}
     </View>
   );
 };

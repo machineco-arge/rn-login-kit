@@ -7,25 +7,40 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {LinearGradient} from 'react-native-gradients';
 import {ScreenProps} from '../types';
 import {createAccountScreenStyles} from '../utils/styles';
 import {useAccountSettings} from '../hooks/useAccountSettings';
 import {ProfilePhotoCropper} from '../components/ProfilePhotoCropper';
-import {EditNameModal} from '../components/EditNameModal';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { useLoginKitTranslation } from '../hooks/useLoginKitTranslation';
 import { userManager } from '../managers/UserManager';
-import { IconSet } from '../components/IconSet';
-import { CustomAlert } from '../components/CustomAlert';
-import { useProfilePhotoCropper } from '..';
+import { CustomBottomSheet, TextInputModal, useProfilePhotoCropper } from '..';
+import { useNavigation } from '@react-navigation/native';
 
-export const AccountScreen: React.FC<ScreenProps> = ({
+export interface AccountScreenProps extends ScreenProps {
+  navigateBackIcon?: React.JSX.Element;
+  backgroundImage?: any;
+  iconUserIcon?: React.JSX.Element;
+  iconMail?: React.JSX.Element;
+  iconEdit?: React.JSX.Element;
+  iconUserAvatarL?: React.JSX.Element;
+  iconAddPP?: React.JSX.Element;
+}
+
+export const AccountScreen: React.FC<AccountScreenProps> = ({
   config,
   showProfileManagement = true,
+  navigateBackIcon,
+  backgroundImage,
+  iconUserIcon,
+  iconMail,
+  iconEdit,
+  iconUserAvatarL,
+  iconAddPP,
 }) => {
   const styles = createAccountScreenStyles(config.theme);
   const {t} = useLoginKitTranslation('login');
+  const navigation = useNavigation();
 
   // Use account settings hook for all business logic
   const {
@@ -50,12 +65,8 @@ export const AccountScreen: React.FC<ScreenProps> = ({
     visibleNameUpdateErrorAlert,
 
     // Handlers
-    handleEditProfilePhoto,
     handleSelectFromGallery,
-    handleResetToDefault,
-    handleDeletePhoto,
     handleUpdateName,
-    handleLogout,
     handleConfirmReset,
     handleConfirmDelete,
 
@@ -76,17 +87,6 @@ export const AccountScreen: React.FC<ScreenProps> = ({
     setVisibleNameUpdateErrorAlert,
   } = useAccountSettings({ config });
 
-  /**
-   * Get user's initials for default avatar
-   */
-  const getUserInitials = (): string => {
-    if (!currentUser?.name) return 'U';
-    const nameParts = currentUser.name.split(' ');
-    if (nameParts.length >= 2) {
-      return `${nameParts[0][0]}${nameParts[1][0]}`.toUpperCase();
-    }
-    return currentUser.name[0].toUpperCase();
-  };
 
   /**
    * Check if user has custom photo
@@ -114,23 +114,22 @@ export const AccountScreen: React.FC<ScreenProps> = ({
 
   return (
     <View style={styles.container}>
-      {/* Background Gradient */}
-      <View style={styles.gradientContainer}>
-        <LinearGradient
-          angle={45}
-          colorList={config.theme.colors.gradient.map((color, index) => ({
-            color,
-            offset: `${
-              (index / (config.theme.colors.gradient.length - 1)) * 100
-            }%`,
-            opacity: '1',
-          }))}
+      {backgroundImage && (
+        <FastImage
+          source={backgroundImage}
+          style={styles.backgroundImage}
+          resizeMode={FastImage.resizeMode.cover}
         />
-      </View>
-
+      )}
       {/* Header */}
       <View style={styles.headerContainer}>
-        <Text style={styles.headerTitle}>{t('accountSettings')}</Text>
+        <View style={styles.headerTitleContainer}>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+            {navigateBackIcon}
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>{t('accountSettings')}</Text>
+        </View>
+        <View style={styles.headerUnderline} />
       </View>
 
       <ScrollView
@@ -139,160 +138,86 @@ export const AccountScreen: React.FC<ScreenProps> = ({
         
         {/* Profile Section */}
         {showProfileManagement && (
-          <View style={styles.profileSection}>
-            <View style={styles.editProfilePhotoHeaderContainer}>
-              <Text style={styles.editProfilePhotoHeaderTitle}>
-                {t('manageProfileSettings')}
-              </Text>
-            </View>
-            
-            {/* Profile Image */}
-            <View style={styles.profileImageContainer}>
-              {hasCustomPhoto() ? (
-                <FastImage
-                  source={{uri: currentUser.photo!}}
-                  style={styles.profileImage}
-                  resizeMode={FastImage.resizeMode.cover}
-                />
-              ) : (
-                <View style={styles.defaultAvatarContainer}>
-                  <Text style={styles.defaultAvatarText}>
-                    {getUserInitials()}
-                  </Text>
-                </View>
-              )}
+          <View style={styles.profileSectionWrapper}>
+            <TouchableOpacity 
+              style={styles.profileSection}
+              activeOpacity={0.8}
+              onPress={handleSelectFromGallery}
+            >
+              <View style={styles.profileImageContainer}>
+                {hasCustomPhoto() ? (
+                  <FastImage
+                    source={{uri: currentUser.photo!}}
+                    style={styles.profileImage}
+                    resizeMode={FastImage.resizeMode.cover}
+                  />
+                ) : (
+                  <View style={styles.defaultAvatarContainer}>
+                    {iconUserAvatarL && iconUserAvatarL}
+                  </View>
+                )}
 
-              {/* Loading Overlay */}
-              {isLoading && (
-                <View style={styles.loadingOverlay}>
-                  <ActivityIndicator size="large" color="white" />
+                {/* Loading Overlay */}
+                {isLoading && (
+                  <View style={styles.loadingOverlay}>
+                    <ActivityIndicator size="small" color="#fff" />
+                  </View>
+                )}
+                
+                {/* Add PP Icon Overlay */}
+                <View style={styles.addPPIconContainer}>
+                  {iconAddPP && iconAddPP}
                 </View>
-              )}
-            </View>
-
-            {/* Action Buttons Grid */}
-            <View style={styles.actionButtonsGrid}>
-              {/* Edit Current Photo */}
-              <TouchableOpacity
-                style={[
-                  styles.actionButtonWithLabel,
-                  !hasCustomPhoto() && styles.actionButtonDisabled,
-                ]}
-                onPress={handleEditProfilePhoto}
-                disabled={!hasCustomPhoto() || isLoading}
-                accessibilityLabel={t('editCurrentPhoto')}>
-                <View style={styles.actionButton}>
-                  <IconSet type="EditPhoto" theme={config.theme} />
-                </View>
-                <Text style={styles.actionButtonLabel}>{t('editPhoto')}</Text>
-              </TouchableOpacity>
-
-              {/* Select from Gallery */}
-              <TouchableOpacity
-                style={styles.actionButtonWithLabel}
-                onPress={handleSelectFromGallery}
-                disabled={isLoading}
-                accessibilityLabel={t('selectFromGallery')}>
-                <View style={styles.actionButton}>
-                  <IconSet type="ImagePicker" theme={config.theme} />
-                </View>
-                <Text style={styles.actionButtonLabel}>{t('selectFromGallery')}</Text>
-              </TouchableOpacity>
-
-              {/* Reset to Default */}
-              <TouchableOpacity
-                style={[
-                  styles.actionButtonWithLabel,
-                  !hasCustomPhoto() && styles.actionButtonDisabled,
-                ]}
-                onPress={handleResetToDefault}
-                disabled={!hasCustomPhoto() || isLoading}
-                accessibilityLabel={t('resetToDefault')}>
-                <View style={styles.actionButton}>
-                  <IconSet type="Reset" theme={config.theme} />
-                </View>
-                <Text style={styles.actionButtonLabel}>{t('resetToDefault')}</Text>
-              </TouchableOpacity>
-
-              {/* Delete Photo */}
-              <TouchableOpacity
-                style={[
-                  styles.actionButtonWithLabel,
-                  !hasCustomPhoto() && styles.actionButtonDisabled,
-                ]}
-                onPress={handleDeletePhoto}
-                disabled={!hasCustomPhoto() || isLoading}
-                accessibilityLabel={t('delete')}>
-                <View style={styles.actionButton}>
-                  <IconSet type="Delete" theme={config.theme} />
-                </View>
-                <Text style={styles.actionButtonLabel}>{t('delete')}</Text>
-              </TouchableOpacity>
-            </View>
+              </View>
+            </TouchableOpacity>
           </View>
         )}
 
         {/* User Information Section */}
-        <View style={styles.infoSection}>
-          {/* Name */}
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>{t('name')}</Text>
-            <Text style={[styles.infoValue, styles.editableInfoValue]}>
-              {currentUser.name || t('noName')}
-            </Text>
-            <TouchableOpacity
-              style={styles.editButton}
-              onPress={() => setShowEditNameModal(true)}
-              disabled={isLoading}
-              accessibilityLabel={t('editName')}>
-              <IconSet type="EditName" theme={config.theme} />
-            </TouchableOpacity>
-          </View>
-
-          {/* Email */}
-          <View style={[styles.infoRow, styles.lastInfoRow]}>
-            <Text style={styles.infoLabel}>{t('email')}</Text>
-            <Text style={styles.infoValue}>
-              {currentUser.email || t('noEmail')}
-            </Text>
-          </View>
-        </View>
-
-        {/* Provider Information Section */}
-        <View style={styles.infoSection}>
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>{t('loginMethod')}</Text>
-            <Text style={styles.infoValue}>
-              {currentUser.providerId === 'google.com'
-                ? t('googleLogin')
-                : currentUser.providerId === 'apple.com'
-                ? t('appleLogin')
-                : currentUser.providerId === 'userSignIn'
-                ? t('emailLogin')
-                : currentUser.providerId === 'userRegister'
-                ? t('emailLogin')
-                : t('unknown')}
-            </Text>
-          </View>
-
-          <View style={[styles.infoRow, styles.lastInfoRow]}>
-            {/* Logout Button */}
-            <TouchableOpacity onPress={handleLogout}>
-              <Text style={styles.profileSettingsLogoutButtonText}>
-                {t('logOut')}
-              </Text>
-            </TouchableOpacity>
-
-            {/* Delete Account Button */}
-            {config.navigation.onDeleteAccountPress && (
-              <TouchableOpacity onPress={() => config.navigation.onDeleteAccountPress?.()}>
-                <Text style={styles.profileSettingsLogoutButtonText}>
-                  {t('deleteAccountButton')}
+        <View style={styles.infoSectionContainer}>
+          <Text style={styles.sectionLabel}>Main Info</Text>
+          <View style={styles.infoSection}>
+            {/* Name */}
+            <View style={styles.infoRow}>
+              <View style={styles.infoRowLeft}>
+                {iconUserIcon && iconUserIcon}
+                <Text style={[styles.infoValue]}>
+                  {currentUser.name || t('noName')}
                 </Text>
+              </View>
+              <TouchableOpacity
+                style={styles.editButton}
+                onPress={() => setShowEditNameModal(true)}
+                disabled={isLoading}
+                accessibilityLabel={t('editName')}>
+                {iconEdit && iconEdit}
               </TouchableOpacity>
-            )}
+            </View>
+
+            {/* Email */}
+            <View style={[styles.infoRow]}>
+              <View style={styles.infoRowLeft}>
+                {iconMail && iconMail}
+                <Text style={styles.infoValue}>
+                  {currentUser.email || t('noEmail')}
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
+
+        {/* Delete Account Section */}
+        {config.navigation.onDeleteAccountPress && (
+          <View style={styles.deleteAccountContainer}>
+            <Text style={styles.sectionLabel}>{t('deleteAccountButton')}</Text>
+            <TouchableOpacity 
+              style={styles.deleteAccountButton}
+              onPress={() => config.navigation.onDeleteAccountPress?.()}
+            >
+              <Text style={styles.deleteAccountButtonText}>{t('deleteAccountButton')}</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </ScrollView>
 
       {/* Profile Photo Cropper Modal */}
@@ -306,7 +231,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
       />
 
       {/* Photo Edit Success Alert */}
-      <CustomAlert
+      <CustomBottomSheet
         config={config}
         visible={photoEditSuccess}
         title={t('_success_')}
@@ -316,7 +241,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
       />
 
       {/* Photo Edit Error Alert */}
-      <CustomAlert
+      <CustomBottomSheet
         config={config}
         visible={photoEditError}
         title={t('_error_')}
@@ -326,17 +251,21 @@ export const AccountScreen: React.FC<ScreenProps> = ({
       />
 
       {/* Edit Name Modal */}
-      <EditNameModal
+      <TextInputModal
+        config={config}
         visible={showEditNameModal}
-        onClose={() => setShowEditNameModal(false)}
-        currentName={currentUser.name || ''}
-        onSave={handleUpdateName}
-        isLoading={isLoading}
-        theme={config.theme}
+        title={t('editNameTitle')}
+        placeholder={currentUser.name || ''}
+        cancelText={t('cancel')}
+        submitText={t('save')}
+        value={currentUser.name || ''}
+        onCancel={() => setShowEditNameModal(false)}
+        onSubmit={handleUpdateName}
+        maxLength={32}
       />
 
       {/* No Profile Photo Alert */}
-      <CustomAlert
+      <CustomBottomSheet
         config={config}
         visible={visibleNoProfilePhotoAlert}
         title={t('noProfilePhotoTitle')}
@@ -346,7 +275,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
       />
 
       {/* Select Photo Error Alert */}
-      <CustomAlert
+      <CustomBottomSheet
         config={config}
         visible={visibleSelectPhotoErrorAlert}
         title={t('_error_')}
@@ -356,7 +285,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
       />
 
       {/* Reset Confirmation Alert */}
-      <CustomAlert
+      <CustomBottomSheet
         config={config}
         visible={visibleResetConfirmAlert}
         title={t('resetProfilePhotoTitle')}
@@ -368,7 +297,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
       />
 
       {/* Reset Success Alert */}
-      <CustomAlert
+      <CustomBottomSheet
         config={config}
         visible={visibleResetSuccessAlert}
         title={t('_success_')}
@@ -378,7 +307,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
       />
 
       {/* Reset Error Alert */}
-      <CustomAlert
+      <CustomBottomSheet
         config={config}
         visible={visibleResetErrorAlert}
         title={t('_error_')}
@@ -388,7 +317,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
       />
 
       {/* Delete Confirmation Alert */}
-      <CustomAlert
+      <CustomBottomSheet
         config={config}
         visible={visibleDeleteConfirmAlert}
         title={t('delete')}
@@ -400,7 +329,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
       />
 
       {/* Delete Success Alert */}
-      <CustomAlert
+      <CustomBottomSheet
         config={config}
         visible={visibleDeleteSuccessAlert}
         title={t('_success_')}
@@ -410,7 +339,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
       />
 
       {/* Delete Error Alert */}
-      <CustomAlert
+      <CustomBottomSheet
         config={config}
         visible={visibleDeleteErrorAlert}
         title={t('_error_')}
@@ -420,7 +349,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
       />
 
       {/* Invalid Name Alert */}
-      <CustomAlert
+      <CustomBottomSheet
         config={config}
         visible={visibleInvalidNameAlert}
         title={t('_error_')}
@@ -430,7 +359,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
       />
 
       {/* Name Update Success Alert */}
-      <CustomAlert
+      <CustomBottomSheet
         config={config}
         visible={visibleNameUpdateSuccessAlert}
         title={t('_success_')}
@@ -440,7 +369,7 @@ export const AccountScreen: React.FC<ScreenProps> = ({
       />
 
       {/* Name Update Error Alert */}
-      <CustomAlert
+      <CustomBottomSheet
         config={config}
         visible={visibleNameUpdateErrorAlert}
         title={t('_error_')}

@@ -2,8 +2,7 @@ import React from 'react';
 import {
   View,
   Text,
-  ViewStyle,
-  TextStyle,
+  StyleSheet,
 } from 'react-native';
 import { LoginKitTheme } from '../types';
 
@@ -16,31 +15,32 @@ export const OrComponent: React.FC<OrComponentProps> = ({
   theme,
   text = 'or',
 }) => {
-  const containerStyle: ViewStyle = {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 20,
-  };
-
-  const lineStyle: ViewStyle = {
-    flex: 1,
-    height: 1,
-    backgroundColor: theme.colors.loginScreensTextInputBorderColor,
-  };
-
-  const textStyle: TextStyle = {
-    fontFamily: theme.fonts.primaryRegular,
-    fontSize: 16,
-    color: theme.colors.loginScreensHaveAnAccountTextColor,
-    marginHorizontal: 16,
-    textTransform: 'lowercase',
-  };
+  const styles = StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginVertical: 16,
+    },
+    line: {
+      flex: 1,
+      height: 1,
+      backgroundColor: theme.colors.PRIMARY_200,
+    },
+    text: {
+      fontFamily: theme.fonts.primaryRegular,
+      fontSize: 14,
+      lineHeight: 20,
+      color: theme.colors.PRIMARY_400,
+      marginHorizontal: 12,
+      textTransform: 'lowercase',
+    },
+  });
 
   return (
-    <View style={containerStyle}>
-      <View style={lineStyle} />
-      <Text style={textStyle}>{text}</Text>
-      <View style={lineStyle} />
+    <View style={styles.container}>
+      <View style={styles.line} />
+      <Text style={styles.text}>{text}</Text>
+      <View style={styles.line} />
     </View>
   );
-}; 
+};

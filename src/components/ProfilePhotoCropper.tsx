@@ -41,6 +41,7 @@ interface ProfilePhotoCropperProps {
   onClose: () => void;
   photoUri: string;
   theme: LoginKitTheme;
+  backgroundImage?: any;
 }
 
 export const ProfilePhotoCropper: React.FC<ProfilePhotoCropperProps> = ({
@@ -50,6 +51,7 @@ export const ProfilePhotoCropper: React.FC<ProfilePhotoCropperProps> = ({
   onClose,
   photoUri,
   theme,
+  backgroundImage,
 }) => {
   const insets = useSafeAreaInsets();
   const styles = createStyleProfilePhotoCropper(theme, insets, CROP_CIRCLE_SIZE);
@@ -287,6 +289,13 @@ export const ProfilePhotoCropper: React.FC<ProfilePhotoCropperProps> = ({
       onRequestClose={handleClose}
       statusBarTranslucent>
       <GestureHandlerRootView style={{ flex: 1 }}>
+        {backgroundImage && (
+        <FastImage
+          source={backgroundImage}
+          style={styles.backgroundImage}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+      )}
         <View style={styles.rootContainer}>
           <View style={styles.header}>
             <Text style={styles.title}>{t('cropperToolbarTitle')}</Text>

@@ -1,46 +1,53 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { LoginKitConfig } from '../types';
 import { EmailAuthService } from '../services/EmailAuthService';
 import { useLoginKitTranslation } from './useLoginKitTranslation';
+import { useAuthBottomSheet } from './AuthBottomSheetContext';
 
 interface UseRegisterProps {
   config: LoginKitConfig;
 }
 
 export const useRegister = ({ config }: UseRegisterProps) => {
+  const { onSuccess } = useAuthBottomSheet();
   const { t } = useLoginKitTranslation('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
-  const [isPrivacyChecked, setIsPrivacyChecked] = useState(!config.privacy.required);
+  const [isPrivacyChecked, setIsPrivacyChecked] = useState(true);
   const [errorRegister, setErrorRegister] = useState(false);
-  const [errorPassword, setErrorPassword] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
   const [errorMissingInputs, setErrorMissingInputs] = useState(false);
-  const [errorInvalidEmail, setErrorInvalidEmail] = useState(false);
+  const [emailError, setEmailError] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const emailAuthService = new EmailAuthService(config);
 
+  useEffect(() => {
+    if (confirmPassword && password !== confirmPassword) {
+      setPasswordError(t('userRegisterPasswordsNotMatchErrorAlert') || 'Passwords do not match');
+    } else {
+      setPasswordError('');
+    }
+  }, [password, confirmPassword, t]);
+
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   const handleRegister = useCallback(async () => {
+    setEmailError('');
+
     if (
-      (config.emailAuth.enabledRegisterEmail && !email) || 
-      (config.emailAuth.enabledRegisterUserName && !name) || 
+      (config.emailAuth.enabledRegisterEmail && !email) ||
+      (config.emailAuth.enabledRegisterUserName && !name) ||
       !password || !confirmPassword) {
       setErrorMissingInputs(true);
       return;
     }
 
-    if (password !== confirmPassword) {
-      setErrorPassword(true);
-      return;
-    }
-
     if (config.emailAuth.enabledRegisterEmail && !emailRegex.test(email)) {
-      setErrorInvalidEmail(true);
+      setEmailError(t('userSignInEnterValidEmailAlert') || 'Please enter a valid email');
       return;
     }
 
@@ -50,9 +57,9 @@ export const useRegister = ({ config }: UseRegisterProps) => {
     try {
       setLoading(true);
       const result = await emailAuthService.registerWithEmail(_userName, _email, password);
-      
+
       if (result.success && result.user) {
-        config.navigation.onLoginSuccess();
+        onSuccess();
       } else {
         console.log(`${t('_error_')} ${t('userRegisterErrorAlertMessage')}`, { error: result.error || 'Unknown error' });
         if (result.error == 'Bu e-posta ile kayıtlı başka bir kullanıcı mevcut') {
@@ -67,15 +74,16 @@ export const useRegister = ({ config }: UseRegisterProps) => {
       setLoading(false);
     }
   }, [
-    email, 
-    password, 
-    confirmPassword, 
-    name, 
-    emailAuthService, 
-    config.navigation, 
-    config.emailAuth.enabledRegisterEmail, 
-    config.emailAuth.enabledRegisterUserName, 
-    t
+    email,
+    password,
+    confirmPassword,
+    name,
+    emailAuthService,
+    config.navigation,
+    config.emailAuth.enabledRegisterEmail,
+    config.emailAuth.enabledRegisterUserName,
+    t,
+    onSuccess
   ]);
 
   return {
@@ -95,10 +103,10 @@ export const useRegister = ({ config }: UseRegisterProps) => {
     setErrorRegister,
     errorMissingInputs,
     setErrorMissingInputs,
-    errorPassword,
-    setErrorPassword,
-    errorInvalidEmail,
-    setErrorInvalidEmail,
+    passwordError,
+    setPasswordError,
+    emailError,
+    setEmailError,
     errorMessage,
   };
 }; 

@@ -62,7 +62,7 @@ export const createLoginScreenStyles = (theme: LoginKitTheme) => {
       fontSize: Math.min(width * 0.12, 44),
       textAlign: "center",
       marginTop: height * 0.001,
-      color: theme.colors.loginScreensLogoTextColor,
+      color: theme.colors.TERTIARY_TEXT_LIGHT,
     } as TextStyle,
 
     buttonsSection: {
@@ -85,7 +85,7 @@ export const createLoginScreenStyles = (theme: LoginKitTheme) => {
     } as ViewStyle,
 
     primaryButton: {
-      backgroundColor: theme.colors.loginScreensButtonsColor,
+      backgroundColor: theme.colors.PRIMARY_950,
       paddingVertical: height * 0.015,
       paddingHorizontal: width * 0.15,
       borderRadius: theme.borderRadius,
@@ -95,7 +95,7 @@ export const createLoginScreenStyles = (theme: LoginKitTheme) => {
     } as ViewStyle,
 
     primaryButtonText: {
-      color: theme.colors.loginScreensButtonTextColor,
+      color: theme.colors.TERTIARY_TEXT_LIGHT,
       fontSize: 18,
       fontFamily: theme.fonts.primarySemiBold,
     } as TextStyle,
@@ -127,83 +127,68 @@ export const createSignInScreenStyles = (theme: LoginKitTheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme.colors.background,
-    } as ViewStyle,
-
-    gradientContainer: {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-    } as ViewStyle,
-
+      backgroundColor: theme.colors.TRANSPARENT_PRIMARY,
+    },
+    overlay: {
+      flex: 1,
+      justifyContent: 'flex-end',
+    },
+    sheetContent: {
+      // Used when embedded in Another BottomSheet
+    },
     scrollContainer: {
       flex: 1,
-      paddingHorizontal: width * 0.06,
-      paddingVertical: height * 0.02,
-      marginTop: height * 0.05,
-    } as ViewStyle,
-
+    },
+    contentContainer: {
+      flexGrow: 1,
+      justifyContent: 'flex-end',
+    },
+    sheet: {
+      backgroundColor: theme.colors.TRANSPARENT_PRIMARY,
+      borderTopLeftRadius: 16,
+      borderTopRightRadius: 16,
+      paddingHorizontal: 16,
+      paddingTop: 12,
+      paddingBottom: 40,
+    },
     headerSection: {
-      marginTop: 0,
-      marginBottom: 0,
-    } as ViewStyle,
-
-    title: {
-      fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.loginScreensTitleColor,
-      fontSize: Math.min(width * 0.08, 32),
-      marginTop: 16,
-    },
-
-    subtitle: {
-      fontFamily: theme.fonts.primaryMedium,
-      color: theme.colors.loginScreensSubTitleColor,
-      fontSize: 16,
-      marginTop: 16,
-    },
-
-    formSection: {
-      marginTop: height * 0.06,
-    } as ViewStyle,
-
-    inputContainer: {
-      marginBottom: 8,
-    } as ViewStyle,
-
-    passwordInputContainer: {
-      marginBottom: height * 0.04,
-    } as ViewStyle,
-
-    loginButton: {
-      backgroundColor: theme.colors.loginScreensButtonsColor,
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-      paddingVertical: 16,
       marginBottom: 24,
-      borderRadius: theme.borderRadius,
-      marginTop: 8,
-    } as ViewStyle,
-
-    loginButtonText: {
-      fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.loginScreensButtonTextColor,
-      fontSize: 18,
-      paddingLeft: 8,
     },
-
+    handleBar: {
+      width: 50,
+      height: 5,
+      backgroundColor: theme.colors.TRANSPARENT_PRIMARY,
+      borderRadius: 2.5,
+      alignSelf: 'center',
+      marginBottom: 12,
+    },
+    title: {
+      fontFamily: theme.fonts.primaryMedium,
+      color: theme.colors.PRIMARY_950,
+      fontSize: 18,
+    },
+    formSection: {
+      marginTop: 0,
+    },
+    loginButton: {
+      backgroundColor: theme.colors.PRIMARY_950,
+      height: 40,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 4,
+      marginTop: 12,
+      marginBottom: 12,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+    },
+    loginButtonText: {
+      fontFamily: theme.fonts.primaryMedium,
+      color: theme.colors.TERTIARY_TEXT_LIGHT,
+      fontSize: 14,
+    },
     socialSection: {
-      marginBottom: Platform.OS === "ios" ? 0 : height * 0.06,
-      marginTop: Platform.OS === "ios" ? height * 0.04 : height * 0.08,
-    } as ViewStyle,
-
-    privacySection: {
-      marginBottom: height * 0.003,
-      marginLeft: width * 0.03,
-      alignItems: "center",
-    } as ViewStyle,
+      marginVertical: 12,
+    },
   });
 };
 
@@ -211,7 +196,7 @@ export const createRegisterScreenStyles = (theme: LoginKitTheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme.colors.background,
+      backgroundColor: theme.colors.TRANSPARENT_PRIMARY,
     } as ViewStyle,
 
     gradientContainer: {
@@ -222,34 +207,28 @@ export const createRegisterScreenStyles = (theme: LoginKitTheme) => {
       bottom: 0,
     } as ViewStyle,
 
+    sheetContent: {
+      // Used when embedded in Another BottomSheet
+    },
+
     scrollContainer: {
       flex: 1,
-      paddingHorizontal: width * 0.06,
-      paddingVertical: height * 0.02,
-      marginTop: height * 0.05,
+      paddingHorizontal: 16,
+      paddingVertical: 16,
     } as ViewStyle,
 
     headerSection: {
-      marginTop: height * 0.05,
-      marginBottom: height * 0.02,
+      marginBottom: 24,
     } as ViewStyle,
 
     title: {
-      fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.loginScreensTitleColor,
-      fontSize: Math.min(width * 0.08, 32),
-      fontWeight: "600",
-    },
-
-    subtitle: {
       fontFamily: theme.fonts.primaryMedium,
-      color: theme.colors.loginScreensSubTitleColor,
-      fontSize: 16,
-      marginTop: 8,
+      color: theme.colors.PRIMARY_950,
+      fontSize: 18,
     },
 
     formSection: {
-      marginTop: height * 0.02,
+      marginTop: 0,
     } as ViewStyle,
 
     inputContainer: {
@@ -257,23 +236,26 @@ export const createRegisterScreenStyles = (theme: LoginKitTheme) => {
     } as ViewStyle,
 
     registerButton: {
-      backgroundColor: theme.colors.loginScreensButtonsColor,
-      paddingVertical: 16,
-      borderRadius: theme.borderRadius,
-      marginTop: height * 0.04,
+      backgroundColor: theme.colors.PRIMARY_950,
+      height: 40,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 4,
+      marginTop: 12,
+      marginBottom: 12,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
     } as ViewStyle,
 
     registerButtonText: {
-      fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.loginScreensButtonTextColor,
-      fontSize: 16,
+      fontFamily: theme.fonts.primaryMedium,
+      color: theme.colors.TERTIARY_TEXT_LIGHT,
+      fontSize: 14,
       textAlign: "center",
     },
 
-    privacySection: {
-      marginBottom: height * 0.03,
-      marginLeft: width * 0.03,
-      alignItems: "center",
+    socialSection: {
+      marginVertical: 12,
     } as ViewStyle,
   });
 };
@@ -284,78 +266,81 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
       flex: 1,
       backgroundColor: theme.colors.background,
     },
-    gradientContainer: {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
+    backgroundImage: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
     },
     scrollContainer: {
       flexGrow: 1,
-      paddingHorizontal: 20,
-      paddingTop: 30,
+      paddingHorizontal: 16,
+      paddingTop: 0,
       paddingBottom: 30,
     },
     headerContainer: {
       position: "relative",
-      alignItems: "center",
       marginTop: "15%",
+      paddingHorizontal: 16,
+      paddingBottom: 16,
+    },
+    headerTitleContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    backButton: {
+      marginRight: 12,
     },
     headerTitle: {
-      fontSize: 28,
-      fontFamily: theme.fonts.primaryBold,
-      color: theme.colors.accountScreenHeaderTitleColor,
-    },
-    editProfilePhotoHeaderContainer: {
-      alignItems: "center",
-      marginBottom: 20,
-    },
-    editProfilePhotoHeaderTitle: {
-      fontSize: 16,
+      fontSize: 24,
       fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.accountScreenHeaderEditPhotoTitleColor,
-      textAlign: "center",
+      color: theme.colors.PRIMARY_950,
+      textTransform: 'uppercase',
+      letterSpacing: 2,
+    },
+    headerUnderline: {
+      height: 1,
+      backgroundColor: theme.colors.PRIMARY_300,
+      marginTop: 20,
+      marginHorizontal: -16, // expand beyond padding
+    },
+    profileSectionWrapper: {
+      alignItems: 'center',
+      marginTop: 20,
+      marginBottom: 30,
     },
     profileSection: {
-      alignItems: "center",
-      marginBottom: 40,
-      backgroundColor: theme.colors.accountScreenEditPhotoCardBgColor,
-      borderRadius: 20,
-      padding: 20,
-      shadowColor: theme.colors.textShadow,
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      elevation: 3,
+      width: '100%',
+      maxWidth: 343,
+      borderRadius: 16,
+      padding: 16,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     profileImageContainer: {
       position: "relative",
-      marginBottom: 20,
+      width: 100,
+      height: 100,
     },
     profileImage: {
-      width: 180,
-      height: 180,
-      borderRadius: 100,
-      borderWidth: 3,
-      borderColor:
-        theme.colors.accountScreenPhotoCropperPreviewContainerBorderColor,
+      width: 100,
+      height: 100,
+      borderRadius: 50,
+      backgroundColor: theme.colors.PRIMARY_200,
     },
     defaultAvatarContainer: {
-      width: 180,
-      height: 180,
-      borderRadius: 100,
-      backgroundColor: theme.colors.accountScreenAvatarPhotoCardBgColor,
+      width: 100,
+      height: 100,
+      borderRadius: 50,
+      backgroundColor: theme.colors.PRIMARY_200,
       justifyContent: "center",
       alignItems: "center",
-      borderWidth: 3,
-      borderColor:
-        theme.colors.accountScreenPhotoCropperPreviewContainerBorderColor,
+      overflow: 'hidden',
     },
-    defaultAvatarText: {
-      fontSize: 40,
-      fontFamily: theme.fonts.primaryMedium,
-      color: theme.colors.accountScreenAvatarPhotoCardTextColor,
+    addPPIconContainer: {
+      position: 'absolute',
+      bottom: -4,
+      right: -4,
+      zIndex: 10,
     },
     loadingOverlay: {
       position: "absolute",
@@ -363,103 +348,68 @@ export const createAccountScreenStyles = (theme: LoginKitTheme) => {
       left: 0,
       right: 0,
       bottom: 0,
-      borderRadius: 100,
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      borderRadius: 50,
+      backgroundColor: "rgba(0, 0, 0, 0.4)",
       justifyContent: "center",
       alignItems: "center",
     },
-    actionButtonsContainer: {
-      flexDirection: "row",
-      flexWrap: "wrap",
-      justifyContent: "center",
-      gap: 15,
-      marginTop: 15,
+    infoSectionContainer: {
+      width: '100%',
+      maxWidth: 343,
+      alignSelf: 'center',
     },
-    actionButton: {
-      width: 50,
-      height: 50,
-      borderRadius: 25,
-      backgroundColor: theme.colors.accountScreenEditPhotoActionButtonsBgColor,
-      justifyContent: "center",
-      alignItems: "center",
-      borderWidth: 1,
-      borderColor: theme.colors.accountScreenEditPhotoActionButtonsBorderColor,
+    sectionLabel: {
+      fontFamily: theme.fonts.primaryMedium,
+      fontSize: 12,
+      color: theme.colors.PRIMARY_500,
+      marginBottom: 12,
+      marginLeft: -8,
     },
     infoSection: {
-      backgroundColor: theme.colors.accountScreenInfoSectionBgColor,
-      borderRadius: 15,
-      padding: 20,
-      marginBottom: 20,
-      shadowColor: theme.colors.textShadow,
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      elevation: 3,
+      backgroundColor: 'transparent',
     },
     infoRow: {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
-      paddingVertical: 15,
-      borderBottomWidth: 1,
-      borderBottomColor: theme.colors.accountScreenInfoSectionBorderColor,
+      paddingVertical: 16,
+      marginLeft: -8,
     },
-    lastInfoRow: {
-      borderBottomWidth: 0,
-    },
-    infoLabel: {
-      fontSize: 16,
-      fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.accountScreenInfoSectionLabelTextColor,
-      flex: 2,
-      maxWidth: 150,
+    infoRowLeft: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      flex: 1,
     },
     infoValue: {
-      fontSize: 16,
+      fontSize: 14,
       fontFamily: theme.fonts.primaryMedium,
-      color: theme.colors.accountScreenInfoSectionValueTextColor,
-      flex: 2,
-      textAlign: "right",
-    },
-    editableInfoValue: {
-      color: theme.colors.accountScreenInfoSectionLabelTextColor,
+      color: theme.colors.TERTIARY_TEXT_DARK,
+      marginLeft: 12,
+      flex: 1,
     },
     editButton: {
       marginLeft: 10,
       padding: 5,
     },
-    editIcon: {
-      width: 20,
-      height: 20,
+    deleteAccountContainer: {
+      width: '100%',
+      maxWidth: 343,
+      alignSelf: 'center',
+      marginTop: 40,
     },
-    // Action buttons grid layout
-    actionButtonsGrid: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
-      marginTop: 15,
-      width: width * 0.9,
-      marginHorizontal: width * 0.1,
+    deleteAccountButton: {
+      alignSelf: 'flex-start',
+      paddingVertical: 10,
+      paddingHorizontal: 16,
+      borderWidth: 1,
+      borderColor: theme.colors.PRIMARY_300,
+      borderRadius: 4,
+      marginLeft: -8,
     },
-    actionButtonWithLabel: {
-      alignItems: "center",
-      opacity: 1,
-    },
-    actionButtonDisabled: {
-      opacity: 0.5,
-    },
-    actionButtonLabel: {
-      fontSize: 12,
+    deleteAccountButtonText: {
       fontFamily: theme.fonts.primaryMedium,
-      color: theme.colors.accountScreenInfoSectionLabelTextColor,
-      marginTop: 5,
-      textAlign: "center",
-      width: 80,
-    },
-    profileSettingsLogoutButtonText: {
-      fontSize: 17,
-      fontFamily: theme.fonts.primaryRegular,
-      color: theme.colors.accountScreenLogoutButtonColor,
+      fontSize: 12,
+      color: theme.colors.PRIMARY_950,
     },
   });
 };
@@ -471,6 +421,11 @@ export const createStyleProfilePhotoCropper = (
 ) =>
   StyleSheet.create({
     rootContainer: { flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.95)' },
+    backgroundImage: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+    },
     header: {
       paddingTop: Platform.OS === 'ios' ? (insets.top + 8) : (insets.top + 16),
       paddingHorizontal: 20,
@@ -480,7 +435,7 @@ export const createStyleProfilePhotoCropper = (
     title: {
       fontSize: 18,
       fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.accountScreenPhotoCropperTitleColor,
+      color: '#FCFBF9',
       textAlign: 'center',
     },
     cropArea: { flex: 1, justifyContent: 'center', alignItems: 'center' },
@@ -492,8 +447,7 @@ export const createStyleProfilePhotoCropper = (
       justifyContent: 'center',
       alignItems: 'center',
       borderWidth: 3,
-      borderColor:
-        theme.colors.accountScreenPhotoCropperPreviewContainerBorderColor,
+      borderColor:  '#A3A3A3',
     },
     controlsContainer: {
       paddingHorizontal: 20,
@@ -525,8 +479,7 @@ export const createStyleProfilePhotoCropper = (
     },
     sliderFill: {
       height: 3,
-      backgroundColor:
-        theme.colors.accountScreenPhotoCropperPreviewContainerBorderColor,
+      backgroundColor: '#D3D3D3',
       borderRadius: 1.5,
       position: 'absolute',
       left: 0,
@@ -536,8 +489,7 @@ export const createStyleProfilePhotoCropper = (
       width: 22,
       height: 22,
       borderRadius: 11,
-      backgroundColor:
-        theme.colors.accountScreenPhotoCropperPreviewContainerBorderColor,
+      backgroundColor: '#D3D3D3',
       position: 'absolute',
       top: (36 - 22) / 2,
       shadowColor: '#000',
@@ -563,19 +515,19 @@ export const createStyleProfilePhotoCropper = (
       paddingVertical: 14,
       borderRadius: 12,
       borderWidth: 1,
-      borderColor: theme.colors.accountScreenPhotoCropperButtonBorderColor,
+      borderColor: theme.colors.PRIMARY_950,
       alignItems: 'center',
     },
     primaryButton: {
-      backgroundColor: theme.colors.accountScreenPhotoCropperOkButtonColor,
+      backgroundColor: '#0B0B0B',
     },
     secondaryButton: {
-      backgroundColor: theme.colors.accountScreenPhotoCropperCancelButtonColor,
+      backgroundColor: '#A3A3A3',
     },
     buttonText: {
       fontSize: 16,
       fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.accountScreenPhotoCropperButtonTextColor,
+      color: '#FCFBF9',
     },
     disabledButton: { opacity: 0.6 },
     actionButtonWithLabel: {
@@ -586,94 +538,21 @@ export const createStyleProfilePhotoCropper = (
       width: 50,
       height: 50,
       borderRadius: 25,
-      backgroundColor: theme.colors.accountScreenEditPhotoActionButtonsBgColor,
+      backgroundColor: '#0B0B0B',
       justifyContent: "center",
       alignItems: "center",
       borderWidth: 1,
-      borderColor: theme.colors.accountScreenEditPhotoActionButtonsBorderColor,
+      borderColor: '#D3D3D3',
     },
     actionButtonLabel: {
       fontSize: 12,
       fontFamily: theme.fonts.primaryMedium,
-      color: theme.colors.accountScreenInfoSectionLabelTextColor,
+      color:  '#D3D3D3',
       marginTop: 5,
       textAlign: "center",
       width: 80,
     },
   });
-
-export const createStyleEditNameModal = (theme: LoginKitTheme) => {
-  return StyleSheet.create({
-    modalBackground: {
-      flex: 1,
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    container: {
-      backgroundColor: theme.colors.accountScreenEditNameModalBgColor,
-      borderRadius: 20,
-      padding: 20,
-      margin: 20,
-      minWidth: 300,
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5,
-    },
-    title: {
-      fontSize: 18,
-      fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.accountScreenEditNameModalTitleColor,
-      textAlign: "center",
-      marginBottom: 20,
-    },
-    textInput: {
-      borderWidth: 1,
-      borderColor: theme.colors.accountScreenEditNameModalBorderColor,
-      borderRadius: 10,
-      padding: 15,
-      fontSize: 16,
-      fontFamily: theme.fonts.primaryMedium,
-      color: theme.colors.accountScreenEditNameModalTextInputColor,
-      backgroundColor: theme.colors.accountScreenEditNameModalTextInputBgColor,
-      marginBottom: 20,
-    },
-    buttonContainer: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      gap: 10,
-    },
-    button: {
-      flex: 1,
-      paddingVertical: 12,
-      borderRadius: 10,
-      alignItems: "center",
-    },
-    primaryButton: {
-      backgroundColor: theme.colors.accountScreenEditNameModalOkButtonColor,
-      borderWidth: 1,
-      borderColor: theme.colors.accountScreenEditNameModalBorderColor,
-    },
-    secondaryButton: {
-      backgroundColor: theme.colors.accountScreenEditNameModalCancelButtonColor,
-      borderWidth: 1,
-      borderColor: theme.colors.accountScreenEditNameModalBorderColor,
-    },
-    disabledButton: {
-      opacity: 0.6,
-    },
-    buttonText: {
-      fontSize: 16,
-      fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.accountScreenEditNameModalButtonTextColor,
-    },
-  });
-};
 
 export const createLanguageScreenStyles = (theme: LoginKitTheme) => {
   return StyleSheet.create({
@@ -681,151 +560,98 @@ export const createLanguageScreenStyles = (theme: LoginKitTheme) => {
       flex: 1,
       backgroundColor: theme.colors.background,
     },
-    gradientContainer: {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
+    backgroundImage: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
     },
     headerContainer: {
-      alignItems: "center",
-      paddingTop: height * 0.1,
-      paddingBottom: height * 0.03,
-      paddingHorizontal: 20,
+      flexDirection: 'column',
+      paddingTop: '15%',
+      paddingHorizontal: 16,
+      paddingBottom: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.PRIMARY_300,
+      marginBottom: 20,
+    },
+    headerTitleContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    backButton: {
+      marginRight: 12,
     },
     headerTitle: {
-      fontSize: Math.min(width * 0.07, 28),
+      fontSize: 24,
       fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.languageScreenHeaderTitleColor,
-      textAlign: "center",
+      color: theme.colors.PRIMARY_950,
+      textTransform: 'uppercase',
+      letterSpacing: 2,
+    },
+    selectLanguageContainer: {
+      paddingHorizontal: 16,
       marginBottom: 8,
+    },
+    selectedLanguageText: {
+      fontSize: 16,
+      fontFamily: theme.fonts.primaryRegular,
+      color: theme.colors.PRIMARY_800,
+    },
+    selectLanguageText: {
+      fontSize: 12,
+      fontFamily: theme.fonts.primaryMedium,
+      color: theme.colors.PRIMARY_500,
     },
     scrollContainer: {
       flex: 1,
-      paddingHorizontal: 20,
+      paddingHorizontal: 16,
     },
     languageList: {
       paddingBottom: 20,
       paddingTop: 5,
     },
     languageItem: {
-      backgroundColor: theme.colors.languageScreenItemCardBgColor,
-      borderRadius: 12,
-      marginBottom: 12,
-      borderWidth: 2,
-      borderColor: "transparent",
-      shadowColor: theme.colors.textShadow,
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      elevation: 3,
+      marginBottom: 16,
     },
     disabledItem: {
       opacity: 0.5,
     },
-    selectedLanguageItem: {
-      borderColor: theme.colors.languageScreenSelectedLanguageItemBorderColor,
-      backgroundColor: theme.colors.languageScreenSelectedLanguageItemBgColor,
-    },
-    currentLanguageItem: {
-      borderColor: theme.colors.languageScreenCurrentLanguageItemBorderColor,
-      backgroundColor: theme.colors.languageScreenCurrentLanguageItemBgColor,
-    },
     languageContent: {
       flexDirection: "row",
       alignItems: "center",
-      padding: 16,
-    },
-    languageFlag: {
-      fontSize: 28,
-      marginRight: 15,
+      justifyContent: "space-between",
     },
     languageTextContainer: {
       flex: 1,
     },
     languageName: {
-      fontSize: 18,
-      fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.languageScreenAllLanguagesTextColor,
-      marginBottom: 4,
+      fontSize: 16,
+      fontFamily: theme.fonts.primaryRegular,
+      color: theme.colors.PRIMARY_600,
+      marginBottom: 2,
     },
     languageEnglishName: {
-      fontSize: 14,
-      fontFamily: theme.fonts.primaryMedium,
-      color: theme.colors.languageScreenEnglishVersionOfAllLanguagesTextColor,
+      fontSize: 12,
+      fontFamily: theme.fonts.primaryRegular,
+      color: theme.colors.PRIMARY_400,
     },
-    selectedLanguageText: {
-      color: theme.colors.languageScreenSelectedLanguageTextColor,
-    },
-    selectedLanguageTextSecondary: {
-      color: theme.colors.languageScreenEnglishVersionOfAllLanguagesTextColor,
-      opacity: 0.7,
-    },
-    currentLanguageText: {
-      color: theme.colors.languageScreenCurrentLanguageColor,
-    },
-    currentIndicator: {
-      width: 30,
-      height: 30,
-      borderRadius: 15,
-      backgroundColor: theme.colors.languageScreenCurrentLanguageColor,
-      justifyContent: "center",
-      alignItems: "center",
-      marginLeft: 10,
-    },
-    currentIndicatorText: {
-      color: "white",
-      fontSize: 16,
-      fontWeight: "bold",
-    },
-    selectedIndicator: {
-      width: 30,
-      height: 30,
-      borderRadius: 15,
-      backgroundColor: theme.colors.languageScreenCurrentLanguageItemBgColor,
-      justifyContent: "center",
-      alignItems: "center",
-      marginLeft: 10,
-    },
-    selectedIndicatorText: {
-      color: theme.colors.languageScreenCurrentLanguageColor,
-      fontSize: 16,
-      fontWeight: "bold",
-    },
-    actionContainer: {
-      paddingHorizontal: 20,
-      paddingBottom: height * 0.05,
-      paddingTop: 20,
-    },
-    applyButton: {
-      backgroundColor: theme.colors.languageScreenApplyButtonColor,
-      paddingVertical: 16,
-      paddingHorizontal: 32,
-      borderRadius: 12,
-      alignItems: "center",
-      justifyContent: "center",
-      marginBottom: 15,
-      shadowColor: theme.colors.textShadow,
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.2,
-      shadowRadius: 4,
-      elevation: 5,
-    },
-    disabledButton: {
-      opacity: 0.6,
-    },
-    applyButtonText: {
-      color: theme.colors.languageScreenApplyButtonTextColor,
-      fontSize: 18,
-      fontFamily: theme.fonts.primarySemiBold,
+    checkIconContainer: {
+      marginLeft: 15,
     },
     // Progress tracking styles
     progressContainer: {
-      backgroundColor: theme.colors.languageScreenItemCardBgColor,
-      marginHorizontal: 20,
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      flex: 1,
+      justifyContent: 'center',
+      // alignItems: 'center',
+      backgroundColor: theme.colors.TRANSPARENT_PRIMARY,
+      // marginHorizontal: 20,
       marginBottom: 20,
-      borderRadius: 12,
+      // borderRadius: 12,
       padding: 16,
       shadowColor: theme.colors.textShadow,
       shadowOffset: { width: 0, height: 2 },
@@ -833,7 +659,9 @@ export const createLanguageScreenStyles = (theme: LoginKitTheme) => {
       shadowRadius: 4,
       elevation: 3,
       borderWidth: 1,
-      borderColor: theme.colors.languageScreenCurrentLanguageItemBorderColor,
+      width: '100%',
+      height: '100%',
+      borderColor: theme.colors.PRIMARY_950,
     },
     progressHeader: {
       marginBottom: 12,
@@ -841,39 +669,9 @@ export const createLanguageScreenStyles = (theme: LoginKitTheme) => {
     progressTitle: {
       fontSize: 16,
       fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.languageScreenProgressTitle,
+      color: theme.colors.PRIMARY_950,
       textAlign: "center",
       marginBottom: 4,
-    },
-    progressSubtitle: {
-      fontSize: 14,
-      fontFamily: theme.fonts.primaryMedium,
-      color: theme.colors.languageScreenProgressSubTitle,
-      textAlign: "center",
-    },
-    progressBarContainer: {
-      height: 8,
-      backgroundColor: theme.colors.languageScreenProgressBarContainer,
-      borderRadius: 4,
-      marginBottom: 12,
-      overflow: "hidden",
-    },
-    progressBarFill: {
-      height: "100%",
-      backgroundColor: theme.colors.languageScreenProgressBarFill,
-      borderRadius: 4,
-      minWidth: 4,
-    },
-    loadingContainer: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: 8,
-    },
-    loadingText: {
-      color: theme.colors.languageScreenProgressBarContainer,
-      fontSize: 14,
-      fontFamily: theme.fonts.primaryRegular,
     },
   });
 };
@@ -882,72 +680,71 @@ export const createDarkLightModeScreenStyles = (theme: LoginKitTheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-      padding: 20,
+      backgroundColor: theme.colors.background,
     },
-    gradientContainer: {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
+    backgroundImage: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
     },
-    header: {
-      marginBottom: 30,
-      alignItems: "center",
+    headerContainer: {
+      flexDirection: 'column',
+      paddingTop: '15%',
+      paddingHorizontal: 16,
+      paddingBottom: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.PRIMARY_300,
+      marginBottom: 2,
     },
-    headerText: {
-      fontSize: 28,
-      letterSpacing: 1,
+    headerTitleContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    backButton: {
+      marginRight: 12,
+    },
+    headerTitle: {
+      fontSize: 24,
       fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.themeScreenHeaderTitleColor,
+      color: theme.colors.PRIMARY_950,
+      textTransform: 'uppercase',
+      letterSpacing: 0,
     },
-    subHeaderText: {
-      fontSize: 16,
-      marginTop: 5,
+    scrollViewContent: {
+      paddingHorizontal: 16,
+      paddingTop: 16,
+      paddingBottom: 40,
+    },
+    sectionTitle: {
+      fontSize: 12,
       fontFamily: theme.fonts.primaryMedium,
-      color: theme.colors.themeScreenSubHeaderTitleColor,
+      color: theme.colors.PRIMARY_500,
+      marginBottom: 16,
     },
-    card: {
-      width: width * 0.8,
-      padding: 20,
-      borderRadius: 20,
-      alignItems: "center",
-      shadowOffset: { width: 0, height: 5 },
-      shadowOpacity: 0.3,
-      shadowRadius: 10,
-      elevation: 10,
-      backgroundColor: theme.colors.themeScreenCardBgColor,
-      shadowColor: theme.colors.themeScreenCardShadowColor,
+    listItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      height: 40,
+      marginBottom: 8,
     },
-    iconContainer: {
-      marginBottom: 20,
+    listItemLeft: {
+      flexDirection: 'row',
+      alignItems: 'center',
     },
-    toggleContainer: {
-      width: 200,
-      height: 60,
-      borderRadius: 30,
-      justifyContent: "center",
-      padding: 5,
-      backgroundColor: theme.colors.themeScreenToggleContainerColor,
+    itemIcon: {
+      marginRight: 12,
     },
-    toggleCircle: {
-      width: 100,
-      height: 50,
-      borderRadius: 25,
-      shadowColor: "#000",
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.2,
-      shadowRadius: 5,
-      elevation: 5,
-      backgroundColor: theme.colors.iconSetThemeScreenIconsColor,
+    itemLabel: {
+      fontSize: 16,
+      fontFamily: theme.fonts.primaryRegular,
+      color: theme.colors.PRIMARY_600
     },
-    toggleText: {
-      marginTop: 20,
-      fontSize: 18,
-      fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.themeScreenToggleTextColor,
+    itemLabelSelected: {
+      color: theme.colors.PRIMARY_800
+    },
+    checkIcon: {
+      marginRight: 110,
     },
   });
 };
@@ -962,7 +759,7 @@ export const createCustomAlertStyles = (theme: LoginKitTheme) => {
     },
     alertContainer: {
       width: width * 0.85,
-      backgroundColor: theme.colors.customAlertCardBgColor,
+      backgroundColor: theme.colors.SECONDARY_50,
       borderRadius: 15,
       overflow: "hidden",
       elevation: 5,
@@ -978,11 +775,11 @@ export const createCustomAlertStyles = (theme: LoginKitTheme) => {
       paddingVertical: 15,
       paddingHorizontal: 20,
       borderBottomWidth: 1,
-      borderBottomColor: theme.colors.customAlertBorderColor,
+      borderBottomColor: theme.colors.PRIMARY_300,
     },
     titleText: {
       fontSize: 18,
-      color: theme.colors.customAlertTitleTextColor,
+      color: theme.colors.PRIMARY_950,
       textAlign: "center",
       fontFamily: theme.fonts.primarySemiBold,
     },
@@ -997,7 +794,7 @@ export const createCustomAlertStyles = (theme: LoginKitTheme) => {
     },
     messageText: {
       fontSize: 16,
-      color: theme.colors.customAlertTitleTextColor,
+      color: theme.colors.PRIMARY_950,
       textAlign: "center",
       lineHeight: 22,
       fontFamily: theme.fonts.primaryMedium,
@@ -1005,7 +802,7 @@ export const createCustomAlertStyles = (theme: LoginKitTheme) => {
     buttonContainer: {
       flexDirection: "row",
       borderTopWidth: 1,
-      borderTopColor: theme.colors.customAlertBorderColor,
+      borderTopColor: theme.colors.PRIMARY_300,
     },
     button: {
       flex: 1,
@@ -1014,20 +811,20 @@ export const createCustomAlertStyles = (theme: LoginKitTheme) => {
       justifyContent: "center",
     },
     cancelButton: {
-      backgroundColor: theme.colors.customAlertCancelColor,
+      backgroundColor: theme.colors.PRIMARY_400,
     },
     confirmButton: {
-      backgroundColor: theme.colors.customAlertConfirmColor,
+      backgroundColor: theme.colors.PRIMARY_950,
     },
     okButton: {
-      backgroundColor: theme.colors.customAlertOkColor,
+      backgroundColor: theme.colors.PRIMARY_950,
     },
     sendToPrintButton: {
-      backgroundColor: theme.colors.customAlertSendPrintColor,
+      backgroundColor: theme.colors.PRIMARY_950,
     },
     buttonText: {
       fontSize: 16,
-      color: theme.colors.customAlertButtonTextColor,
+      color: theme.colors.TERTIARY_TEXT_LIGHT,
       fontFamily: theme.fonts.primarySemiBold,
     },
   });
@@ -1039,93 +836,89 @@ export const createHelpsFAQsScreenStyles = (theme: LoginKitTheme) => {
       flex: 1,
       backgroundColor: theme.colors.background,
     },
-    gradientContainer: {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
+    backgroundImage: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
     },
     headerContainer: {
-      paddingTop: 100,
-      paddingBottom: 20,
-      alignItems: "center",
-      paddingHorizontal: 20,
+      flexDirection: 'column',
+      paddingTop: '15%',
+      paddingHorizontal: 16,
+      paddingBottom: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.PRIMARY_300,
+      marginBottom: 2,
+    },
+    headerTitleContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    backButton: {
+      marginRight: 12,
     },
     headerTitle: {
-      fontSize: 28,
+      fontSize: 24,
       fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.faqsScreeenHeaderTitleColor,
-      textAlign: "center",
+      color: theme.colors.PRIMARY_950,
+      textTransform: 'uppercase',
+      letterSpacing: 2,
     },
     scrollViewContent: {
       paddingHorizontal: 16,
       paddingBottom: 40,
+      paddingTop: 16,
     },
     sectionContainer: {
-      marginBottom: 24,
+      marginBottom: 32,
     },
     sectionHeader: {
       flexDirection: "row",
       alignItems: "center",
-      marginBottom: 16,
+      marginBottom: 8,
     },
     sectionTitle: {
-      fontSize: 20,
-      fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.faqsScreeenSectionTitle,
-      marginLeft: 12,
+      fontSize: 12,
+      fontFamily: theme.fonts.primaryMedium,
+      color: theme.colors.PRIMARY_500,
     },
     accordionItem: {
-      backgroundColor: theme.colors.faqsScreeenAccordionBgColor,
-      borderRadius: 12,
-      marginBottom: 12,
-      elevation: 3,
-      shadowColor: theme.colors.faqsScreeenAccordionShadowColor,
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.PRIMARY_300,
     },
     questionContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
-      padding: 16,
+      paddingVertical: 16,
     },
     questionText: {
       flex: 1,
-      fontSize: 16,
+      fontSize: 14,
       fontFamily: theme.fonts.primaryMedium,
-      color: theme.colors.faqsScreeenQuestionTextColor,
+      color: theme.colors.PRIMARY_800,
     },
     toggleIcon: {
-      color: theme.colors.faqsScreeenTooggleIconColor,
       marginLeft: 12,
-      transform: [{ rotate: "0deg" }],
-    },
-    toggleIconOpen: {
-      transform: [{ rotate: "180deg" }],
     },
     answerContainer: {
-      paddingHorizontal: 16,
       paddingBottom: 16,
-      borderTopWidth: 1,
-      borderTopColor: theme.colors.faqsScreeenAccordionBorderColor,
     },
     answerText: {
-      fontSize: 15,
+      fontSize: 14,
       fontFamily: theme.fonts.primaryRegular,
-      color: theme.colors.faqsScreeenAnswerTextColor,
-      lineHeight: 22,
-      marginTop: 8,
+      color: theme.colors.PRIMARY_600,
+      lineHeight: 20,
     },
   });
 };
 
 export const createStyleProfileSettings = (theme: LoginKitTheme) => {
   return StyleSheet.create({
-    gradientContainer: {
-      position: "absolute",
+    backgroundImage: {
+      position: 'absolute',
+      width: width,
+      height: height,
       top: 0,
       left: 0,
       right: 0,
@@ -1136,29 +929,45 @@ export const createStyleProfileSettings = (theme: LoginKitTheme) => {
     },
     profileSettingsContainer: {
       flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
+      justifyContent: 'center',
+      alignItems: 'center',
     },
-    profileSettingsHeaderContainer: {
-      top: "5%",
-      paddingTop: 20,
-      paddingBottom: 20,
-      alignItems: "center",
-      borderBottomWidth: 1,
-      borderBottomColor:
-        theme.colors.profileSettingsHeaderContainerBottomBorderColor,
+    headerContainer: {
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
+      width: '100%',
+      paddingTop: 64,
+      paddingBottom: 0,
+      paddingHorizontal: 16,
     },
-    profileSettingsHeaderTitle: {
-      fontSize: 20,
+    headerTitleContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingBottom: 16,
+    },
+    backButton: {
+      marginRight: 16,
+    },
+    headerTitleText: {
+      fontSize: 24,
       fontFamily: theme.fonts.primarySemiBold,
-      color: theme.colors.profileSettingsHeaderTitleColor,
+      color: theme.colors.PRIMARY_950,
+      letterSpacing: 1.2,
+      textTransform: 'uppercase',
+    },
+    headerUnderline: {
+      height: 1,
+      backgroundColor: theme.colors.PRIMARY_300,
+      width: Dimensions.get('window').width + 40,
+      marginTop: 2,
+      left: -20,
     },
     profileSettingsScrollView: {
       flex: 1,
-      top: "5%",
+      top: '1%',
     },
     profileSettingsProfileSection: {
-      alignItems: "center",
+      alignItems: 'center',
       paddingVertical: 0,
       paddingHorizontal: 16,
     },
@@ -1166,64 +975,82 @@ export const createStyleProfileSettings = (theme: LoginKitTheme) => {
       width: 100,
       height: 100,
       borderRadius: 50,
-      overflow: "hidden",
+      overflow: 'hidden',
       marginBottom: 16,
       marginTop: 16,
-      backgroundColor: theme.colors.profileSettingsProfilePhotoBgColor,
+      backgroundColor: theme.colors.SECONDARY_50,
     },
     profileSettingsProfilePhoto: {
-      width: "100%",
-      height: "100%",
+      width: '100%',
+      height: '100%',
     },
     profileSettingsIconContainer: {
-      width: "100%",
-      height: "100%",
-      justifyContent: "center",
-      alignItems: "center",
-      transform: [{ scale: 2.5 }],
+      width: '100%',
+      height: '100%',
+      justifyContent: 'center',
+      alignItems: 'center',
+      transform: [{scale: 2.5}],
     },
     profileSettingsUserName: {
       fontSize: 24,
       fontFamily: theme.fonts.primaryMedium,
-      color: theme.colors.profileSettingsUserNameColor,
+      color: theme.colors.PRIMARY_950,
       marginBottom: 8,
     },
     profileProMember: {
       fontSize: 16,
       fontFamily: theme.fonts.primarySemiBold,
-      textAlign: "center",
+      textAlign: 'center',
       marginBottom: 8,
     },
     profileSettingsBio: {
       fontSize: 16,
       fontFamily: theme.fonts.primaryLight,
-      color: theme.colors.profileSettingsBioColor,
-      textAlign: "center",
+      color: theme.colors.PRIMARY_300,
+      textAlign: 'center',
       marginBottom: 8,
     },
     profileSettingsStats: {
       fontSize: 14,
       fontFamily: theme.fonts.primaryRegular,
-      color: theme.colors.profileSettingsStatsColor,
+      color: theme.colors.PRIMARY_300,
     },
     profileSettingsMenuItem: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
       paddingVertical: 16,
       paddingHorizontal: 16,
       borderBottomWidth: 1,
-      borderBottomColor: theme.colors.profileSettingsMenuItemBottomBorderColor,
+      borderBottomColor: theme.colors.PRIMARY_300,
     },
     profileSettingsMenuItemText: {
-      fontSize: 17,
+      fontSize: 14,
       fontFamily: theme.fonts.primaryMedium,
-      color: theme.colors.profileSettingsMenuItemTextColor,
+      color: theme.colors.TERTIARY_TEXT_DARK,
     },
-    profileSettingsChevron: {
-      fontSize: 24,
-      fontFamily: theme.fonts.primaryBold,
-      color: theme.colors.profileSettingsChevronColor,
+    profileSettingsLogoutButton: {
+      position: 'relative',
+      marginBottom: 24,                // veya 20/32 gibi ekran alt boşluk
+      alignSelf: 'center',
+      width: 343,
+      height: 40,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: theme.colors.PRIMARY_400,
+      borderRadius: 4,
+      paddingHorizontal: 16,
+      backgroundColor: 'transparent',
+    },
+    profileSettingsLogoutButtonText: {
+      fontSize: 14,
+      fontFamily: theme.fonts.primaryMedium,
+      color: theme.colors.PRIMARY_950,
+    },
+    profileSettingsLogoutIcon: {
+      marginLeft: 8,
     },
   });
 };
@@ -1234,42 +1061,258 @@ export const createTermsPolicyStyles = (theme: LoginKitTheme) => {
       flex: 1,
       backgroundColor: theme.colors.background,
     },
-    gradientContainer: {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-    },
-    scrollView: {
-      padding: 20,
-      paddingBottom: 60,
+    backgroundImage: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
     },
     headerContainer: {
-      paddingTop: height * 0.1,
-      paddingBottom: height * 0.03,
-      alignItems: "center",
-      paddingHorizontal: 20,
+      flexDirection: 'column',
+      paddingTop: '15%',
+      paddingHorizontal: 16,
+      paddingBottom: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.PRIMARY_300,
+      marginBottom: 2,
     },
-    title: {
-      fontSize: 26,
-      textAlign: "center",
-      fontFamily: theme.fonts.primaryExtraBold,
-      color: theme.colors.text,
+    headerTitleContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    backButton: {
+      marginRight: 12,
+    },
+    headerTitle: {
+      fontSize: 24,
+      fontFamily: theme.fonts.primarySemiBold,
+      color: theme.colors.PRIMARY_950,
+      textTransform: 'uppercase',
+      letterSpacing: 0,
+    },
+    scrollView: {
+      paddingHorizontal: 16,
+      paddingTop: 16,
+      paddingBottom: 60,
+    },
+    sectionContainer: {
+      marginBottom: 20,
     },
     heading: {
-      fontSize: 20,
-      fontFamily: theme.fonts.primaryBold,
-      marginTop: 20,
-      marginBottom: 10,
-      color: theme.colors.faqsScreeenAnswerTextColor,
+      fontSize: 18,
+      fontFamily: theme.fonts.primaryMedium,
+      marginBottom: 12,
+      color: theme.colors.PRIMARY_950,
     },
     paragraph: {
-      fontSize: 15,
-      lineHeight: 22,
-      marginBottom: 35,
+      fontSize: 14,
+      lineHeight: 16.8, // 120%
+      marginBottom: 12,
       fontFamily: theme.fonts.primaryRegular,
-      color: theme.colors.text,
+      color: theme.colors.PRIMARY_700,
+    },
+    sectionLabel: {
+      fontSize: 12,
+      fontFamily: theme.fonts.primaryMedium,
+      color: theme.colors.PRIMARY_500,
+      marginTop: 8,
+      marginBottom: 8,
+      textTransform: 'none',
     },
   });
 };
+
+export const createCustomBottomSheetStyles = (theme: LoginKitTheme) =>
+  StyleSheet.create({
+    overlay: {
+      flex: 1,
+      justifyContent: 'flex-end',
+    },
+    backdrop: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: 'rgba(0, 0, 0, 0.45)',
+    },
+    sheet: {
+      backgroundColor: theme.colors.SECONDARY_50,
+      borderTopLeftRadius: 16,
+      borderTopRightRadius: 16,
+      borderTopWidth: 1,
+      borderColor: theme.colors.PRIMARY_300,
+    },
+    handleBar: {
+      alignSelf: 'center',
+      width: 36,
+      height: 4,
+      borderRadius: 2,
+      backgroundColor: theme.colors.PRIMARY_300,
+      marginTop: 8,
+      marginBottom: 16,
+    },
+    body: {
+      paddingHorizontal: 16,
+      paddingBottom: 24,
+      gap: 24,
+    },
+    textStack: {
+      gap: 8,
+    },
+    title: {
+      fontFamily: theme.fonts.primaryMedium,
+      fontSize: 18,
+      lineHeight: 22,
+      color: theme.colors.PRIMARY_950,
+    },
+    message: {
+      fontFamily: theme.fonts.primaryRegular,
+      fontSize: 14,
+      lineHeight: 20,
+      color: theme.colors.PRIMARY_600,
+    },
+    buttonRow: {
+      flexDirection: 'row',
+      gap: 12,
+      alignItems: 'stretch',
+    },
+    button: {
+      flex: 1,
+      paddingVertical: 14,
+      borderRadius: 8,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    cancelButton: {
+      backgroundColor: theme.colors.SECONDARY_50,
+      borderWidth: 1,
+      borderColor: theme.colors.PRIMARY_400,
+    },
+    primaryButton: {
+      backgroundColor: theme.colors.PRIMARY_950,
+    },
+    cancelButtonText: {
+      fontFamily: theme.fonts.primaryMedium,
+      fontSize: 14,
+      lineHeight: 22,
+      color: theme.colors.PRIMARY_950,
+    },
+    primaryButtonText: {
+      fontFamily: theme.fonts.primaryMedium,
+      fontSize: 14,
+      lineHeight: 22,
+      color: theme.colors.TERTIARY_TEXT_LIGHT,
+    },
+    singleButton: {
+      width: '100%',
+      paddingVertical: 14,
+      borderRadius: 8,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: theme.colors.PRIMARY_950,
+    },
+    singleButtonText: {
+      fontFamily: theme.fonts.primaryMedium,
+      fontSize: 14,
+      lineHeight: 22,
+      color: theme.colors.TERTIARY_TEXT_LIGHT,
+    },
+});
+
+export const createTextInputModalStyles = (theme: LoginKitTheme) =>
+  StyleSheet.create({
+    keyboardAvoidingRoot: {
+      flex: 1,
+    },
+    overlay: {
+      flex: 1,
+      justifyContent: 'flex-end',
+    },
+    backdrop: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: 'rgba(0, 0, 0, 0.45)',
+    },
+    sheet: {
+      backgroundColor: theme.colors.SECONDARY_50,
+      borderTopLeftRadius: 16,
+      borderTopRightRadius: 16,
+      borderTopWidth: 1,
+      borderColor: theme.colors.PRIMARY_300,
+    },
+    handleBar: {
+      alignSelf: 'center',
+      width: 36,
+      height: 4,
+      borderRadius: 2,
+      backgroundColor: theme.colors.PRIMARY_300,
+      marginTop: 8,
+      marginBottom: 16,
+    },
+    body: {
+      paddingHorizontal: 16,
+      paddingBottom: 24,
+      gap: 24,
+    },
+    modalTitle: {
+      fontFamily: theme.fonts.primaryMedium,
+      fontSize: 18,
+      lineHeight: 22,
+      color: theme.colors.PRIMARY_950,
+    },
+    modalMessage: {
+      fontFamily: theme.fonts.primaryRegular,
+      fontSize: 14,
+      lineHeight: 20,
+      color: theme.colors.PRIMARY_600,
+    },
+    inputBlock: {
+      gap: 8,
+    },
+    textInput: {
+      borderWidth: 1,
+      borderColor: theme.colors.PRIMARY_300,
+      borderRadius: 8,
+      paddingVertical: 12,
+      paddingHorizontal: 14,
+      fontFamily: theme.fonts.primaryRegular,
+      fontSize: 16,
+      lineHeight: 22,
+      color: theme.colors.PRIMARY_950,
+      backgroundColor: theme.colors.SECONDARY_50,
+    },
+    characterCount: {
+      fontSize: 12,
+      lineHeight: 14,
+      fontFamily: theme.fonts.primaryRegular,
+      color: theme.colors.PRIMARY_600,
+      textAlign: 'right',
+    },
+    buttonContainer: {
+      flexDirection: 'row',
+      gap: 12,
+      alignItems: 'stretch',
+    },
+    button: {
+      flex: 1,
+      paddingVertical: 14,
+      borderRadius: 8,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    cancelButton: {
+      backgroundColor: theme.colors.SECONDARY_50,
+      borderWidth: 1,
+      borderColor: theme.colors.PRIMARY_400,
+    },
+    submitButton: {
+      backgroundColor: theme.colors.PRIMARY_950,
+    },
+    cancelButtonText: {
+      fontFamily: theme.fonts.primaryMedium,
+      fontSize: 14,
+      lineHeight: 22,
+      color: theme.colors.PRIMARY_950,
+    },
+    submitButtonText: {
+      fontFamily: theme.fonts.primaryMedium,
+      fontSize: 14,
+      lineHeight: 22,
+      color: theme.colors.TERTIARY_TEXT_LIGHT,
+    },
+});

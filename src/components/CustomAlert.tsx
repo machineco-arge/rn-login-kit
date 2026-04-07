@@ -90,7 +90,7 @@ export const CustomAlert: React.FC<
               onPress={onCancel || onClose}>
               <XCircleIcon
                 size={35}
-                color={config.theme.colors.customAlertCancelColor}
+                color={config.theme.colors.PRIMARY_400}
               />
             </TouchableOpacity>
             )}

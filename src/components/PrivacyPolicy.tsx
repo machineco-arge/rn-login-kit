@@ -79,10 +79,10 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({
         value={isChecked}
         onValueChange={onCheckboxChange}
         tintColors={{
-          true: colors.loginScreensPrivacyPolicyCheckTrueColor,
+          true: colors.PRIMARY_950,
           false: isError
             ? 'red'
-            : colors.loginScreensPrivacyPolicyCheckFalseColor,
+            : colors.PRIMARY_300,
         }}
         style={styles.checkbox}
       />
@@ -92,13 +92,13 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({
         <Text
           style={[
             styles.text,
-            {color: colors.loginScreensPrivacyPolicyCheckFalseColor},
+            {color: colors.PRIMARY_300},
           ]}>
           <Text
             style={[
               styles.link,
               {
-                color: colors.loginScreensPrivacyPolicyTextColor,
+                color: colors.PRIMARY_600,
                 fontFamily: theme.fonts.primaryRegular,
               },
             ]}>

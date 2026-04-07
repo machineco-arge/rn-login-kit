@@ -6,14 +6,27 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-import {LinearGradient} from 'react-native-gradients';
 import {ScreenProps} from '../types';
 import {createLanguageScreenStyles} from '../utils/styles';
 import {useAutoTranslation} from '../hooks/useAutoTranslation';
 import {useLoginKitTranslation} from '../hooks/useLoginKitTranslation';
-import { CustomAlert } from '..';
+import { useNavigation } from '@react-navigation/native';
+import FastImage from 'react-native-fast-image';
+import { CustomBottomSheet } from '..';
 
-export const LanguageScreen: React.FC<ScreenProps> = ({config}) => {
+export interface LanguageScreenProps extends ScreenProps {
+  navigateBackIcon?: React.JSX.Element;
+  backgroundImage?: any;
+  iconCheck?: React.JSX.Element;
+}
+
+export const LanguageScreen: React.FC<LanguageScreenProps> = ({
+  config,
+  navigateBackIcon,
+  backgroundImage,
+  iconCheck,
+}) => {
+  const navigation = useNavigation();
   const styles = createLanguageScreenStyles(config.theme);
   const {
     currentLanguage,
@@ -32,46 +45,20 @@ export const LanguageScreen: React.FC<ScreenProps> = ({config}) => {
     setSelectedLanguage(currentLanguage);
   }, [currentLanguage]);
 
-  const handleLanguageSelect = (languageCode: string) => {
-    console.log('Language selected:', languageCode);
+  const handleLanguageSelect = async (languageCode: string) => {
+    if (languageCode === currentLanguage || isChangingLanguage) return;
+
     setSelectedLanguage(languageCode);
-  };
-
-  const handleApplyLanguage = async () => {
-    if (selectedLanguage === currentLanguage) {
-      console.log('Selected language is same as current, no change needed');
-      return;
-    }
-
-    console.log('Applying language change to:', selectedLanguage);
+    console.log('Applying language change to:', languageCode);
 
     try {
-      await changeLanguage(selectedLanguage);
+      await changeLanguage(languageCode);
       setLanguageChangeSuccess(true);
     } catch (error) {
-      console.error('Error in handleApplyLanguage:', error);
+      console.error('Error auto-applying language:', error);
       setLanguageChangeError(true);
+      setSelectedLanguage(currentLanguage); // revert selection
     }
-  };
-
-
-  const getLanguageFlag = (code: string) => {
-    const flags: {[key: string]: string} = {
-      tr: '🇹🇷',
-      en: '🇬🇧',
-      az: '🇦🇿',
-      de: '🇩🇪',
-      es: '🇪🇸',
-      fr: '🇫🇷',
-      it: '🇮🇹',
-      pt: '🇵🇹',
-      ru: '🇷🇺',
-      ja: '🇯🇵',
-      ko: '🇰🇷',
-      zh: '🇨🇳',
-      ar: '🇸🇦',
-    };
-    return flags[code] || '🌐';
   };
 
   const renderTranslationProgress = () => {
@@ -80,13 +67,10 @@ export const LanguageScreen: React.FC<ScreenProps> = ({config}) => {
     return (
       <View style={styles.progressContainer}>
         <View style={styles.progressHeader}>
-          <ActivityIndicator size="small" color={config.theme.colors.text} />
           <Text style={styles.progressTitle}>
             {t('translatingContent')}...
           </Text>
-        </View>
-        <View style={styles.progressBarContainer}>
-          <View style={styles.progressBarFill} />
+          <ActivityIndicator size="small" color={config.theme.colors.text} />
         </View>
       </View>
     );
@@ -94,26 +78,28 @@ export const LanguageScreen: React.FC<ScreenProps> = ({config}) => {
 
   return (
     <View style={styles.container}>
-      {/* Background Gradient */}
-      <View style={styles.gradientContainer}>
-        <LinearGradient
-          angle={45}
-          colorList={config.theme.colors.gradient.map((color, index) => ({
-            color,
-            offset: `${
-              (index / (config.theme.colors.gradient.length - 1)) * 100
-            }%`,
-            opacity: '1',
-          }))}
+      {/* Background */}
+      {backgroundImage && (
+        <FastImage
+          source={backgroundImage}
+          style={styles.backgroundImage}
+          resizeMode={FastImage.resizeMode.cover}
         />
-      </View>
+      )}
 
       {/* Header */}
       <View style={styles.headerContainer}>
-        <Text style={styles.headerTitle}>{t('languageSettings')}</Text>
+        <View style={styles.headerTitleContainer}>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+            {navigateBackIcon}
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>{t('language') || 'LANGUAGE'}</Text>
+        </View>
       </View>
 
-      {renderTranslationProgress()}
+      <View style={styles.selectLanguageContainer}>
+        <Text style={styles.selectLanguageText}>{t('selectLanguage') || 'Select language'}</Text>
+      </View>
 
       {/* Language List */}
       <ScrollView
@@ -125,80 +111,35 @@ export const LanguageScreen: React.FC<ScreenProps> = ({config}) => {
               key={language.code}
               style={[
                 styles.languageItem,
-                selectedLanguage === language.code &&
-                  styles.selectedLanguageItem,
-                currentLanguage === language.code && styles.currentLanguageItem,
                 isChangingLanguage && styles.disabledItem,
               ]}
               onPress={() => handleLanguageSelect(language.code)}
               disabled={isChangingLanguage}
               activeOpacity={0.7}>
               <View style={styles.languageContent}>
-                <Text style={styles.languageFlag}>
-                  {getLanguageFlag(language.code)}
-                </Text>
                 <View style={styles.languageTextContainer}>
-                  <Text
-                    style={[
-                      styles.languageName,
-                      selectedLanguage === language.code &&
-                        styles.selectedLanguageText,
-                      currentLanguage === language.code &&
-                        styles.currentLanguageText,
-                    ]}>
+                  <Text style={[styles.languageName, selectedLanguage === language.code && styles.selectedLanguageText]}>
                     {language.nativeName}
                   </Text>
-                  <Text
-                    style={[
-                      styles.languageEnglishName,
-                      selectedLanguage === language.code &&
-                        styles.selectedLanguageTextSecondary,
-                    ]}>
+                  <Text style={styles.languageEnglishName}>
                     {language.name}
                   </Text>
                 </View>
-                {currentLanguage === language.code && (
-                  <View style={styles.currentIndicator}>
-                    <Text style={styles.currentIndicatorText}>✓</Text>
+                {selectedLanguage === language.code && (
+                  <View style={styles.checkIconContainer}>
+                    {iconCheck ? iconCheck : <Text>✓</Text>}
                   </View>
                 )}
-                {/* {selectedLanguage === language.code &&
-                  selectedLanguage !== currentLanguage && (
-                    <View style={styles.selectedIndicator}>
-                      <Text style={styles.selectedIndicatorText}>○</Text>
-                    </View>
-                  )} */}
               </View>
             </TouchableOpacity>
           ))}
         </View>
       </ScrollView>
 
-      {/* Action Buttons */}
-      <View style={styles.actionContainer}>
-        <TouchableOpacity
-          style={[
-            styles.applyButton,
-            (isChangingLanguage || selectedLanguage == currentLanguage) &&
-              styles.disabledButton,
-          ]}
-          onPress={handleApplyLanguage}
-          disabled={isChangingLanguage || selectedLanguage == currentLanguage}>
-          {isChangingLanguage ? (
-            <View style={styles.loadingContainer}>
-              <ActivityIndicator size="small" color="white" />
-              <Text style={styles.loadingText}>
-                {t('applying')}
-              </Text>
-            </View>
-          ) : (
-            <Text style={styles.applyButtonText}>{t('applyLanguage')}</Text>
-          )}
-        </TouchableOpacity>
-      </View>
+      {renderTranslationProgress()}
 
       {/* Language Change Success Alert */}
-      <CustomAlert
+      <CustomBottomSheet
         config={config}
         visible={languageChangeSuccess}
         title={t('languageChanged')}
@@ -208,7 +149,7 @@ export const LanguageScreen: React.FC<ScreenProps> = ({config}) => {
       />
 
       {/* Language Change Error Alert */}
-      <CustomAlert
+      <CustomBottomSheet
         config={config}
         visible={languageChangeError}
         title={t('_error_')}

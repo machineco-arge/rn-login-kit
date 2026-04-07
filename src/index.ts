@@ -17,9 +17,10 @@ export {LoadingIndicator} from './components/LoadingIndicator';
 export {HaveAnAccount} from './components/HaveAnAccount';
 export {OrComponent} from './components/OrComponent';
 export {ProfilePhotoCropper} from './components/ProfilePhotoCropper';
-export {EditNameModal} from './components/EditNameModal';
 export {IconSet} from './components/IconSet';
 export {CustomAlert} from './components/CustomAlert';
+export {CustomBottomSheet} from './components/CustomBottomSheet';
+export {TextInputModal} from './components/TextInputModal';
 export {MenuItems} from './components/MenuItems';
 
 // Configuration and I18n
@@ -41,6 +42,7 @@ export {profilePhotoManager} from './managers/ProfilePhotoManager';
 export {uriManager} from './managers/UriManager';
 
 // Hooks
+export {useAuthBottomSheet, AuthBottomSheetProvider} from './hooks/AuthBottomSheetContext';
 export {useSignIn} from './hooks/useSignIn';
 export {useRegister} from './hooks/useRegister';
 export {useSocialAuth} from './hooks/useSocialAuth';
@@ -90,11 +92,12 @@ export {
   createRegisterScreenStyles,
   createAccountScreenStyles,
   createStyleProfilePhotoCropper,
-  createStyleEditNameModal,
   createLanguageScreenStyles,
   createDarkLightModeScreenStyles,
   createCustomAlertStyles,
   createHelpsFAQsScreenStyles,
   createStyleProfileSettings,
   createTermsPolicyStyles,
+  createCustomBottomSheetStyles,
+  createTextInputModalStyles,
 } from './utils/styles';

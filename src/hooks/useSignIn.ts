@@ -10,36 +10,60 @@ interface UseSignInProps {
 export const useSignIn = ({ config }: UseSignInProps) => {
   const { t } = useLoginKitTranslation('login');
   const [email, setEmail] = useState('');
-  const [companyName, setCompanyName] =  useState('');
+  const [companyName, setCompanyName] = useState('');
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [errorSignIn, setErrorSignIn] = useState(false);
-  const [errorPassword, setErrorPassword] = useState(false);
-  const [errorMissingInputs, setErrorMissingInputs] = useState(false);
-  const [errorInvalidEmail, setErrorInvalidEmail] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isPrivacyChecked, setIsPrivacyChecked] = useState(!config.privacy.required);
+
+  // Validation Errors (Inline)
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [companyError, setCompanyError] = useState('');
+  const [userError, setUserError] = useState('');
+
+  // Server Errors (Bottom Sheet)
+  const [serverErrorVisible, setServerErrorVisible] = useState(false);
+  const [serverErrorMessage, setServerErrorMessage] = useState('');
 
   const emailAuthService = new EmailAuthService(config);
-
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   const handleLogin = useCallback(async () => {
-    if (
-      !password ||
-      (config.emailAuth.enabledSignInUserName && !userName) ||
-      (config.emailAuth.enabledSignInEmail && !email) ||
-      (config.emailAuth.enabledSignInCompanyName && !companyName)
-    ) {
-      setErrorMissingInputs(true);
-      return;
+    // Reset errors
+    setEmailError('');
+    setPasswordError('');
+    setCompanyError('');
+    setUserError('');
+    setServerErrorVisible(false);
+
+    let hasError = false;
+
+    if (config.emailAuth.enabledSignInEmail) {
+      if (!email) {
+        setEmailError(t('userSignInEnterEmailAndPasswordAlert') || 'Email is required');
+        hasError = true;
+      } else if (!emailRegex.test(email)) {
+        setEmailError(t('userSignInEnterValidEmailAlert') || 'Invalid email');
+        hasError = true;
+      }
     }
 
-    if (config.emailAuth.enabledSignInEmail && !emailRegex.test(email)) {
-      setErrorInvalidEmail(true);
-      return;
+    if (config.emailAuth.enabledSignInUserName && !userName) {
+      setUserError(t('userSignInEnterEmailAndPasswordAlert') || 'Username is required');
+      hasError = true;
     }
+
+    if (config.emailAuth.enabledSignInCompanyName && !companyName) {
+      setCompanyError(t('userSignInEnterEmailAndPasswordAlert') || 'Company name is required');
+      hasError = true;
+    }
+
+    if (!password) {
+      setPasswordError(t('userSignInEnterEmailAndPasswordAlert') || 'Password is required');
+      hasError = true;
+    }
+
+    if (hasError) return;
 
     const _companyName = config.emailAuth.enabledSignInCompanyName ? companyName : 'tempName';
     const _userName = config.emailAuth.enabledSignInUserName ? userName : 'tempName';
@@ -48,24 +72,22 @@ export const useSignIn = ({ config }: UseSignInProps) => {
     try {
       setLoading(true);
       const result = await emailAuthService.signInWithEmail(_companyName, _email, _userName, password);
-      
+
       if (result.success && result.user) {
         config.navigation.onLoginSuccess();
       } else {
-        console.log(`${t('_error_')} ${t('userSignInErrorAlertMessage')}`, { error: result.error || 'Unknown error' });
-        if (result.error == 'Şifre hatalı') {
-          setErrorPassword(true);
-        } else if(result.error == 'Zaten aktif bir oturum var.') {
-          setErrorMessage('userSignInErrorAlreadyActiveSession');
-          setErrorSignIn(true);
+        if (result.error === 'Şifre hatalı') {
+          setServerErrorMessage(t('userSignInErrorWrongPasswordAlertMessage') || 'Wrong password');
+        } else if (result.error === 'Zaten aktif bir oturum var.') {
+          setServerErrorMessage(t('userSignInErrorAlreadyActiveSession') || 'Active session exists');
         } else {
-          setErrorMessage('');
-          setErrorSignIn(true);
+          setServerErrorMessage(result.error || t('userSignInErrorAlertMessage') || 'An error occurred');
         }
+        setServerErrorVisible(true);
       }
     } catch (error) {
-      console.log(`${t('_error_')} ${t('userSignInErrorAlertMessage')}`, { error: (error as Error).message });
-      setErrorSignIn(true);
+      setServerErrorMessage((error as Error).message);
+      setServerErrorVisible(true);
     } finally {
       setLoading(false);
     }
@@ -82,7 +104,6 @@ export const useSignIn = ({ config }: UseSignInProps) => {
     t,
   ]);
 
-
   return {
     email,
     setEmail,
@@ -93,17 +114,19 @@ export const useSignIn = ({ config }: UseSignInProps) => {
     password,
     setPassword,
     loading,
-    isPrivacyChecked,
-    setIsPrivacyChecked,
     handleLogin,
-    errorMissingInputs,
-    setErrorMissingInputs,
-    errorInvalidEmail,
-    setErrorInvalidEmail,
-    errorSignIn,
-    setErrorSignIn,
-    errorPassword,
-    setErrorPassword,
-    errorMessage,
+    emailError,
+    passwordError,
+    companyError,
+    userError,
+    serverErrorVisible,
+    setServerErrorVisible,
+    serverErrorMessage,
+    isFormValid: (
+      !!password &&
+      (!config.emailAuth.enabledSignInEmail || !!email) &&
+      (!config.emailAuth.enabledSignInUserName || !!userName) &&
+      (!config.emailAuth.enabledSignInCompanyName || !!companyName)
+    ),
   };
-}; 
+};

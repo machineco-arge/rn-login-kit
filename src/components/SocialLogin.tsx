@@ -7,7 +7,7 @@ import {
   ViewStyle,
   TextStyle,
   ActivityIndicator,
-  Dimensions,
+  StyleSheet,
 } from 'react-native';
 import { LoginKitTheme, SocialAuthConfig } from '../types';
 
@@ -29,47 +29,53 @@ export const SocialLogin: React.FC<SocialLoginProps> = ({
   loading = false,
   onGooglePress,
   onApplePress,
-  googleText = "Continue with Google",
-  appleText = "Continue with Apple",
+  googleText = "Sign in with Google",
+  appleText = "Sign in with Apple",
   GoogleIcon,
   AppleIcon,
 }) => {
 
-  const { height } = Dimensions.get("window");
-  
-  const buttonStyle: ViewStyle = {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    padding: height * 0.015,
-    marginTop: height * 0.02,
-    borderRadius: theme.borderRadius,
-    borderWidth: 1,
-    borderColor: theme.colors.loginScreensTextInputBorderColor,
-    opacity: loading ? 0.5 : 1,
-  };
-
-  const textStyle: TextStyle = {
-    flex: 1,
-    fontSize: 16,
-    fontFamily: theme.fonts.primarySemiBold,
-    marginLeft: 2,
-    textAlign: 'left',
-  };
+  const styles = StyleSheet.create({
+    container: {
+      gap: 12,
+    },
+    button: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: 40,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      borderRadius: 4,
+      borderWidth: 1,
+      borderColor: theme.colors.PRIMARY_400,
+      opacity: loading ? 0.5 : 1,
+      shadowColor: '#0A0D12',
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.05,
+      shadowRadius: 2,
+      elevation: 2,
+    } as ViewStyle,
+    iconContainer: {
+      marginRight: 10,
+    },
+    text: {
+      fontSize: 14,
+      fontFamily: theme.fonts.primaryMedium,
+      color: theme.colors.PRIMARY_600
+    } as TextStyle,
+  });
 
   if (!socialConfig.google?.enabled && !socialConfig.apple?.enabled) {
     return null;
   }
 
   return (
-    <View style={{ gap: 16 }}>
+    <View style={styles.container}>
       {/* Google Login Button */}
       {socialConfig.google?.enabled && (
         <TouchableOpacity
-          style={[
-            buttonStyle,
-            { backgroundColor: '#ffffff' }
-          ]}
+          style={[styles.button, { backgroundColor: '#FFFFFF' }]}
           onPress={onGooglePress}
           disabled={loading}
         >
@@ -78,16 +84,11 @@ export const SocialLogin: React.FC<SocialLoginProps> = ({
           ) : (
             <>
               {GoogleIcon && (
-                <View style={{ marginLeft: -12, }}>
+                <View style={styles.iconContainer}>
                   <GoogleIcon />
                 </View>
               )}
-              <Text
-                style={[
-                  textStyle,
-                  { color: '#333333' }
-                ]}
-              >
+              <Text style={styles.text}>
                 {googleText}
               </Text>
             </>
@@ -98,28 +99,20 @@ export const SocialLogin: React.FC<SocialLoginProps> = ({
       {/* Apple Login Button */}
       {socialConfig.apple?.enabled && Platform.OS === 'ios' && (
         <TouchableOpacity
-          style={[
-            buttonStyle,
-            { backgroundColor: '#000000' }
-          ]}
+          style={[styles.button, { backgroundColor: '#FFFFFF' }]}
           onPress={onApplePress}
           disabled={loading}
         >
           {loading ? (
-            <ActivityIndicator size="small" color="#ffffff" />
+            <ActivityIndicator size="small" color="#333" />
           ) : (
             <>
               {AppleIcon && (
-                <View style={{ marginLeft: -12 }}>
+                <View style={[styles.iconContainer, {left: -3}]}>
                   <AppleIcon />
                 </View>
               )}
-              <Text
-                style={[
-                  textStyle,
-                  { color: '#ffffff' }
-                ]}
-              >
+              <Text style={[styles.text, { left: -3 }]}>
                 {appleText}
               </Text>
             </>

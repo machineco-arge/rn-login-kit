@@ -17,6 +17,7 @@ export const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
 }) => {
   const containerStyle: ViewStyle = {
     flex: 1,
+    top: 15,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.colors.background,

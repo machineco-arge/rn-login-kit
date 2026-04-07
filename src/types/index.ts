@@ -17,119 +17,6 @@ export interface LoginKitThemeColors {
   text: string;
   gradient: string[];
 
-
-  // Login&SignIn&Register Screens
-  loginScreensTextInputBgColor: string;
-  loginScreensTextInputBorderColor: string;
-  loginScreensTextInputTextColor: string;
-  loginScreensTextInputSecondaryTextColor: string;
-  loginScreensPrivacyPolicyCheckTrueColor: string;
-  loginScreensPrivacyPolicyCheckFalseColor: string;
-  loginScreensPrivacyPolicyTextColor: string;
-  loginScreensHaveAnAccountTextColor: string;
-  loginScreensHaveAnAccountButtonColor: string;
-  loginScreensTitleColor: string;
-  loginScreensSubTitleColor: string;
-  loginScreensButtonsColor: string;
-  loginScreensButtonTextColor: string;
-  loginScreensLogoTextColor: string;
-
-  // Profile & Settings
-  profileSettingsHeaderContainerBottomBorderColor: string;
-  profileSettingsHeaderTitleColor: string;
-  profileSettingsProfilePhotoBgColor: string;
-  profileSettingsUserNameColor: string;
-  profileSettingsBioColor: string;
-  profileSettingsStatsColor: string;
-  profileSettingsMenuItemBottomBorderColor: string;
-  profileSettingsMenuItemTextColor: string;
-  profileSettingsChevronColor: string;
-
-  // Account Screen
-  accountScreenPhotoCropperBgColor: string;
-  accountScreenPhotoCropperTitleColor: string;
-  accountScreenPhotoCropperPreviewContainerBorderColor: string;
-  accountScreenPhotoCropperButtonBorderColor: string;
-  accountScreenPhotoCropperOkButtonColor: string;
-  accountScreenPhotoCropperCancelButtonColor: string;
-  accountScreenPhotoCropperButtonTextColor: string;
-  accountScreenEditNameModalBgColor: string;
-  accountScreenEditNameModalBorderColor: string;
-  accountScreenEditNameModalTitleColor: string;
-  accountScreenEditNameModalTextInputBgColor: string;
-  accountScreenEditNameModalTextInputColor: string;
-  accountScreenEditNameModalOkButtonColor: string;
-  accountScreenEditNameModalCancelButtonColor: string;
-  accountScreenEditNameModalButtonTextColor: string;
-  accountScreenHeaderTitleColor: string;
-  accountScreenHeaderEditPhotoTitleColor: string;
-  accountScreenEditPhotoCardBgColor: string;
-  accountScreenAvatarPhotoCardBgColor: string;
-  accountScreenAvatarPhotoCardTextColor: string;
-  accountScreenEditPhotoActionButtonsBgColor: string;
-  accountScreenEditPhotoActionButtonsBorderColor: string;
-  accountScreenInfoSectionBgColor: string;
-  accountScreenInfoSectionBorderColor: string;
-  accountScreenInfoSectionLabelTextColor: string;
-  accountScreenInfoSectionValueTextColor: string;
-  accountScreenLogoutButtonColor: string;
-
-  // Language Screen
-  languageScreenHeaderTitleColor: string;
-  languageScreenItemCardBgColor: string;
-  languageScreenSelectedLanguageItemBgColor: string;
-  languageScreenSelectedLanguageItemBorderColor: string;
-  languageScreenCurrentLanguageItemBgColor: string;
-  languageScreenCurrentLanguageItemBorderColor: string;
-  languageScreenAllLanguagesTextColor: string;
-  languageScreenEnglishVersionOfAllLanguagesTextColor: string;
-  languageScreenSelectedLanguageTextColor: string;
-  languageScreenCurrentLanguageColor: string;
-  languageScreenApplyButtonColor: string;
-  languageScreenApplyButtonTextColor: string;
-  languageScreenProgressTitle: string;
-  languageScreenProgressSubTitle: string;
-  languageScreenProgressBarContainer: string;
-  languageScreenProgressBarFill: string;
-
-  // Helps&FAQs Screen
-  faqsScreeenHeaderTitleColor: string;
-  faqsScreeenIconsColor: string;
-  faqsScreeenTooggleIconColor: string;
-  faqsScreeenSectionTitle: string;
-  faqsScreeenAccordionBgColor: string;
-  faqsScreeenAccordionShadowColor: string;
-  faqsScreeenAccordionBorderColor: string;
-  faqsScreeenQuestionTextColor: string;
-  faqsScreeenAnswerTextColor: string;
-
-  // DarkLightMode Screen
-  themeScreenHeaderTitleColor: string;
-  themeScreenSubHeaderTitleColor: string;
-  themeScreenCardBgColor: string;
-  themeScreenCardShadowColor: string;
-  themeScreenToggleContainerColor: string;
-  themeScreenToggleTextColor: string;
-
-  // CustomAlert
-  customAlertCardBgColor: string;
-  customAlertBorderColor: string;
-  customAlertTitleTextColor: string;
-  customAlertCancelColor: string;
-  customAlertConfirmColor: string;
-  customAlertOkColor: string;
-  customAlertSendPrintColor: string;
-  customAlertButtonTextColor: string;
-
-  // IconSet
-  iconSetSignInAndSignUpScreenIconsColor: string;
-  iconSetThemeScreenIconsColor: string;
-  iconSetAccountScreenResetColor: string;
-  iconSetAccountScreenEditColor: string;
-  iconSetAccountScreenImagePickerColor: string;
-  iconSetAccountScreenDeleteColor: string;
-  iconSetProfileSettingsPpIconColor: string;
-
   // new
   PRIMARY_950: string;
   PRIMARY_900: string;
@@ -301,17 +188,24 @@ export interface ScreenProps {
 }
 
 export interface IMenuItemsProps {
-  title: string;
-  onPress: () => void;
-  config: LoginKitConfig,
+    title: string;
+    onPress: () => void;
+    config: LoginKitConfig;
+    iconChevron?: React.ComponentType<any>;
 }
 
 export interface ProfileSettigsProps {
   config: LoginKitConfig;
+  backgroundImage?: any;
+  userAvatarIcon?: React.ComponentType<any>;
+  iconChevron?: React.ComponentType<any>;
+  iconLogout?: React.ComponentType<any>;
+  navigateBackIcon?: React.JSX.Element;
   menuList: {
     title: string;
     onPress?: () => void;
   }[];
+  showUserName?: boolean;
   biography?: string;
   stats?: string;
   proMemberText?: string;
@@ -321,9 +215,8 @@ export interface ProfileSettigsProps {
 
 export interface TermsPoliciesProps {
   config: LoginKitConfig;
-  content: {
-    heading: string;
-    paragraphs: string[];
-  }[];
   title: string;
+  content: { heading: string; paragraphs: string[] }[];
+  backgroundImage?: any;
+  navigateBackIcon?: React.JSX.Element;
 }

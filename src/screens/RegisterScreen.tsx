@@ -13,16 +13,22 @@ import {useRegister} from '../hooks/useRegister';
 import {createRegisterScreenStyles} from '../utils/styles';
 import {useLoginKitTranslation} from '../hooks/useLoginKitTranslation';
 import {TextInputsLogin} from '../components/TextInputsLogin';
-import {PrivacyPolicy} from '../components/PrivacyPolicy';
 import {LoadingIndicator} from '../components/LoadingIndicator';
 import {HaveAnAccount} from '../components/HaveAnAccount';
 import {OrComponent} from '../components/OrComponent';
-import { IconSet } from '../components/IconSet';
-import { CustomAlert } from '..';
-import { usePrivacyCheck } from '../hooks/usePrivacyCheck';
+import { CustomBottomSheet, SocialLogin, useSocialAuth } from '..';
 
-export const RegisterScreen: React.FC<ScreenProps> = ({
+export const RegisterScreen: React.FC<ScreenProps & { 
+  isBottomSheet?: boolean;
+  showSocialLogin?: boolean;
+  GoogleIcon?: any;
+  AppleIcon?: any;
+}> = ({
   config,
+  showSocialLogin = true,
+  GoogleIcon,
+  AppleIcon,
+  isBottomSheet = false,
 }) => {
   const {t} = useLoginKitTranslation('login');
   const styles = createRegisterScreenStyles(config.theme);
@@ -37,29 +43,145 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
     name,
     setName,
     loading,
-    isPrivacyChecked,
-    setIsPrivacyChecked,
     handleRegister,
     errorRegister,
     setErrorRegister,
     errorMissingInputs,
     setErrorMissingInputs,
-    errorPassword,
-    setErrorPassword,
-    errorInvalidEmail,
-    setErrorInvalidEmail,
+    passwordError,
+    emailError,
     errorMessage
   } = useRegister({
     config,
   });
 
-  const { animatePrivacyPolicy, handlePressWithPrivacyCheck } = usePrivacyCheck({
-    isPrivacyChecked,
-    isPrivacyRequired: config.privacy.required,
-  });
+  const { isSocialLoginLoading, handleSocialLogin } = useSocialAuth({config});
 
-  if (loading) {
+  if (loading || isSocialLoginLoading) {
     return <LoadingIndicator theme={config.theme} />;
+  }
+
+  const isFormValid = (
+    (!config.emailAuth.enabledRegisterEmail || email) &&
+    (!config.emailAuth.enabledRegisterUserName || name) &&
+    password && confirmPassword &&
+    password === confirmPassword
+  );
+
+  if (isBottomSheet) {
+    return (
+      <View style={styles.sheetContent}>
+        <View style={styles.headerSection}>
+          <Text style={styles.title}>{t('userRegister') || 'Sign Up'}</Text>
+        </View>
+
+        <View style={styles.formSection}>
+          {config.emailAuth.enabledRegisterUserName && (
+            <View style={styles.inputContainer}>
+              <TextInputsLogin
+                theme={config.theme}
+                type="User"
+                placeholder={t('placeholderEnterUserName')}
+                value={name}
+                onChangeText={setName}
+              />
+            </View>
+          )}
+          
+          {config.emailAuth.enabledRegisterEmail && (
+            <View style={styles.inputContainer}>
+              <TextInputsLogin
+                theme={config.theme}
+                type="Mail"
+                placeholder={t('placeholderEnterEmail')}
+                value={email}
+                onChangeText={setEmail}
+                errorText={emailError}
+              />
+            </View>
+          )}
+
+          <View style={styles.inputContainer}>
+            <TextInputsLogin
+              theme={config.theme}
+              type="Password"
+              placeholder={t('placeholderEnterPassword')}
+              value={password}
+              onChangeText={setPassword}
+              passwordClose={true}
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <TextInputsLogin
+              theme={config.theme}
+              type="Password"
+              placeholder={t('placeholderConfirmPassword')}
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              passwordClose={true}
+              errorText={passwordError}
+            />
+          </View>
+
+          <TouchableOpacity
+            style={[
+              styles.registerButton,
+              !isFormValid && { backgroundColor: config.theme.colors.PRIMARY_300 }
+            ]}
+            onPress={handleRegister}
+            disabled={!isFormValid}>
+            <Text style={styles.registerButtonText}>
+              {t('userRegisterCreateAccount') || 'Continue'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <OrComponent theme={config.theme} text={t('userSignInOr') || 'or'} />
+
+        {/* Social Login Section */}
+        {showSocialLogin && (
+          <View style={styles.socialSection}>
+            <SocialLogin
+              theme={config.theme}
+              socialConfig={config.socialAuth}
+              loading={isSocialLoginLoading}
+              onGooglePress={() => handleSocialLogin('google')}
+              onApplePress={() => handleSocialLogin('apple')}
+              GoogleIcon={GoogleIcon}
+              AppleIcon={AppleIcon}
+              googleText={t('socialLoginWithGoogle')}
+              appleText={t('socialLoginWithApple')}
+            />
+          </View>
+        )}
+
+        {/* Have an Account Section */}
+        <HaveAnAccount
+          theme={config.theme}
+          screen="register"
+          onPress={() => config.navigation.onSignInPress?.()}
+        />
+
+        {/* Error Handling with CustomBottomSheet */}
+        <CustomBottomSheet  
+          config={config}
+          visible={errorMissingInputs}
+          title={t('_error_')}
+          message={t('userRegisterPleaseEnterAllInformation')}
+          onOK={() => setErrorMissingInputs(false)}
+          okText={t('ok')}
+        />
+        <CustomBottomSheet
+          config={config}
+          visible={errorRegister}
+          title={t('_error_')}
+          message={`${t('userRegisterErrorAlertMessage')} ${t(errorMessage)}`}
+          onOK={() => setErrorRegister(false)}
+          okText={t('ok')}
+        />
+      </View>
+    );
   }
 
   return (
@@ -84,7 +206,6 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
         showsVerticalScrollIndicator={false}>
         <View style={styles.headerSection}>
           <Text style={styles.title}>{t('userRegister')}</Text>
-          <Text style={styles.subtitle}>{t('userRegisterToGetStarted')}</Text>
         </View>
 
         <View style={styles.formSection}>
@@ -97,7 +218,6 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
                 placeholder={t('placeholderEnterUserName')}
                 value={name}
                 onChangeText={setName}
-                IconComponent={IconSet}
                 passwordClose={false}
               />
             </View>
@@ -111,8 +231,8 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
                 placeholder={t('placeholderEnterEmail')}
                 value={email}
                 onChangeText={setEmail}
-                IconComponent={IconSet}
                 passwordClose={false}
+                errorText={emailError}
               />
           </View>
           )}
@@ -126,7 +246,6 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
               value={password}
               onChangeText={setPassword}
               passwordClose={true}
-              IconComponent={IconSet}
             />
           </View>
 
@@ -138,13 +257,13 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
               value={confirmPassword}
               onChangeText={setConfirmPassword}
               passwordClose={true}
-              IconComponent={IconSet}
+              errorText={passwordError}
             />
           </View>
 
           <TouchableOpacity
             style={styles.registerButton}
-            onPress={() => handlePressWithPrivacyCheck(handleRegister)}>
+            onPress={handleRegister}>
             <Text style={styles.registerButtonText}>
               {t('userRegisterCreateAccount')}
             </Text>
@@ -152,6 +271,23 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
         </View>
 
         <OrComponent theme={config.theme} text={t('userSignInOr')} />
+
+        {/* Social Login Section */}
+        {showSocialLogin && (
+          <View style={styles.socialSection}>
+            <SocialLogin
+              theme={config.theme}
+              socialConfig={config.socialAuth}
+              loading={isSocialLoginLoading}
+              onGooglePress={() => handleSocialLogin('google')}
+              onApplePress={() => handleSocialLogin('apple')}
+              GoogleIcon={GoogleIcon}
+              AppleIcon={AppleIcon}
+              googleText={t('socialLoginWithGoogle')}
+              appleText={t('socialLoginWithApple')}
+            />
+          </View>
+        )}
 
         {/* Have an Account Section */}
         <HaveAnAccount
@@ -161,54 +297,23 @@ export const RegisterScreen: React.FC<ScreenProps> = ({
         />
       </ScrollView>
 
-      {/* Privacy Section */}
-      {config.privacy.required && (
-        <View style={styles.privacySection}>
-          <PrivacyPolicy
-            theme={config.theme}
-            isChecked={isPrivacyChecked}
-            onCheckboxChange={setIsPrivacyChecked}
-            pressPrivacyPolicy={config.privacy.pressPrivacyPolicy}
-            triggerAnimation={animatePrivacyPolicy}
-          />
-        </View>
-      )}
-
-    <CustomAlert
-      config={config}
-      visible={errorMissingInputs}
-      title={t('_error_')}
-      message={t('userRegisterPleaseEnterAllInformation')}
-      onOK={() => setErrorMissingInputs(false)}
-      okText={t('ok')}
-    />
-    
-    <CustomAlert
-      config={config}
-      visible={errorPassword}
-      title={t('_error_')}
-      message={t('userRegisterPasswordsNotMatchErrorAlert')}
-      onOK={() => setErrorPassword(false)}
-      okText={t('ok')}
-    />
-
-    <CustomAlert
-      config={config}
-      visible={errorInvalidEmail}
-      title={t('_error_')}
-      message={t('userSignInEnterValidEmailAlert')}
-      onOK={() => setErrorInvalidEmail(false)}
-      okText={t('ok')}
-    />
-
-    <CustomAlert
-      config={config}
-      visible={errorRegister}
-      title={t('_error_')}
-      message={`${t('userRegisterErrorAlertMessage')} ${t(errorMessage)}`}
-      onOK={() => setErrorRegister(false)}
-      okText={t('ok')}
-    />
+      {/* Direct use of CustomBottomSheet for desktop/standalone errors */}
+      <CustomBottomSheet
+        config={config}
+        visible={errorMissingInputs}
+        title={t('_error_')}
+        message={t('userRegisterPleaseEnterAllInformation')}
+        onOK={() => setErrorMissingInputs(false)}
+        okText={t('ok')}
+      />
+      <CustomBottomSheet
+        config={config}
+        visible={errorRegister}
+        title={t('_error_')}
+        message={`${t('userRegisterErrorAlertMessage')} ${t(errorMessage)}`}
+        onOK={() => setErrorRegister(false)}
+        okText={t('ok')}
+      />
     </KeyboardAvoidingView>
   );
 };

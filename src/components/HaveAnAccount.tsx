@@ -3,8 +3,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  ViewStyle,
-  TextStyle,
+  StyleSheet,
 } from 'react-native';
 import { LoginKitTheme } from '../types';
 import { useLoginKitTranslation } from '../hooks/useLoginKitTranslation';
@@ -20,38 +19,37 @@ export const HaveAnAccount: React.FC<HaveAnAccountProps> = ({
   screen,
   onPress,
 }) => {
-
   const { t } = useLoginKitTranslation('login');
 
-  const containerStyle: ViewStyle = {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 20,
-  };
-
-  const textStyle: TextStyle = {
-    fontFamily: theme.fonts.primaryMedium,
-    fontSize: 16,
-    color: theme.colors.loginScreensHaveAnAccountTextColor,
-  };
-
-  const linkStyle: TextStyle = {
-    fontFamily: theme.fonts.primarySemiBold,
-    fontSize: 16,
-    color: theme.colors.loginScreensHaveAnAccountButtonColor,
-    marginLeft: 4,
-  };
+  const styles = StyleSheet.create({
+    container: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginVertical: 24,
+    },
+    text: {
+      fontFamily: theme.fonts.primaryRegular,
+      fontSize: 14,
+      color: theme.colors.PRIMARY_500,
+      textAlign: 'center',
+    },
+    link: {
+      fontFamily: theme.fonts.primaryMedium,
+      fontSize: 14,
+      color: theme.colors.PRIMARY_950,
+      marginTop: 4,
+    },
+  });
 
   const isSignIn = screen === 'signIn';
-  const questionText = isSignIn ? t('userSignInHaveNotAccount') : t('userRegisterAlreadyHaveAccount');
-  const actionText = isSignIn ? t('userRegister') : t('userSignInLogin');
+  const questionText = isSignIn ? t('userSignInHaveNotAccount') || "Don't you have an account?" : t('userRegisterAlreadyHaveAccount');
+  const actionText = isSignIn ? t('userRegister') || "Sign Up" : t('userSignIn');
 
   return (
-    <View style={containerStyle}>
-      <Text style={textStyle}>{questionText}</Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>{questionText}</Text>
       <TouchableOpacity onPress={onPress}>
-        <Text style={linkStyle}>{actionText}</Text>
+        <Text style={styles.link}>{actionText}</Text>
       </TouchableOpacity>
     </View>
   );
