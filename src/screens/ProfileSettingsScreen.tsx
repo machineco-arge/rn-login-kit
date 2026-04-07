@@ -99,7 +99,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettigsProps> = (
           </View>
 
           {/* Menu Items */}
-          <View>
+          <View style={StyleProfileSettings.profileSettingsMenuContainer}>
             {menuList.map((item, index) => (
               <MenuItems
                 key={index}

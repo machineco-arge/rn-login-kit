@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Modal,
   View,
@@ -6,10 +6,20 @@ import {
   TouchableOpacity,
   Pressable,
   ActivityIndicator,
+  Animated,
+  Platform,
+  InteractionManager,
+  Easing,
+  Dimensions,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { createCustomBottomSheetStyles } from '../utils/styles';
 import { LoginKitConfig } from '../types'
+
+const SCREEN_HEIGHT = Dimensions.get('window').height;
+
+/** After RN Modal unmounts, iOS still needs a tick before showing share sheet / another Modal. */
+const IOS_AFTER_MODAL_MS = 100;
 
 /**
  * Bottom-sheet replacement for CustomAlert (album flows).
@@ -53,6 +63,12 @@ export const CustomBottomSheet: React.FC<ICustomBottomSheetProps> = ({
   const insets = useSafeAreaInsets();
   const styles = createCustomBottomSheetStyles(config.theme);
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
+  const sheetWasShownRef = useRef(false);
+  /** Run after exit animation + modal unmount — avoids stacking modals / frozen UI on iOS. */
+  const pendingAfterCloseRef = useRef<(() => void) | null>(null);
+
   const isTwoButton =
     typeof onConfirm === 'function' &&
     typeof onCancel === 'function' &&
@@ -62,24 +78,94 @@ export const CustomBottomSheet: React.FC<ICustomBottomSheetProps> = ({
   const isSingleOk =
     typeof onOK === 'function' && okText != null && !isTwoButton;
 
+  const close = useCallback(() => {
+    pendingAfterCloseRef.current = null;
+    if (onCancel) {
+      onCancel();
+    } else if (onOK) {
+      onOK();
+    }
+  }, [onCancel, onOK]);
+
+  const queueCloseThen = useCallback(
+    (action: () => void) => {
+      pendingAfterCloseRef.current = action;
+      if (onCancel) {
+        onCancel();
+      } else if (onOK) {
+        onOK();
+      }
+    },
+    [onCancel, onOK],
+  );
+
+  useEffect(() => {
+    if (visible) {
+      sheetWasShownRef.current = true;
+      setModalVisible(true);
+      translateY.setValue(SCREEN_HEIGHT);
+      Animated.timing(translateY, {
+        toValue: 0,
+        duration: 350,
+        easing: Easing.out(Easing.cubic),
+        useNativeDriver: true,
+      }).start();
+      return;
+    }
+    if (!sheetWasShownRef.current) {
+      return;
+    }
+    Animated.timing(translateY, {
+      toValue: SCREEN_HEIGHT,
+      duration: 250,
+      easing: Easing.out(Easing.cubic),
+      useNativeDriver: true,
+    }).start(({ finished }) => {
+      if (finished) {
+        setModalVisible(false);
+        const run = pendingAfterCloseRef.current;
+        pendingAfterCloseRef.current = null;
+        if (run) {
+          InteractionManager.runAfterInteractions(() => {
+            if (Platform.OS === 'ios') {
+              setTimeout(run, IOS_AFTER_MODAL_MS);
+            } else {
+              run();
+            }
+          });
+        }
+      }
+    });
+  }, [visible, translateY]);
+
+  const onConfirmPress = useCallback(() => {
+    if (onConfirm) {
+      queueCloseThen(onConfirm);
+    }
+  }, [onConfirm, queueCloseThen]);
+
+  const onCancelPress = useCallback(() => {
+    close();
+  }, [close]);
+
+  const onOKPress = useCallback(() => {
+    if (onOK) {
+      close();
+    }
+  }, [onOK, close]);
+
   const dismissBackdrop = () => {
     if (confirmLoading) {
       return;
     }
-    if (isTwoButton && onCancel) {
-      onCancel();
-    } else if (isSingleOk && onOK) {
-      onOK();
-    } else if (onCancel) {
-      onCancel();
-    }
+    close();
   };
 
   return (
     <Modal
       transparent
-      animationType="fade"
-      visible={visible}
+      animationType="none"
+      visible={modalVisible}
       onRequestClose={dismissBackdrop}
       statusBarTranslucent
       navigationBarTranslucent>
@@ -88,12 +174,17 @@ export const CustomBottomSheet: React.FC<ICustomBottomSheetProps> = ({
           style={styles.backdrop}
           onPress={dismissBackdrop}
           accessibilityRole="button"
-          accessibilityLabel={isTwoButton ? cancelText ?? 'Cancel' : okText ?? 'OK'}
+          accessibilityLabel={
+            isTwoButton ? cancelText ?? 'Cancel' : okText ?? 'OK'
+          }
         />
-        <View
+        <Animated.View
           style={[
             styles.sheet,
-            { paddingBottom: Math.max(insets.bottom, 16) },
+            {
+              paddingBottom: Math.max(insets.bottom, 16),
+              transform: [{ translateY }],
+            },
           ]}>
           <View style={styles.handleBar} />
           <View style={styles.body}>
@@ -110,7 +201,7 @@ export const CustomBottomSheet: React.FC<ICustomBottomSheetProps> = ({
               <View style={styles.buttonRow}>
                 <TouchableOpacity
                   style={[styles.button, styles.cancelButton]}
-                  onPress={onCancel}
+                  onPress={onCancelPress}
                   disabled={confirmLoading}
                   activeOpacity={0.85}
                   accessibilityRole="button"
@@ -120,7 +211,7 @@ export const CustomBottomSheet: React.FC<ICustomBottomSheetProps> = ({
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[styles.button, styles.primaryButton]}
-                  onPress={onConfirm}
+                  onPress={onConfirmPress}
                   disabled={confirmLoading}
                   activeOpacity={0.85}
                   accessibilityRole="button"
@@ -138,7 +229,7 @@ export const CustomBottomSheet: React.FC<ICustomBottomSheetProps> = ({
             {isSingleOk ? (
               <TouchableOpacity
                 style={styles.singleButton}
-                onPress={onOK}
+                onPress={onOKPress}
                 activeOpacity={0.85}
                 accessibilityRole="button"
                 accessibilityLabel={okText}>
@@ -146,7 +237,7 @@ export const CustomBottomSheet: React.FC<ICustomBottomSheetProps> = ({
               </TouchableOpacity>
             ) : null}
           </View>
-        </View>
+        </Animated.View>
       </View>
     </Modal>
   );

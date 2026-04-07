@@ -1015,6 +1015,12 @@ export const createStyleProfileSettings = (theme: LoginKitTheme) => {
       fontFamily: theme.fonts.primaryRegular,
       color: theme.colors.PRIMARY_300,
     },
+    profileSettingsMenuContainer: {
+      width: width * 0.9,
+      justifyContent: 'center',
+      alignSelf: 'center',
+      marginTop: 24,
+    },
     profileSettingsMenuItem: {
       flexDirection: 'row',
       justifyContent: 'space-between',
