@@ -27,13 +27,6 @@ export const TermsPoliciesScreen: React.FC<TermsPoliciesProps> = ({
           resizeMode={FastImage.resizeMode.cover}
         />
       )}
-      {backgroundImage && (
-        <FastImage
-          source={backgroundImage}
-          style={style.backgroundImage}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-      )}
       <View style={style.headerContainer}>
         <View style={style.headerTitleContainer}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={style.backButton}>
