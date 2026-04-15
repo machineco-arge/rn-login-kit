@@ -57,6 +57,7 @@ export interface HelpsFAQsScreenProps {
   title: any;
   faqSections: any;
   backgroundImage?: any;
+  backgroundSvg?: () => React.JSX.Element;
   navigateBackIcon?: React.JSX.Element;
   iconArrowUp?: React.JSX.Element;
   iconArrowDown?: React.JSX.Element;
@@ -67,6 +68,7 @@ export const HelpsFAQsScreen: React.FC<HelpsFAQsScreenProps> = ({
   faqSections,
   config,
   backgroundImage,
+  backgroundSvg,
   navigateBackIcon,
   iconArrowUp,
   iconArrowDown,
@@ -76,7 +78,8 @@ export const HelpsFAQsScreen: React.FC<HelpsFAQsScreenProps> = ({
 
   return (
     <View style={styles.mainContainer}>
-      {backgroundImage && (
+      {backgroundSvg && backgroundSvg()}
+      {backgroundImage && !backgroundSvg && (
         <FastImage
           source={backgroundImage}
           style={styles.backgroundImage}

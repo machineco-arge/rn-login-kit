@@ -10,6 +10,7 @@ import FastImage from 'react-native-fast-image';
 interface DarkLightModeScreenProps {
   config: LoginKitConfig;
   backgroundImage?: any;
+  backgroundSvg?: () => React.JSX.Element;
   navigateBackIcon?: React.JSX.Element;
   iconSelected?: React.JSX.Element;
   iconThemeSun: React.ComponentType<any>;
@@ -19,6 +20,7 @@ interface DarkLightModeScreenProps {
 export const DarkLightModeScreen: React.FC<DarkLightModeScreenProps> = ({
   config,
   backgroundImage,
+  backgroundSvg,
   navigateBackIcon,
   iconSelected,
   iconThemeSun,
@@ -44,7 +46,8 @@ export const DarkLightModeScreen: React.FC<DarkLightModeScreenProps> = ({
 
   return (
     <View style={styles.container}>
-      {backgroundImage && (
+      {backgroundSvg && backgroundSvg()}
+      {backgroundImage && !backgroundSvg && (
         <FastImage
           source={backgroundImage}
           style={styles.backgroundImage}

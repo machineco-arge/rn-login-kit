@@ -20,6 +20,7 @@ import { useNavigation } from '@react-navigation/native';
 export interface AccountScreenProps extends ScreenProps {
   navigateBackIcon?: React.JSX.Element;
   backgroundImage?: any;
+  backgroundSvg?: () => React.JSX.Element;
   iconUserIcon?: React.JSX.Element;
   iconMail?: React.JSX.Element;
   iconEdit?: React.JSX.Element;
@@ -32,6 +33,7 @@ export const AccountScreen: React.FC<AccountScreenProps> = ({
   showProfileManagement = true,
   navigateBackIcon,
   backgroundImage,
+  backgroundSvg,
   iconUserIcon,
   iconMail,
   iconEdit,
@@ -114,7 +116,8 @@ export const AccountScreen: React.FC<AccountScreenProps> = ({
 
   return (
     <View style={styles.container}>
-      {backgroundImage && (
+      {backgroundSvg && backgroundSvg()}
+      {backgroundImage && !backgroundSvg && (
         <FastImage
           source={backgroundImage}
           style={styles.backgroundImage}

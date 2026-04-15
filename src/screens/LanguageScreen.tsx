@@ -17,6 +17,7 @@ import { CustomBottomSheet } from '..';
 export interface LanguageScreenProps extends ScreenProps {
   navigateBackIcon?: React.JSX.Element;
   backgroundImage?: any;
+  backgroundSvg?: () => React.JSX.Element;
   iconCheck?: React.JSX.Element;
 }
 
@@ -25,6 +26,7 @@ export const LanguageScreen: React.FC<LanguageScreenProps> = ({
   navigateBackIcon,
   backgroundImage,
   iconCheck,
+  backgroundSvg,
 }) => {
   const navigation = useNavigation();
   const styles = createLanguageScreenStyles(config.theme);
@@ -79,7 +81,8 @@ export const LanguageScreen: React.FC<LanguageScreenProps> = ({
   return (
     <View style={styles.container}>
       {/* Background */}
-      {backgroundImage && (
+      {backgroundSvg && backgroundSvg()}
+      {backgroundImage && !backgroundSvg && (
         <FastImage
           source={backgroundImage}
           style={styles.backgroundImage}

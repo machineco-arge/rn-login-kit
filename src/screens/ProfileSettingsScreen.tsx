@@ -27,11 +27,15 @@ export const ProfileSettingsScreen: React.FC<ProfileSettigsProps> = (
 
   return (
     <View style={StyleProfileSettings.profileSettingsMainContainer}>
-      <FastImage
-        source={props.backgroundImage}
-        style={StyleProfileSettings.backgroundImage}
-        resizeMode="cover"
-      />
+      {props.backgroundSvg ? (
+        <props.backgroundSvg />
+      ) : (
+        <FastImage
+          source={props.backgroundImage}
+          style={StyleProfileSettings.backgroundImage}
+          resizeMode="cover"
+        />
+      ) }
       <View style={StyleProfileSettings.profileSettingsContainer}>
         {/* Header */}
         <View style={StyleProfileSettings.headerContainer}>

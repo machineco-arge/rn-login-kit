@@ -197,6 +197,7 @@ export interface IMenuItemsProps {
 export interface ProfileSettigsProps {
   config: LoginKitConfig;
   backgroundImage?: any;
+  backgroundSvg?: () => React.JSX.Element;
   userAvatarIcon?: React.ComponentType<any>;
   iconChevron?: React.ComponentType<any>;
   iconLogout?: React.ComponentType<any>;
@@ -218,5 +219,6 @@ export interface TermsPoliciesProps {
   title: string;
   content: { heading: string; paragraphs: string[] }[];
   backgroundImage?: any;
+  backgroundSvg?: () => React.JSX.Element;
   navigateBackIcon?: React.JSX.Element;
 }

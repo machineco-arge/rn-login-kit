@@ -11,6 +11,7 @@ export const TermsPoliciesScreen: React.FC<TermsPoliciesProps> = ({
   title,
   content,
   backgroundImage,
+  backgroundSvg,
   navigateBackIcon,
 }) => {
   const style = createTermsPolicyStyles(config.theme);
@@ -18,6 +19,14 @@ export const TermsPoliciesScreen: React.FC<TermsPoliciesProps> = ({
 
   return (
     <View style={style.container}>
+      {backgroundSvg && backgroundSvg()}
+      {backgroundImage && !backgroundSvg && (
+        <FastImage
+          source={backgroundImage}
+          style={style.backgroundImage}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+      )}
       {backgroundImage && (
         <FastImage
           source={backgroundImage}
