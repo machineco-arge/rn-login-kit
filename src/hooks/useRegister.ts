@@ -59,7 +59,7 @@ export const useRegister = ({ config }: UseRegisterProps) => {
       const result = await emailAuthService.registerWithEmail(_userName, _email, password);
 
       if (result.success && result.user) {
-        onSuccess();
+        config.navigation.onLoginSuccess();
       } else {
         console.log(`${t('_error_')} ${t('userRegisterErrorAlertMessage')}`, { error: result.error || 'Unknown error' });
         if (result.error == 'Bu e-posta ile kayıtlı başka bir kullanıcı mevcut') {
