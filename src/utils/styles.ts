@@ -186,6 +186,20 @@ export const createSignInScreenStyles = (theme: LoginKitTheme) => {
       color: theme.colors.TERTIARY_TEXT_LIGHT,
       fontSize: 14,
     },
+    passwordFieldFooter: {
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+      marginTop: -4,
+      marginBottom: 4,
+    },
+    forgotPasswordText: {
+      fontFamily: theme.fonts.primaryRegular,
+      fontSize: 12,
+      color: theme.colors.PRIMARY_600,
+    },
+    forgotPasswordTextDisabled: {
+      color: theme.colors.PRIMARY_300,
+    },
     socialSection: {
       marginVertical: 12,
     },
@@ -1308,6 +1322,9 @@ export const createTextInputModalStyles = (theme: LoginKitTheme) =>
     },
     submitButton: {
       backgroundColor: theme.colors.PRIMARY_950,
+    },
+    submitButtonDisabled: {
+      backgroundColor: theme.colors.PRIMARY_300,
     },
     cancelButtonText: {
       fontFamily: theme.fonts.primaryMedium,

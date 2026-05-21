@@ -16,7 +16,7 @@ import {TextInputsLogin} from '../components/TextInputsLogin';
 import {LoadingIndicator} from '../components/LoadingIndicator';
 import {HaveAnAccount} from '../components/HaveAnAccount';
 import {OrComponent} from '../components/OrComponent';
-import { CustomBottomSheet, SocialLogin, useSocialAuth } from '..';
+import { CustomBottomSheet, SocialLogin, TextInputModal, useSocialAuth } from '..';
 
 export const RegisterScreen: React.FC<ScreenProps & { 
   isBottomSheet?: boolean;
@@ -50,14 +50,23 @@ export const RegisterScreen: React.FC<ScreenProps & {
     setErrorMissingInputs,
     passwordError,
     emailError,
-    errorMessage
+    errorMessage,
+    verificationSheetVisible,
+    verificationError,
+    verificationSubmitting,
+    handleConfirmVerificationCode,
+    handleCancelVerification,
   } = useRegister({
     config,
   });
 
   const { isSocialLoginLoading, handleSocialLogin } = useSocialAuth({config});
 
-  if (loading || isSocialLoginLoading) {
+  const verificationMessage = verificationError
+    ? `${t('verificationCodeMessageRegister')}\n\n${verificationError}`
+    : t('verificationCodeMessageRegister');
+
+  if ((loading || isSocialLoginLoading) && !verificationSheetVisible) {
     return <LoadingIndicator theme={config.theme} />;
   }
 
@@ -176,9 +185,26 @@ export const RegisterScreen: React.FC<ScreenProps & {
           config={config}
           visible={errorRegister}
           title={t('_error_')}
-          message={`${t('userRegisterErrorAlertMessage')} ${t(errorMessage)}`}
+          message={errorMessage}
           onOK={() => setErrorRegister(false)}
           okText={t('ok')}
+        />
+        <TextInputModal
+          config={config}
+          visible={verificationSheetVisible}
+          title={t('verificationCodeTitle')}
+          message={verificationMessage}
+          placeholder={t('verificationCodePlaceholder')}
+          cancelText={t('cancel')}
+          submitText={t('userSignInContinue')}
+          value=""
+          onCancel={handleCancelVerification}
+          onSubmit={handleConfirmVerificationCode}
+          maxLength={6}
+          keyboardType="number-pad"
+          inputFilter={(text) => text.replace(/\D/g, '').slice(0, 6)}
+          closeOnSubmit={false}
+          submitLoading={verificationSubmitting}
         />
       </View>
     );
@@ -313,6 +339,23 @@ export const RegisterScreen: React.FC<ScreenProps & {
         message={`${t('userRegisterErrorAlertMessage')} ${t(errorMessage)}`}
         onOK={() => setErrorRegister(false)}
         okText={t('ok')}
+      />
+      <TextInputModal
+        config={config}
+        visible={verificationSheetVisible}
+        title={t('verificationCodeTitle')}
+        message={verificationMessage}
+        placeholder={t('verificationCodePlaceholder')}
+        cancelText={t('cancel')}
+        submitText={t('userSignInContinue')}
+        value=""
+        onCancel={handleCancelVerification}
+        onSubmit={handleConfirmVerificationCode}
+        maxLength={6}
+        keyboardType="number-pad"
+        inputFilter={(text) => text.replace(/\D/g, '').slice(0, 6)}
+        closeOnSubmit={false}
+        submitLoading={verificationSubmitting}
       />
     </KeyboardAvoidingView>
   );

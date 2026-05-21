@@ -34,6 +34,10 @@ interface CreateDefaultConfigParams {
       logout: string;
       userLogin?: string;
       userRegister?: string;
+      sendRegistrationCode?: string;
+      sendPasswordResetCode?: string;
+      verifyPasswordResetCode?: string;
+      resetPassword?: string;
     };
   };
 }

@@ -19,63 +19,58 @@ import { LoginKitConfig } from 'types';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-/** After RN Modal unmounts, iOS still needs a tick before showing share sheet / another Modal (see SharedPhotoManager). */
+/** After RN Modal unmounts, iOS still needs a tick before showing another Modal. */
 const IOS_AFTER_MODAL_MS = 100;
 
-interface TextInputModalProps {
+export interface DualPasswordSubmitValues {
+  password: string;
+  confirmPassword: string;
+}
+
+interface DualPasswordInputModalProps {
   config: LoginKitConfig;
   visible: boolean;
   title: string;
-  placeholder?: string;
   message?: string;
-  value: string;
+  passwordPlaceholder: string;
+  confirmPlaceholder: string;
   onCancel: () => void;
-  onSubmit: (value: string) => void;
+  onSubmit: (values: DualPasswordSubmitValues) => void;
   cancelText: string;
   submitText: string;
-  maxLength?: number;
-  /** When false, sheet stays open after submit (parent closes on success). Default true. */
   closeOnSubmit?: boolean;
-  /** Optional transform applied on each keystroke (e.g. digits-only). */
-  inputFilter?: (text: string) => string;
-  keyboardType?: 'default' | 'number-pad' | 'numeric';
   submitLoading?: boolean;
   submitDisabled?: boolean;
-  /** Called after close animation and modal unmount (iOS-safe delay included). */
   onClosed?: () => void;
 }
 
 /**
- * Cross-platform text input sheet (Alert.prompt replacement on Android).
- * Bottom-sheet layout matches album rename design (IBM Plex Mono, themed colors).
+ * Twin of TextInputModal — same sheet layout, buttons, and animation; two password fields.
  */
-export const TextInputModal: React.FC<TextInputModalProps> = ({
+export const DualPasswordInputModal: React.FC<DualPasswordInputModalProps> = ({
   config,
   visible,
   title,
   message,
-  value,
+  passwordPlaceholder,
+  confirmPlaceholder,
   onCancel,
   onSubmit,
   cancelText,
   submitText,
-  placeholder,
-  maxLength = 30,
   closeOnSubmit = true,
-  inputFilter,
-  keyboardType = 'default',
   submitLoading = false,
   submitDisabled = false,
   onClosed,
 }) => {
   const insets = useSafeAreaInsets();
   const styles = createTextInputModalStyles(config.theme);
-  const [inputValue, setInputValue] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const [modalVisible, setModalVisible] = useState(false);
   const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
   const sheetWasShownRef = useRef(false);
-  /** Run after exit animation + modal unmount — avoids stacking modals / frozen UI on iOS. */
   const pendingAfterCloseRef = useRef<(() => void) | null>(null);
   const onClosedRef = useRef(onClosed);
   onClosedRef.current = onClosed;
@@ -96,7 +91,8 @@ export const TextInputModal: React.FC<TextInputModalProps> = ({
 
   useEffect(() => {
     if (visible) {
-      setInputValue(value);
+      setPassword('');
+      setConfirmPassword('');
       sheetWasShownRef.current = true;
       setModalVisible(true);
       translateY.setValue(SCREEN_HEIGHT);
@@ -124,7 +120,7 @@ export const TextInputModal: React.FC<TextInputModalProps> = ({
         runAfterSheetClose(run ?? undefined);
       }
     });
-  }, [visible, value, translateY, runAfterSheetClose]);
+  }, [visible, translateY, runAfterSheetClose]);
 
   const close = useCallback(() => {
     pendingAfterCloseRef.current = onCancel;
@@ -135,24 +131,17 @@ export const TextInputModal: React.FC<TextInputModalProps> = ({
     if (submitLoading || submitDisabled) {
       return;
     }
+    const values = { password, confirmPassword };
     if (closeOnSubmit) {
-      pendingAfterCloseRef.current = () => onSubmit(inputValue);
+      pendingAfterCloseRef.current = () => onSubmit(values);
       onCancel();
       return;
     }
-    onSubmit(inputValue);
-  }, [onSubmit, onCancel, inputValue, closeOnSubmit, submitLoading, submitDisabled]);
+    onSubmit(values);
+  }, [onSubmit, onCancel, password, confirmPassword, closeOnSubmit, submitLoading, submitDisabled]);
 
-  const handleChangeText = (text: string) => {
-    const filtered = inputFilter ? inputFilter(text) : text;
-    if (maxLength && filtered.length > maxLength) {
-      setInputValue(filtered.substring(0, maxLength));
-    } else {
-      setInputValue(filtered);
-    }
-  };
-
-  const isSubmitDisabled = submitDisabled || submitLoading || !inputValue.trim();
+  const isSubmitDisabled =
+    submitDisabled || submitLoading || !password.trim() || !confirmPassword.trim();
 
   return (
     <Modal
@@ -165,7 +154,7 @@ export const TextInputModal: React.FC<TextInputModalProps> = ({
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardAvoidingRoot}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}>
+        keyboardVerticalOffset={0}>
         <View style={styles.overlay} pointerEvents="box-none">
           <Pressable
             style={styles.backdrop}
@@ -185,27 +174,33 @@ export const TextInputModal: React.FC<TextInputModalProps> = ({
             <View style={styles.body}>
               <Text style={styles.modalTitle}>{title}</Text>
 
-              {message ? (
-                <Text style={styles.modalMessage}>{message}</Text>
-              ) : null}
+              {message ? <Text style={styles.modalMessage}>{message}</Text> : null}
 
               <View style={styles.inputBlock}>
                 <TextInput
                   style={styles.textInput}
-                  onChangeText={handleChangeText}
-                  value={inputValue}
+                  onChangeText={setPassword}
+                  value={password}
                   autoFocus
                   selectTextOnFocus
-                  placeholder={placeholder}
+                  placeholder={passwordPlaceholder}
                   placeholderTextColor={config.theme.colors.PRIMARY_600}
-                  maxLength={maxLength}
-                  keyboardType={keyboardType}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  textContentType="newPassword"
                 />
-                {maxLength ? (
-                  <Text style={styles.characterCount}>
-                    {inputValue.length} / {maxLength}
-                  </Text>
-                ) : null}
+                <TextInput
+                  style={styles.textInput}
+                  onChangeText={setConfirmPassword}
+                  value={confirmPassword}
+                  placeholder={confirmPlaceholder}
+                  placeholderTextColor={config.theme.colors.PRIMARY_600}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  textContentType="newPassword"
+                />
               </View>
 
               <View style={styles.buttonContainer}>
@@ -237,4 +232,3 @@ export const TextInputModal: React.FC<TextInputModalProps> = ({
     </Modal>
   );
 };
-

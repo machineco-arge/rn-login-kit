@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { userManager } from '../managers/UserManager';
 import { EmailAuthConfig, IUserInfo, LoginKitConfig } from '../types';
+import { extractAuthApiError } from '../utils/authApiErrors';
 
 interface ApiConfig {
   baseUrl: string;
@@ -9,6 +10,10 @@ interface ApiConfig {
     appleLogin: string;
     userLogin?: string;
     userRegister?: string;
+    sendRegistrationCode?: string;
+    sendPasswordResetCode?: string;
+    verifyPasswordResetCode?: string;
+    resetPassword?: string;
   };
 }
 
@@ -16,6 +21,20 @@ interface EmailAuthResult {
   success: boolean;
   user?: IUserInfo;
   error?: string;
+  errorCode?: string;
+}
+
+interface SimpleResult {
+  success: boolean;
+  error?: string;
+  errorCode?: string;
+}
+
+interface VerifyPasswordResetResult {
+  success: boolean;
+  passwordResetToken?: string;
+  error?: string;
+  errorCode?: string;
 }
 
 export class EmailAuthService {
@@ -92,14 +111,55 @@ export class EmailAuthService {
     }
   }
 
-  async registerWithEmail(_userName: string, _email: string, password: string): Promise<EmailAuthResult> {
+  async sendRegistrationCode(_email: string): Promise<SimpleResult> {
+    if (!this.apiConfig?.baseUrl || !this.apiConfig?.endpoints?.sendRegistrationCode) {
+      throw new Error('Registration code endpoint not configured');
+    }
+
+    try {
+      const response = await axios.post(
+        this.apiConfig.baseUrl + this.apiConfig.endpoints.sendRegistrationCode,
+        { email: _email },
+      );
+
+      if (response.status === 200) {
+        return { success: true };
+      }
+      const data = response.data;
+      return {
+        success: false,
+        error: data?.message || 'Failed to send verification code',
+        errorCode: data?.code,
+      };
+    } catch (error: unknown) {
+      const apiError = extractAuthApiError(error);
+      return {
+        success: false,
+        error: apiError.message || (error instanceof Error ? error.message : 'Failed to send verification code'),
+        errorCode: apiError.code,
+      };
+    }
+  }
+
+  async registerWithEmail(
+    _userName: string,
+    _email: string,
+    password: string,
+    verificationCode: string,
+  ): Promise<EmailAuthResult> {
     if (!this.apiConfig?.baseUrl || !this.apiConfig?.endpoints?.userRegister) {
       throw new Error('Email registration not configured');
     }
 
     try {
-      const requestData: { email?: string; password: string; userName?: string } = {
+      const requestData: {
+        email?: string;
+        password: string;
+        userName?: string;
+        verificationCode: string;
+      } = {
         password: password,
+        verificationCode: verificationCode,
       };
 
       if (this.emailAuthConfig?.enabledRegisterEmail) {
@@ -112,7 +172,7 @@ export class EmailAuthService {
 
       const response = await axios.post(
         this.apiConfig.baseUrl + this.apiConfig.endpoints.userRegister,
-        requestData
+        requestData,
       );
 
       const companyName = 'tempName'
@@ -143,11 +203,133 @@ export class EmailAuthService {
           error: response.data.message || 'Registration failed',
         };
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const apiError = extractAuthApiError(error);
       return {
         success: false,
-        error: error.response?.data?.message || error.message || 'Registration failed',
+        error: apiError.message || (error instanceof Error ? error.message : 'Registration failed'),
+        errorCode: apiError.code,
       };
     }
   }
-} 
+
+  async sendPasswordResetCode(_email: string): Promise<SimpleResult> {
+    if (!this.apiConfig?.baseUrl || !this.apiConfig?.endpoints?.sendPasswordResetCode) {
+      throw new Error('Password reset code endpoint not configured');
+    }
+
+    try {
+      const response = await axios.post(
+        this.apiConfig.baseUrl + this.apiConfig.endpoints.sendPasswordResetCode,
+        { email: _email },
+      );
+
+      if (response.status === 200) {
+        return { success: true };
+      }
+      const data = response.data;
+      return {
+        success: false,
+        error: data?.message || 'Failed to send reset code',
+        errorCode: data?.code,
+      };
+    } catch (error: unknown) {
+      const apiError = extractAuthApiError(error);
+      return {
+        success: false,
+        error: apiError.message || (error instanceof Error ? error.message : 'Failed to send reset code'),
+        errorCode: apiError.code,
+      };
+    }
+  }
+
+  async verifyPasswordResetCode(_email: string, verificationCode: string): Promise<VerifyPasswordResetResult> {
+    if (!this.apiConfig?.baseUrl || !this.apiConfig?.endpoints?.verifyPasswordResetCode) {
+      throw new Error('Password reset verify endpoint not configured');
+    }
+
+    try {
+      const response = await axios.post(
+        this.apiConfig.baseUrl + this.apiConfig.endpoints.verifyPasswordResetCode,
+        { email: _email, verificationCode },
+      );
+
+      if (response.status === 200 && response.data?.passwordResetToken) {
+        return {
+          success: true,
+          passwordResetToken: response.data.passwordResetToken,
+        };
+      }
+
+      const data = response.data;
+      return {
+        success: false,
+        error: data?.message || 'Verification failed',
+        errorCode: data?.code,
+      };
+    } catch (error: unknown) {
+      const apiError = extractAuthApiError(error);
+      return {
+        success: false,
+        error: apiError.message || (error instanceof Error ? error.message : 'Verification failed'),
+        errorCode: apiError.code,
+      };
+    }
+  }
+
+  async resetPassword(
+    _email: string,
+    passwordResetToken: string,
+    newPassword: string,
+    confirmPassword: string,
+  ): Promise<SimpleResult> {
+    if (!this.apiConfig?.baseUrl || !this.apiConfig?.endpoints?.resetPassword) {
+      throw new Error('Password reset endpoint not configured');
+    }
+
+    try {
+      const response = await axios.post(
+        this.apiConfig.baseUrl + this.apiConfig.endpoints.resetPassword,
+        {
+          email: _email,
+          passwordResetToken,
+          newPassword,
+          confirmPassword,
+        },
+      );
+
+      if (response.status === 200) {
+        return { success: true };
+      }
+      const data = response.data;
+      return {
+        success: false,
+        error: data?.message || 'Password reset failed',
+        errorCode: data?.code,
+      };
+    } catch (error: unknown) {
+      const apiError = extractAuthApiError(error);
+      return {
+        success: false,
+        error: apiError.message || (error instanceof Error ? error.message : 'Password reset failed'),
+        errorCode: apiError.code,
+      };
+    }
+  }
+
+  async resetPasswordAndSignIn(
+    _userName: string,
+    _email: string,
+    passwordResetToken: string,
+    newPassword: string,
+    confirmPassword: string,
+  ): Promise<EmailAuthResult> {
+    const resetResult = await this.resetPassword(_email, passwordResetToken, newPassword, confirmPassword);
+    if (!resetResult.success) {
+      return { success: false, error: resetResult.error, errorCode: resetResult.errorCode };
+    }
+
+    const companyName = 'tempName'
+    return this.signInWithEmail(companyName, _email, _userName, newPassword);
+  }
+}

@@ -173,6 +173,10 @@ export interface LoginKitConfig {
       logout: string;
       userLogin?: string;
       userRegister?: string;
+      sendRegistrationCode?: string;
+      sendPasswordResetCode?: string;
+      verifyPasswordResetCode?: string;
+      resetPassword?: string;
     };
   };
   translationConfig: TranslationConfig; // New CDN-based config

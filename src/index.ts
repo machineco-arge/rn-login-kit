@@ -21,6 +21,10 @@ export {IconSet} from './components/IconSet';
 export {CustomAlert} from './components/CustomAlert';
 export {CustomBottomSheet} from './components/CustomBottomSheet';
 export {TextInputModal} from './components/TextInputModal';
+export {DualPasswordInputModal} from './components/DualPasswordInputModal';
+export type {DualPasswordSubmitValues} from './components/DualPasswordInputModal';
+export {resolveAuthErrorMessage, extractAuthApiError} from './utils/authApiErrors';
+export type {AuthApiErrorPayload} from './utils/authApiErrors';
 export {MenuItems} from './components/MenuItems';
 
 // Configuration and I18n
@@ -45,6 +49,7 @@ export {uriManager} from './managers/UriManager';
 export {useAuthBottomSheet, AuthBottomSheetProvider} from './hooks/AuthBottomSheetContext';
 export {useSignIn} from './hooks/useSignIn';
 export {useRegister} from './hooks/useRegister';
+export {useForgotPassword} from './hooks/useForgotPassword';
 export {useSocialAuth} from './hooks/useSocialAuth';
 export {useAccountSettings} from './hooks/useAccountSettings';
 export {useProfilePhotoCropper} from './hooks/useProfilePhotoCropper';
