@@ -215,6 +215,8 @@ export interface ProfileSettigsProps {
   stats?: string;
   proMemberText?: string;
   proMemberTextColor?: string;
+  /** Optional badge rendered on the profile photo (e.g. Pro star). Shown only when provided. */
+  proBadgeIcon?: React.ComponentType<{ size?: number }>;
 }
 
 

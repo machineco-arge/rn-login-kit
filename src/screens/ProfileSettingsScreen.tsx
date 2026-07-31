@@ -24,6 +24,10 @@ export const ProfileSettingsScreen: React.FC<ProfileSettigsProps> = (
 
   const menuList: ProfileSettigsProps['menuList'] = props.menuList;
   const NavigateBackIcon = props.navigateBackIcon;
+  const windowWidth = Dimensions.get('window').width;
+  const photoSize = Math.min(Math.round(windowWidth * 0.26), 112);
+  const proBadgeSize = Math.max(Math.round(photoSize * 0.28), 20);
+  const ProBadgeIcon = props.proBadgeIcon;
 
   return (
     <View style={StyleProfileSettings.profileSettingsMainContainer}>
@@ -53,24 +57,33 @@ export const ProfileSettingsScreen: React.FC<ProfileSettigsProps> = (
         <ScrollView
           contentContainerStyle={{
             paddingBottom: '40%',
-            width: Dimensions.get('window').width,
+            width: windowWidth,
           }}
           style={StyleProfileSettings.profileSettingsScrollView}>
           {/* Profile Section */}
           <View style={StyleProfileSettings.profileSettingsProfileSection}>
-            <View
-              style={StyleProfileSettings.profileSettingsProfilePhotoContainer}>
-              {userManager.hasCustomPhoto() ? (
-                <FastImage
-                  source={{uri: userInfo?.photo!}}
-                  resizeMode={FastImage.resizeMode.cover}
-                  style={StyleProfileSettings.profileSettingsProfilePhoto}
-                />
-              ) : (
-                <View style={StyleProfileSettings.profileSettingsIconContainer}>
-                  {props.userAvatarIcon && <props.userAvatarIcon />}
+            <View style={StyleProfileSettings.profileSettingsProfilePhotoWrapper}>
+              <View
+                style={StyleProfileSettings.profileSettingsProfilePhotoContainer}>
+                {userManager.hasCustomPhoto() ? (
+                  <FastImage
+                    source={{uri: userInfo?.photo!}}
+                    resizeMode={FastImage.resizeMode.cover}
+                    style={StyleProfileSettings.profileSettingsProfilePhoto}
+                  />
+                ) : (
+                  <View style={StyleProfileSettings.profileSettingsIconContainer}>
+                    {props.userAvatarIcon && <props.userAvatarIcon />}
+                  </View>
+                )}
+              </View>
+              {ProBadgeIcon ? (
+                <View
+                  pointerEvents="none"
+                  style={StyleProfileSettings.profileProBadge}>
+                  <ProBadgeIcon size={proBadgeSize} />
                 </View>
-              )}
+              ) : null}
             </View>
             {props.showUserName && (
               <Text style={StyleProfileSettings.profileSettingsUserName}>

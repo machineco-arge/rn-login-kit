@@ -985,13 +985,19 @@ export const createStyleProfileSettings = (theme: LoginKitTheme) => {
       paddingVertical: 0,
       paddingHorizontal: 16,
     },
+    profileSettingsProfilePhotoWrapper: {
+      width: Math.min(Math.round(width * 0.26), 112),
+      height: Math.min(Math.round(width * 0.26), 112),
+      marginBottom: Math.max(Math.round(width * 0.04), 12),
+      marginTop: Math.max(Math.round(width * 0.04), 12),
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
     profileSettingsProfilePhotoContainer: {
-      width: 100,
-      height: 100,
-      borderRadius: 50,
+      width: '100%',
+      height: '100%',
+      borderRadius: Math.min(Math.round(width * 0.13), 56),
       overflow: 'hidden',
-      marginBottom: 16,
-      marginTop: 16,
       backgroundColor: theme.colors.SECONDARY_50,
     },
     profileSettingsProfilePhoto: {
@@ -1004,6 +1010,13 @@ export const createStyleProfileSettings = (theme: LoginKitTheme) => {
       justifyContent: 'center',
       alignItems: 'center',
       transform: [{scale: 2.5}],
+    },
+    profileProBadge: {
+      position: 'absolute',
+      bottom: Math.max(Math.round(width * 0.005), 2),
+      right: Math.max(Math.round(width * 0.005), 2),
+      zIndex: 2,
+      elevation: 2,
     },
     profileSettingsUserName: {
       fontSize: 24,
