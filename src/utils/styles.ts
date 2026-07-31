@@ -928,6 +928,10 @@ export const createHelpsFAQsScreenStyles = (theme: LoginKitTheme) => {
 };
 
 export const createStyleProfileSettings = (theme: LoginKitTheme) => {
+  const photoSize = Math.min(Math.round(width * 0.26), 112);
+  const badgeSize = Math.max(Math.round(photoSize * 0.28), 20);
+  const badgeGap = Math.max(Math.round(width * 0.01), 4);
+
   return StyleSheet.create({
     backgroundImage: {
       position: 'absolute',
@@ -986,17 +990,15 @@ export const createStyleProfileSettings = (theme: LoginKitTheme) => {
       paddingHorizontal: 16,
     },
     profileSettingsProfilePhotoWrapper: {
-      width: Math.min(Math.round(width * 0.26), 112),
-      height: Math.min(Math.round(width * 0.26), 112),
+      width: photoSize + badgeSize + badgeGap,
+      height: photoSize,
       marginBottom: Math.max(Math.round(width * 0.04), 12),
       marginTop: Math.max(Math.round(width * 0.04), 12),
-      justifyContent: 'center',
-      alignItems: 'center',
     },
     profileSettingsProfilePhotoContainer: {
-      width: '100%',
-      height: '100%',
-      borderRadius: Math.min(Math.round(width * 0.13), 56),
+      width: photoSize,
+      height: photoSize,
+      borderRadius: photoSize / 2,
       overflow: 'hidden',
       backgroundColor: theme.colors.SECONDARY_50,
     },
@@ -1013,8 +1015,8 @@ export const createStyleProfileSettings = (theme: LoginKitTheme) => {
     },
     profileProBadge: {
       position: 'absolute',
-      bottom: Math.max(Math.round(width * 0.005), 2),
-      right: Math.max(Math.round(width * 0.005), 2),
+      right: 0,
+      bottom: Math.round(photoSize * 0.08),
       zIndex: 2,
       elevation: 2,
     },
