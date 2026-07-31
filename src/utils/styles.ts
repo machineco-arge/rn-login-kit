@@ -5,7 +5,7 @@ import {
   Platform,
   TextStyle,
 } from "react-native";
-import { LoginKitTheme } from "../types";
+import { LoginKitTheme } from "../types"; 
 import { ImageStyle } from "react-native-fast-image";
 
 const { width, height } = Dimensions.get("window");
