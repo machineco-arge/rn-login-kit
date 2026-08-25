@@ -144,7 +144,24 @@ export const ProfileSettingsScreen: React.FC<ProfileSettigsProps> = (
             )}
           </TouchableOpacity>
         )}
+        {!isUserLoggedIn && (
+          <TouchableOpacity
+            style={[StyleProfileSettings.profileSettingsLogoutButton, { marginBottom: Math.max(insets.bottom, 100) }]}
+            onPress={props.loginPress}
+            activeOpacity={0.7}
+          >
+            <Text style={StyleProfileSettings.profileSettingsLogoutButtonText}>
+              {t('userSignIn')}
+            </Text>
+            {props.iconLogin && (
+              <View style={StyleProfileSettings.profileSettingsLogoutIcon}>
+                <props.iconLogin />
+              </View>
+            )}
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
 };
+

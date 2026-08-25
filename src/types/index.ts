@@ -205,6 +205,8 @@ export interface ProfileSettigsProps {
   userAvatarIcon?: React.ComponentType<any>;
   iconChevron?: React.ComponentType<any>;
   iconLogout?: React.ComponentType<any>;
+  iconLogin?: React.ComponentType<any>;
+  loginPress?: () => void;
   navigateBackIcon?: React.JSX.Element;
   menuList: {
     title: string;
