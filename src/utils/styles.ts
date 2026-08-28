@@ -6,7 +6,7 @@ import {
   TextStyle,
 } from "react-native";
 import { LoginKitTheme } from "../types"; 
-import { ImageStyle } from "react-native-fast-image";
+import { ImageStyle } from '@d11/react-native-fast-image';
 
 const { width, height } = Dimensions.get("window");
 
@@ -1169,7 +1169,7 @@ export const createCustomBottomSheetStyles = (theme: LoginKitTheme) =>
       justifyContent: 'flex-end',
     },
     backdrop: {
-      ...StyleSheet.absoluteFillObject,
+      ...StyleSheet.absoluteFill,
       backgroundColor: 'rgba(0, 0, 0, 0.45)',
     },
     sheet: {
@@ -1266,7 +1266,7 @@ export const createTextInputModalStyles = (theme: LoginKitTheme) =>
       justifyContent: 'flex-end',
     },
     backdrop: {
-      ...StyleSheet.absoluteFillObject,
+      ...StyleSheet.absoluteFill,
       backgroundColor: 'rgba(0, 0, 0, 0.45)',
     },
     sheet: {

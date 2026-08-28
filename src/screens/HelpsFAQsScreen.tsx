@@ -11,7 +11,7 @@ import {
 import {LoginKitConfig} from '../types';
 import {createHelpsFAQsScreenStyles} from '../utils/styles';
 import { useNavigation } from '@react-navigation/native';
-import FastImage from 'react-native-fast-image';
+import FastImage from '@d11/react-native-fast-image';
 
 if (
   Platform.OS === 'android' &&

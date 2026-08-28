@@ -183,7 +183,7 @@ export class TranslationService {
       const translationKeys = keys.filter(key => key.startsWith('i18next_res_'));
       if (translationKeys.length > 0) {
         console.log('[Translation] Clearing cached translation keys:', translationKeys);
-        await AsyncStorage.multiRemove(translationKeys);
+        await AsyncStorage.removeMany(translationKeys);
       } else {
         console.log('[Translation] No translation cache keys found to clear.');
       }

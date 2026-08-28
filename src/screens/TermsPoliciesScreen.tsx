@@ -3,7 +3,7 @@ import { Text, ScrollView, View, TouchableOpacity } from "react-native";
 import { createTermsPolicyStyles } from "../utils/styles";
 import { TermsPoliciesProps } from "../types";
 import { useNavigation } from "@react-navigation/native";
-import FastImage from "react-native-fast-image";
+import FastImage from '@d11/react-native-fast-image';
 
 
 export const TermsPoliciesScreen: React.FC<TermsPoliciesProps> = ({

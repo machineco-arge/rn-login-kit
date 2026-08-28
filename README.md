@@ -35,24 +35,34 @@ Bu paket, düzgün çalışabilmesi için aşağıdaki eş bağımlılıklara ih
 
 ```bash
 npm install \
-  react@18.3.1 react-native@0.77.1 \
-  @react-navigation/native@^7.0.14 @react-navigation/native-stack@^7.2.0 \
-  react-i18next@^15.5.1 i18next@^25.0.1 \
-  @react-native-google-signin/google-signin@^13.2.0 @invertase/react-native-apple-authentication@^2.4.0 \
-  react-native-fast-image@^8.6.3 react-native-gradients@^2.1.1 \
-  react-native-reanimated@^3.17.1 react-native-heroicons@^4.0.0 \
-  axios@^1.8.1 react-native-localize@^3.5.2 \
-  @dr.pogodin/react-native-fs@^2.21.0 \
-  @react-native-async-storage/async-storage@^1.19.0 \
-  @react-native-community/checkbox@^0.5.20 \
-  i18next-async-storage-backend2@^2.1.0 \
-  i18next-chained-backend@^4.6.2 \
-  i18next-http-backend@^3.0.2
+  react@19.2.3 react-native@0.86.3 \
+  @react-navigation/native@7.3.18 \
+  react-i18next@15.7.4 i18next@25.10.10 \
+  @react-native-google-signin/google-signin@16.1.4 \
+  @invertase/react-native-apple-authentication@2.5.1 \
+  @d11/react-native-fast-image@8.13.0 \
+  @shopify/react-native-skia@2.10.1 \
+  react-native-reanimated@4.4.1 react-native-worklets@0.9.2 \
+  react-native-gesture-handler@3.1.0 \
+  react-native-safe-area-context@5.8.0 react-native-svg@15.15.5 \
+  react-native-gradients@2.1.1 react-native-heroicons@4.0.0 \
+  react-native-image-crop-picker@0.51.1 \
+  react-native-localize@3.7.0 \
+  @dr.pogodin/react-native-fs@2.39.2 \
+  @react-native-async-storage/async-storage@3.1.1 \
+  @react-native-community/checkbox@0.5.20 \
+  axios@1.20.0 \
+  i18next-async-storage-backend2@2.1.0 \
+  i18next-chained-backend@4.6.3 \
+  i18next-http-backend@3.0.6
 ```
 
 **Önemli Notlar:**
 
-*   `react-native-reanimated` için Babel yapılandırması gereklidir. `babel.config.js` dosyanıza `plugins: ['react-native-reanimated/plugin']` eklediğinizden emin olun.
-*   iOS projeleri için `cd ios && pod install` komutunu çalıştırmanız gerekebilir.
-
+- Bu sürüm React Native 0.86 ve React 19 için hazırlanmıştır.
+- React Native yeni mimarisi etkin olmalıdır.
+- `react-native-worklets/plugin`, uygulamanın `babel.config.js` dosyasındaki eklentiler listesinin sonunda bulunmalıdır.
+- Google girişi mevcut herkese açık Google giriş paketini kullanır; Universal giriş sürümü gerekli değildir.
+- `react-native-fast-image` yerine `@d11/react-native-fast-image` kullanılmaktadır.
+- iOS bağımlılıkları değiştikten sonra `ios` klasöründe Pod kurulumu yeniden yapılmalıdır.
 
