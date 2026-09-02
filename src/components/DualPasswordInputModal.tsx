@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { createTextInputModalStyles } from '../utils/styles';
-import { LoginKitConfig } from 'types';
+import {LoginKitConfig} from '../types';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 

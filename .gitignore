@@ -164,3 +164,6 @@ build/
 !dist/index.js
 !dist/index.d.ts
 !dist/index.js.map
+
+# React Native Babel configuration must be version controlled
+!babel.config.js

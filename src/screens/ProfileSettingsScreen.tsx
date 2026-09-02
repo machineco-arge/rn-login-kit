@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, ScrollView, Dimensions, TouchableOpacity } from "react-native";
-import FastImage from "react-native-fast-image";
+import FastImage from '@d11/react-native-fast-image';
 import { createStyleProfileSettings } from "../utils/styles";
 import { useProfileSettings } from "../hooks/useProfileSettings";
 import { userManager } from "../managers/UserManager";

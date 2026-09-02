@@ -5,7 +5,7 @@ import {createDarkLightModeScreenStyles} from '../utils/styles';
 import {useDarkLightMode} from '../hooks/useDarkLightMode';
 import { useLoginKitTranslation } from '../hooks/useLoginKitTranslation';
 import { useNavigation } from '@react-navigation/native';
-import FastImage from 'react-native-fast-image';
+import FastImage from '@d11/react-native-fast-image';
 
 interface DarkLightModeScreenProps {
   config: LoginKitConfig;

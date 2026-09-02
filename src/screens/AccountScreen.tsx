@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import FastImage from '@d11/react-native-fast-image';
 import {ScreenProps} from '../types';
 import {createAccountScreenStyles} from '../utils/styles';
 import {useAccountSettings} from '../hooks/useAccountSettings';
