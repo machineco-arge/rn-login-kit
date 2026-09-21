@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { userManager } from '../managers/UserManager';
-import { EmailAuthConfig, IUserInfo, LoginKitConfig } from '../types';
+import { EmailAuthConfig, IUserInfo, LoginKitConfig, UserProfileInfo } from '../types';
 import { extractAuthApiError } from '../utils/authApiErrors';
 
 interface ApiConfig {
@@ -40,12 +40,12 @@ interface VerifyPasswordResetResult {
 export class EmailAuthService {
   private apiConfig?: ApiConfig;
   private emailAuthConfig?: EmailAuthConfig;
-  private onGetUserName?: () => Promise<string | null>;
+  private onGetUserInfo?: () => Promise<UserProfileInfo | null>;
 
   constructor(config: LoginKitConfig) {
     this.apiConfig = config.apiConfig;
     this.emailAuthConfig = config.emailAuth;
-    this.onGetUserName = config.navigation.onGetUserName;
+    this.onGetUserInfo = config.navigation.onGetUserInfo;
   }
 
   async signInWithEmail(_companyName: string, _email: string, _userName: string, password: string): Promise<EmailAuthResult> {
@@ -91,7 +91,7 @@ export class EmailAuthService {
           throw new Error('idToken is null! Cannot save userToken.');
         }
 
-        await userManager.setCurrentUser(userInfo, this.onGetUserName);
+        await userManager.setCurrentUser(userInfo, this.onGetUserInfo);
 
         return {
           success: true,
@@ -184,7 +184,7 @@ export class EmailAuthService {
           // Update the user name from registration
           if (_userName && loginResult.user.name !== _userName) {
             loginResult.user.name = _userName;
-            await userManager.setCurrentUser(loginResult.user, this.onGetUserName);
+            await userManager.setCurrentUser(loginResult.user, this.onGetUserInfo);
           }
           
           return {

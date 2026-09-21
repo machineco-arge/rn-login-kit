@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { IUserInfo, UserInitializationCallback } from '../types';
-import { profilePhotoManager } from './ProfilePhotoManager';
+import { IUserInfo, UserInitializationCallback, UserProfileInfo } from '../types';
 import { userNameManager } from './UserNameManager';
 
 type UserUpdateListener = (user: IUserInfo | null) => void;
@@ -61,10 +60,12 @@ class UserManager {
       const storedUserInfo = await AsyncStorage.getItem('userInfo');
       if (storedUserInfo) {
         this.currentUser = JSON.parse(storedUserInfo);
-        
-        // Load custom profile photo if exists
-        await this.loadCustomProfilePhoto();
-        
+
+        if (this.currentUser?.photo?.startsWith('file://')) {
+          this.currentUser.photo = null;
+          await AsyncStorage.setItem('userInfo', JSON.stringify(this.currentUser));
+        }
+
         // Notify listeners after initialization
         this.notifyListeners();
         
@@ -91,38 +92,6 @@ class UserManager {
       console.log('User-dependent services initialized');
     } catch (error) {
       console.error('Error initializing user-dependent services:', error);
-    }
-  }
-
-  /**
-   * Load custom profile photo from storage using ProfilePhotoManager
-   */
-  private async loadCustomProfilePhoto(): Promise<void> {
-    if (!this.currentUser?.email) return;
-    
-    try {
-      // Check if user has deliberately deleted their photo
-      const hasDeletedPhoto = await profilePhotoManager.hasUserDeletedPhoto(this.currentUser.email);
-      if (hasDeletedPhoto) {
-        // User has deliberately deleted their photo, don't load any photo
-        if (this.currentUser) {
-          this.currentUser.photo = null;
-          await AsyncStorage.setItem('userInfo', JSON.stringify(this.currentUser));
-        }
-        return;
-      }
-      
-      const photoData = await profilePhotoManager.loadCustomProfilePhoto(this.currentUser.email);
-      
-      if (photoData.exists) {
-        // Update current user with custom photo
-        if (this.currentUser) {
-          this.currentUser.photo = photoData.uri;
-          await AsyncStorage.setItem('userInfo', JSON.stringify(this.currentUser));
-        }
-      }
-    } catch (error) {
-      console.error('Error loading custom profile photo:', error);
     }
   }
 
@@ -161,9 +130,12 @@ class UserManager {
 
   /**
    * Set the current user (called when user logs in)
-   * This will preserve custom name and profile photo
+   * Name and profile photo come from a single onGetUserInfo callback.
    */
-  async setCurrentUser(user: IUserInfo, onGetUserName?: () => Promise<string | null>): Promise<void> {
+  async setCurrentUser(
+    user: IUserInfo,
+    onGetUserInfo?: () => Promise<UserProfileInfo | null>,
+  ): Promise<void> {
     console.log('[UserManager] Starting setCurrentUser for email:', user.email);
 
     // Step 1: Immediately persist the user object with the token.
@@ -174,34 +146,32 @@ class UserManager {
       console.log('[UserManager] Provisional user info with token saved to storage.');
     }
 
-    if (user.email && user.photo) {
-      await profilePhotoManager.saveOriginalProfilePhoto(user.email, user.photo);
-    }
-
     if (user.email && user.name) {
       await userNameManager.saveOriginalUserName(user.email, user.name);
     }
-    
-    const hasDeletedPhoto = user.email ? await profilePhotoManager.hasUserDeletedPhoto(user.email) : false;
-    
+
     // Step 2: Determine the user's name.
     const customName = await userNameManager.getCustomUserName(user.email);
     let finalUserName = customName;
+    let profilePhoto: string | null = null;
     console.log(`[UserManager] Found local custom name: "${finalUserName}"`);
 
-    if (!finalUserName && user.email && onGetUserName) {
-      console.log('[UserManager] No local name. Calling onGetUserName...');
+    if (user.email && onGetUserInfo) {
+      console.log('[UserManager] Calling onGetUserInfo...');
       try {
-        const serverName = await onGetUserName();
-        console.log(`[UserManager] onGetUserName returned: "${serverName}"`);
-        if (serverName) {
-          finalUserName = serverName;
-          await userNameManager.saveCustomUserName(user.email, serverName);
-          await userNameManager.saveOriginalUserName(user.email, serverName);
-          console.log(`[UserManager] Using server name and saved it locally: "${finalUserName}"`);
+        const userInfo = await onGetUserInfo();
+        console.log('[UserManager] onGetUserInfo returned:', userInfo);
+        if (userInfo) {
+          if (userInfo.userName) {
+            finalUserName = userInfo.userName;
+            await userNameManager.saveCustomUserName(user.email, userInfo.userName);
+            await userNameManager.saveOriginalUserName(user.email, userInfo.userName);
+            console.log(`[UserManager] Using server name and saved it locally: "${finalUserName}"`);
+          }
+          profilePhoto = userInfo.profilePhotoUrl;
         }
       } catch (error) {
-        console.error('[UserManager] Error calling onGetUserName:', error);
+        console.error('[UserManager] Error calling onGetUserInfo:', error);
       }
     }
 
@@ -210,35 +180,16 @@ class UserManager {
         finalUserName = user.name; // Fallback name from initial login (e.g., email prefix)
         console.log(`[UserManager] No local or server name. Using fallback: "${finalUserName}"`);
     }
-    
-    // Step 4: Determine profile photo.
-    let profilePhoto = user.photo;
-    if (hasDeletedPhoto) {
-      // User has deliberately deleted their photo
-      profilePhoto = null;
-    } else if (!user.photo && user.email) {
-      // Server photo is null, check for effective original photo (for email/Apple users)
-      const effectiveOriginalPhoto = await profilePhotoManager.getEffectiveOriginalProfilePhoto(user.email);
-      if (effectiveOriginalPhoto) {
-        profilePhoto = effectiveOriginalPhoto;
-        console.log('Using effective original photo for email/Apple user:', effectiveOriginalPhoto);
-      }
-    }
-    
-    // Step 5: Construct the final user object.
+
+    // Step 4: Construct the final user object.
     this.currentUser = {
       ...user,
       name: finalUserName,
       photo: profilePhoto,
     };
     console.log('[UserManager] Final user object constructed:', this.currentUser);
-    
-    // After setting user, check if there's a custom profile photo (only if user hasn't deleted photo)
-    if (!hasDeletedPhoto) {
-      await this.loadCustomProfilePhoto();
-    }
-    
-    // Step 6: Persist the final, complete user object to storage.
+
+    // Step 5: Persist the final, complete user object to storage.
     await AsyncStorage.setItem('userInfo', JSON.stringify(this.currentUser));
     console.log('[UserManager] Final user info saved to storage.');
     
@@ -253,68 +204,30 @@ class UserManager {
   }
 
   /**
-   * Update user profile photo - delegates to ProfilePhotoManager
+   * Update user profile photo from the host upload callback.
+   * Only the remote URL returned by the host is persisted.
    */
-  async updateProfilePhoto(photoUri: string): Promise<void> {
+  async updateProfilePhoto(
+    photoUri: string,
+    onUploadProfilePhoto?: (photoUri: string) => Promise<string>,
+  ): Promise<void> {
     if (!this.currentUser?.email) {
       throw new Error('No user logged in');
     }
+    if (!onUploadProfilePhoto) {
+      throw new Error('Profile photo upload is not configured');
+    }
 
     try {
-      // Use ProfilePhotoManager to save the photo
-      const permanentUri = await profilePhotoManager.saveCustomProfilePhoto(this.currentUser.email, photoUri);
-      
-      // Update state
-      this.currentUser.photo = permanentUri;
-      
-      // Persist to storage
+      const profilePhotoUrl = await onUploadProfilePhoto(photoUri);
+
+      this.currentUser.photo = profilePhotoUrl;
+
       await AsyncStorage.setItem('userInfo', JSON.stringify(this.currentUser));
-      
-      // Notify listeners of the change
+
       this.notifyListeners();
     } catch (error) {
       console.error('Error updating profile photo:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Clear profile photo completely - delegates to ProfilePhotoManager
-   */
-  async clearProfilePhoto(): Promise<void> {
-    if (!this.currentUser?.email) return;
-    
-    try {
-      // Use ProfilePhotoManager to clear the photo
-      await profilePhotoManager.clearCustomProfilePhoto(this.currentUser.email);
-      
-      this.currentUser.photo = null;
-      await AsyncStorage.setItem('userInfo', JSON.stringify(this.currentUser));
-      
-      // Notify listeners of the change
-      this.notifyListeners();
-    } catch (error) {
-      console.error('Error clearing profile photo:', error);
-    }
-  }
-
-  /**
-   * Reset profile photo to original - delegates to ProfilePhotoManager
-   */
-  async resetToDefaultProfilePhoto(): Promise<void> {
-    if (!this.currentUser?.email) return;
-    
-    try {
-      // Use ProfilePhotoManager to reset the photo
-      const originalPhoto = await profilePhotoManager.resetToOriginalProfilePhoto(this.currentUser.email);
-      
-      this.currentUser.photo = originalPhoto;
-      await AsyncStorage.setItem('userInfo', JSON.stringify(this.currentUser));
-      
-      // Notify listeners of the change
-      this.notifyListeners();
-    } catch (error) {
-      console.error('Error resetting profile photo to default:', error);
       throw error;
     }
   }

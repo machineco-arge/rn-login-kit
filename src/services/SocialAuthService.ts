@@ -5,14 +5,14 @@ import {
 } from '@react-native-google-signin/google-signin';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import axios from 'axios';
-import {IUserInfo, SocialAuthConfig} from '../types';
+import {IUserInfo, SocialAuthConfig, UserProfileInfo} from '../types';
 import {userManager} from '../managers/UserManager';
 
 export class SocialAuthService {
   private config: SocialAuthConfig;
   private apiBaseUrl?: string;
   private endpoints?: {googleLogin: string; appleLogin: string; logout: string};
-  private onGetUserName?: () => Promise<string | null>;
+  private onGetUserInfo?: () => Promise<UserProfileInfo | null>;
 
   constructor(
     config: SocialAuthConfig,
@@ -20,12 +20,12 @@ export class SocialAuthService {
       baseUrl: string;
       endpoints: {googleLogin: string; appleLogin: string; logout: string};
     },
-    onGetUserName?: () => Promise<string | null>,
+    onGetUserInfo?: () => Promise<UserProfileInfo | null>,
   ) {
     this.config = config;
     this.apiBaseUrl = apiConfig?.baseUrl;
     this.endpoints = apiConfig?.endpoints;
-    this.onGetUserName = onGetUserName;
+    this.onGetUserInfo = onGetUserInfo;
     this.initializeGoogle();
   }
 
@@ -87,12 +87,12 @@ export class SocialAuthService {
         name:
           signInResult.data.user.givenName || signInResult.data.user.name || '',
         email: signInResult.data.user.email || '',
-        photo: signInResult.data.user.photo,
+        photo: null,
         providerId: 'google.com',
       };
 
       // Save user session
-      await this.saveUserSession(user, this.onGetUserName);
+      await this.saveUserSession(user, this.onGetUserInfo);
 
       return {success: true, user};
     } catch (error: any) {
@@ -167,7 +167,7 @@ export class SocialAuthService {
       console.log('Authenticated User:', user);
 
       // Save user session
-      await this.saveUserSession(user, this.onGetUserName);
+      await this.saveUserSession(user, this.onGetUserInfo);
 
       return {success: true, user};
     } catch (error: any) {
@@ -331,11 +331,11 @@ export class SocialAuthService {
     return response
   }
 
-  private async saveUserSession(user: IUserInfo, onGetUserName?: () => Promise<string | null>): Promise<void> {
+  private async saveUserSession(user: IUserInfo, onGetUserInfo?: () => Promise<UserProfileInfo | null>): Promise<void> {
     if (!user.idToken) {
       throw new Error('idToken is null! Cannot save user session.');
     }
 
-    await userManager.setCurrentUser(user, onGetUserName);
+    await userManager.setCurrentUser(user, onGetUserInfo);
   }
 }

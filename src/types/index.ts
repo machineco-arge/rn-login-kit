@@ -91,7 +91,12 @@ export interface IUserInfo {
   email: string | null;
   photo: string | null;
   providerId: 'google.com' | 'apple.com' | 'userSignIn' | 'userRegister' | null;
-} 
+}
+
+export interface UserProfileInfo {
+  userName: string;
+  profilePhotoUrl: string | null;
+}
 
 // Navigation Configuration
 export interface NavigationConfig {
@@ -101,7 +106,8 @@ export interface NavigationConfig {
   onForgotPasswordPress?: () => void;
   onLogout?: () => void;
   onUserNameUpdate?: (newName: string) => Promise<void>;
-  onGetUserName?: () => Promise<string | null>;
+  onGetUserInfo?: () => Promise<UserProfileInfo | null>;
+  onUploadProfilePhoto?: (photoUri: string) => Promise<string>;
   onPermissionAccessGalery?: () => Promise<boolean>;
   onDeleteAccountPress?: () => void;
 }

@@ -75,6 +75,7 @@ export type {
   LocalizationConfig,
   ScreenProps,
   IUserInfo,
+  UserProfileInfo,
   AppTranslationResources,
   TranslationConfig,
   EmailAuthConfig,

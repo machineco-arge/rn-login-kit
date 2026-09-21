@@ -56,12 +56,6 @@ export const AccountScreen: React.FC<AccountScreenProps> = ({
     // Alert states
     visibleNoProfilePhotoAlert,
     visibleSelectPhotoErrorAlert,
-    visibleResetConfirmAlert,
-    visibleResetSuccessAlert,
-    visibleResetErrorAlert,
-    visibleDeleteConfirmAlert,
-    visibleDeleteSuccessAlert,
-    visibleDeleteErrorAlert,
     visibleInvalidNameAlert,
     visibleNameUpdateSuccessAlert,
     visibleNameUpdateErrorAlert,
@@ -69,8 +63,6 @@ export const AccountScreen: React.FC<AccountScreenProps> = ({
     // Handlers
     handleSelectFromGallery,
     handleUpdateName,
-    handleConfirmReset,
-    handleConfirmDelete,
 
     // Setters
     setShowProfilePhotoCropper,
@@ -78,12 +70,6 @@ export const AccountScreen: React.FC<AccountScreenProps> = ({
     setPendingPhotoUri,
     setVisibleNoProfilePhotoAlert,
     setVisibleSelectPhotoErrorAlert,
-    setVisibleResetConfirmAlert,
-    setVisibleResetSuccessAlert,
-    setVisibleResetErrorAlert,
-    setVisibleDeleteConfirmAlert,
-    setVisibleDeleteSuccessAlert,
-    setVisibleDeleteErrorAlert,
     setVisibleInvalidNameAlert,
     setVisibleNameUpdateSuccessAlert,
     setVisibleNameUpdateErrorAlert,
@@ -108,6 +94,7 @@ export const AccountScreen: React.FC<AccountScreenProps> = ({
   // Custom hook handles all business logic
   const { isProcessing, handleCropAndSave, photoEditSuccess, setPhotoEditSuccess, photoEditError, setPhotoEditError } = useProfilePhotoCropper({ 
     onClose: handleProfilePhotoCropperClose,
+    onUploadProfilePhoto: config.navigation.onUploadProfilePhoto,
   });
 
   if (!currentUser) {
@@ -285,70 +272,6 @@ export const AccountScreen: React.FC<AccountScreenProps> = ({
         message={t('selectPhotoErrorMessage')}
         okText={t('ok')}
         onOK={() => setVisibleSelectPhotoErrorAlert(false)}
-      />
-
-      {/* Reset Confirmation Alert */}
-      <CustomBottomSheet
-        config={config}
-        visible={visibleResetConfirmAlert}
-        title={t('resetProfilePhotoTitle')}
-        message={t('resetProfilePhotoMessage')}
-        confirmText={t('resetToDefault')}
-        cancelText={t('cancel')}
-        onConfirm={handleConfirmReset}
-        onCancel={() => setVisibleResetConfirmAlert(false)}
-      />
-
-      {/* Reset Success Alert */}
-      <CustomBottomSheet
-        config={config}
-        visible={visibleResetSuccessAlert}
-        title={t('_success_')}
-        message={t('profilePhotoResetSuccessMessage')}
-        okText={t('ok')}
-        onOK={() => setVisibleResetSuccessAlert(false)}
-      />
-
-      {/* Reset Error Alert */}
-      <CustomBottomSheet
-        config={config}
-        visible={visibleResetErrorAlert}
-        title={t('_error_')}
-        message={t('profilePhotoResetErrorMessage')}
-        okText={t('ok')}
-        onOK={() => setVisibleResetErrorAlert(false)}
-      />
-
-      {/* Delete Confirmation Alert */}
-      <CustomBottomSheet
-        config={config}
-        visible={visibleDeleteConfirmAlert}
-        title={t('delete')}
-        message={t('deleteProfilePhotoMessage')}
-        confirmText={t('delete')}
-        cancelText={t('cancel')}
-        onConfirm={handleConfirmDelete}
-        onCancel={() => setVisibleDeleteConfirmAlert(false)}
-      />
-
-      {/* Delete Success Alert */}
-      <CustomBottomSheet
-        config={config}
-        visible={visibleDeleteSuccessAlert}
-        title={t('_success_')}
-        message={t('profilePhotoDeletedSuccessMessage')}
-        okText={t('ok')}
-        onOK={() => setVisibleDeleteSuccessAlert(false)}
-      />
-
-      {/* Delete Error Alert */}
-      <CustomBottomSheet
-        config={config}
-        visible={visibleDeleteErrorAlert}
-        title={t('_error_')}
-        message={t('profilePhotoDeleteErrorMessage')}
-        okText={t('ok')}
-        onOK={() => setVisibleDeleteErrorAlert(false)}
       />
 
       {/* Invalid Name Alert */}

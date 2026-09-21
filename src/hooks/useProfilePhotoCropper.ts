@@ -15,6 +15,7 @@ interface CropData {
 
 interface UseProfilePhotoCropperProps {
   onClose: () => void;
+  onUploadProfilePhoto?: (photoUri: string) => Promise<string>;
 }
 
 interface UseProfilePhotoCropperReturn {
@@ -30,6 +31,7 @@ const OUTPUT_SIZE = 600;
 
 export const useProfilePhotoCropper = ({
   onClose,
+  onUploadProfilePhoto,
 }: UseProfilePhotoCropperProps): UseProfilePhotoCropperReturn => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [photoEditSuccess, setPhotoEditSuccess] = useState(false);
@@ -120,8 +122,7 @@ export const useProfilePhotoCropper = ({
 
       const fileUri = `file://${outputPath}`;
 
-      // Update user profile photo
-      await userManager.updateProfilePhoto(fileUri);
+      await userManager.updateProfilePhoto(fileUri, onUploadProfilePhoto);
 
       setPhotoEditSuccess(true);
       onClose();

@@ -14,9 +14,9 @@ export const useSocialAuth = ({ config }: UseSocialAuthProps) => {
     return new SocialAuthService(
       config.socialAuth,
       config.apiConfig,
-      config.navigation.onGetUserName,
+      config.navigation.onGetUserInfo,
     );
-  }, [config.socialAuth, config.apiConfig, config.navigation.onGetUserName]);
+  }, [config.socialAuth, config.apiConfig, config.navigation.onGetUserInfo]);
 
   const handleSocialLogin = async (provider: 'google' | 'apple') => {
 

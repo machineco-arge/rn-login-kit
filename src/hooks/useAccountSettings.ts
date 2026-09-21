@@ -21,12 +21,6 @@ interface UseAccountSettingsReturn {
   // Alert states
   visibleNoProfilePhotoAlert: boolean;
   visibleSelectPhotoErrorAlert: boolean;
-  visibleResetConfirmAlert: boolean;
-  visibleResetSuccessAlert: boolean;
-  visibleResetErrorAlert: boolean;
-  visibleDeleteConfirmAlert: boolean;
-  visibleDeleteSuccessAlert: boolean;
-  visibleDeleteErrorAlert: boolean;
   visibleInvalidNameAlert: boolean;
   visibleNameUpdateSuccessAlert: boolean;
   visibleNameUpdateErrorAlert: boolean;
@@ -34,12 +28,8 @@ interface UseAccountSettingsReturn {
   // Handlers
   handleEditProfilePhoto: () => void;
   handleSelectFromGallery: () => void;
-  handleResetToDefault: () => void;
-  handleDeletePhoto: () => void;
   handleUpdateName: (newName: string) => void;
   handleLogout: () => void;
-  handleConfirmReset: () => void;
-  handleConfirmDelete: () => void;
 
   // Setters
   setShowProfilePhotoCropper: (show: boolean) => void;
@@ -47,12 +37,6 @@ interface UseAccountSettingsReturn {
   setPendingPhotoUri: (uri: string | null) => void;
   setVisibleNoProfilePhotoAlert: (visible: boolean) => void;
   setVisibleSelectPhotoErrorAlert: (visible: boolean) => void;
-  setVisibleResetConfirmAlert: (visible: boolean) => void;
-  setVisibleResetSuccessAlert: (visible: boolean) => void;
-  setVisibleResetErrorAlert: (visible: boolean) => void;
-  setVisibleDeleteConfirmAlert: (visible: boolean) => void;
-  setVisibleDeleteSuccessAlert: (visible: boolean) => void;
-  setVisibleDeleteErrorAlert: (visible: boolean) => void;
   setVisibleInvalidNameAlert: (visible: boolean) => void;
   setVisibleNameUpdateSuccessAlert: (visible: boolean) => void;
   setVisibleNameUpdateErrorAlert: (visible: boolean) => void;
@@ -73,12 +57,6 @@ export const useAccountSettings = ({
   // Alert states
   const [visibleNoProfilePhotoAlert, setVisibleNoProfilePhotoAlert] = useState(false);
   const [visibleSelectPhotoErrorAlert, setVisibleSelectPhotoErrorAlert] = useState(false);
-  const [visibleResetConfirmAlert, setVisibleResetConfirmAlert] = useState(false);
-  const [visibleResetSuccessAlert, setVisibleResetSuccessAlert] = useState(false);
-  const [visibleResetErrorAlert, setVisibleResetErrorAlert] = useState(false);
-  const [visibleDeleteConfirmAlert, setVisibleDeleteConfirmAlert] = useState(false);
-  const [visibleDeleteSuccessAlert, setVisibleDeleteSuccessAlert] = useState(false);
-  const [visibleDeleteErrorAlert, setVisibleDeleteErrorAlert] = useState(false);
   const [visibleInvalidNameAlert, setVisibleInvalidNameAlert] = useState(false);
   const [visibleNameUpdateSuccessAlert, setVisibleNameUpdateSuccessAlert] = useState(false);
   const [visibleNameUpdateErrorAlert, setVisibleNameUpdateErrorAlert] = useState(false);
@@ -159,54 +137,6 @@ export const useAccountSettings = ({
   };
 
   /**
-   * Handle resetting profile photo to default
-   */
-  const handleResetToDefault = (): void => {
-    setVisibleResetConfirmAlert(true);
-  };
-
-  /**
-   * Handle confirm reset operation
-   */
-  const handleConfirmReset = async (): Promise<void> => {
-    try {
-      setIsLoading(true);
-      setVisibleResetConfirmAlert(false);
-      await userManager.resetToDefaultProfilePhoto();
-      setVisibleResetSuccessAlert(true);
-    } catch (error) {
-      console.error('Error resetting profile photo:', error);
-      setVisibleResetErrorAlert(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  /**
-   * Handle deleting custom profile photo
-   */
-  const handleDeletePhoto = (): void => {
-    setVisibleDeleteConfirmAlert(true);
-  };
-
-  /**
-   * Handle confirm delete operation
-   */
-  const handleConfirmDelete = async (): Promise<void> => {
-    try {
-      setIsLoading(true);
-      setVisibleDeleteConfirmAlert(false);
-      await userManager.clearProfilePhoto();
-      setVisibleDeleteSuccessAlert(true);
-    } catch (error) {
-      console.error('Error deleting profile photo:', error);
-      setVisibleDeleteErrorAlert(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  /**
    * Handle updating user name
    */
   const handleUpdateName = async (newName: string): Promise<void> => {
@@ -275,12 +205,6 @@ export const useAccountSettings = ({
     // Alert states
     visibleNoProfilePhotoAlert,
     visibleSelectPhotoErrorAlert,
-    visibleResetConfirmAlert,
-    visibleResetSuccessAlert,
-    visibleResetErrorAlert,
-    visibleDeleteConfirmAlert,
-    visibleDeleteSuccessAlert,
-    visibleDeleteErrorAlert,
     visibleInvalidNameAlert,
     visibleNameUpdateSuccessAlert,
     visibleNameUpdateErrorAlert,
@@ -288,12 +212,8 @@ export const useAccountSettings = ({
     // Handlers
     handleEditProfilePhoto,
     handleSelectFromGallery,
-    handleResetToDefault,
-    handleDeletePhoto,
     handleUpdateName,
     handleLogout,
-    handleConfirmReset,
-    handleConfirmDelete,
 
     // Setters
     setShowProfilePhotoCropper,
@@ -301,12 +221,6 @@ export const useAccountSettings = ({
     setPendingPhotoUri,
     setVisibleNoProfilePhotoAlert,
     setVisibleSelectPhotoErrorAlert,
-    setVisibleResetConfirmAlert,
-    setVisibleResetSuccessAlert,
-    setVisibleResetErrorAlert,
-    setVisibleDeleteConfirmAlert,
-    setVisibleDeleteSuccessAlert,
-    setVisibleDeleteErrorAlert,
     setVisibleInvalidNameAlert,
     setVisibleNameUpdateSuccessAlert,
     setVisibleNameUpdateErrorAlert,
