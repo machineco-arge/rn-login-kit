@@ -1,3 +1,4 @@
+import {ScreenHeaderTitle} from '../components/ScreenHeaderTitle';
 import React from "react";
 import { View, Text, ScrollView, Dimensions, TouchableOpacity } from "react-native";
 import FastImage from '@d11/react-native-fast-image';
@@ -47,9 +48,9 @@ export const ProfileSettingsScreen: React.FC<ProfileSettigsProps> = (
             <TouchableOpacity onPress={() => {navigation.goBack();}} style={StyleProfileSettings.backButton}>
               {NavigateBackIcon}
             </TouchableOpacity>
-            <Text style={StyleProfileSettings.headerTitleText}>
+            <ScreenHeaderTitle style={StyleProfileSettings.headerTitleText}>
               {t('_settings_profileSettings')}
-            </Text>
+            </ScreenHeaderTitle>
           </View>
           <View style={StyleProfileSettings.headerUnderline} />
         </View>

@@ -1,3 +1,4 @@
+import {ScreenHeaderTitle} from '../components/ScreenHeaderTitle';
 import React from "react";
 import { Text, ScrollView, View, TouchableOpacity } from "react-native";
 import { createTermsPolicyStyles } from "../utils/styles";
@@ -32,7 +33,7 @@ export const TermsPoliciesScreen: React.FC<TermsPoliciesProps> = ({
           <TouchableOpacity onPress={() => navigation.goBack()} style={style.backButton}>
             {navigateBackIcon}
           </TouchableOpacity>
-          <Text style={style.headerTitle}>{title || "TERMS AND POLICIES"}</Text>
+          <ScreenHeaderTitle style={style.headerTitle}>{title || "TERMS AND POLICIES"}</ScreenHeaderTitle>
         </View>
       </View>
 

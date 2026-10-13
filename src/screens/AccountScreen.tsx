@@ -1,3 +1,4 @@
+import {ScreenHeaderTitle} from '../components/ScreenHeaderTitle';
 import React from 'react';
 import {
   ScrollView,
@@ -117,7 +118,7 @@ export const AccountScreen: React.FC<AccountScreenProps> = ({
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             {navigateBackIcon}
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>{t('accountSettings')}</Text>
+          <ScreenHeaderTitle style={styles.headerTitle}>{t('accountSettings')}</ScreenHeaderTitle>
         </View>
         <View style={styles.headerUnderline} />
       </View>

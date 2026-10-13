@@ -1,3 +1,4 @@
+import {ScreenHeaderTitle} from '../components/ScreenHeaderTitle';
 import React, {useState} from 'react';
 import {
   View,
@@ -96,7 +97,7 @@ export const LanguageScreen: React.FC<LanguageScreenProps> = ({
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             {navigateBackIcon}
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>{t('language') || 'LANGUAGE'}</Text>
+          <ScreenHeaderTitle style={styles.headerTitle}>{t('language') || 'LANGUAGE'}</ScreenHeaderTitle>
         </View>
       </View>
 

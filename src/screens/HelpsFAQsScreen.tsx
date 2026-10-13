@@ -1,3 +1,4 @@
+import {ScreenHeaderTitle} from '../components/ScreenHeaderTitle';
 import React, {useState, useCallback} from 'react';
 import {
   View,
@@ -91,7 +92,7 @@ export const HelpsFAQsScreen: React.FC<HelpsFAQsScreenProps> = ({
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             {navigateBackIcon}
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>{title || 'HELP & FAQ'}</Text>
+          <ScreenHeaderTitle style={styles.headerTitle}>{title || 'HELP & FAQ'}</ScreenHeaderTitle>
         </View>
       </View>
       <ScrollView

@@ -1,3 +1,4 @@
+import {ScreenHeaderTitle} from '../components/ScreenHeaderTitle';
 import React from 'react';
 import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import {LoginKitConfig} from '../types';
@@ -59,7 +60,7 @@ export const DarkLightModeScreen: React.FC<DarkLightModeScreenProps> = ({
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             {navigateBackIcon}
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>{t('_settings_darkOrLightModeSettings') || 'THEME SETTINGS'}</Text>
+          <ScreenHeaderTitle style={styles.headerTitle}>{t('_settings_darkOrLightModeSettings') || 'THEME SETTINGS'}</ScreenHeaderTitle>
         </View>
       </View>
 
